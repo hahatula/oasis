@@ -4,9 +4,9 @@ import Toolbar from '../Toolbar/Toolbar';
 function Footer() {
   return (
     <div className="footer">
-      <p>Developed by Olga Golubev</p>
+      <p className='footer__info'>Developed by Olga Golubev</p>
       <Toolbar />
-      <p>2024</p>
+      <p className='footer__info footer__year'>2024</p>
     </div>
   );
 }
