@@ -1,5 +1,6 @@
 import './Main.css';
 import { PageTitle } from '../Titles/PageTitle';
+import Posts from '../Posts/Posts';
 
 const TitleTexts: string[] = [
   'Oasis Latest News',
@@ -20,12 +21,7 @@ function Main() {
   return (
     <article className="main">
       <PageTitle titleText={getTitleText()} />
-      <ul className="posts-grid">
-        <li className="post">post</li>
-        <li className="post">post</li>
-        <li className="post">post</li>
-        <li className="post">post</li>
-      </ul>
+      <Posts/>
     </article>
   );
 }

@@ -6,6 +6,8 @@
     padding: 0 60px;
     align-content: end;
     align-items: end;
+    border-top: 1px solid var(--vibrant-green);
+    z-index: 1;
 }
 
 .footer__info {
