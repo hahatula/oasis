@@ -50,18 +50,20 @@ const Post: React.FC<PostProps> = ({
           <p className="author__host-name">Hosted by {authors.host.name}</p>
         </div>
       </div>
-      <div className="post__image-wrapper">
-        <img
-          className="post__image"
-          src={photoUrl}
-          alt={`${authors.resident.name}'s post`}
-        />
-        <div className="post__likes">
-          <button className="post__like-button"></button>
-          {likes}
+      <div className="post__body">
+        <div className="post__image-wrapper">
+          <img
+            className="post__image"
+            src={photoUrl}
+            alt={`${authors.resident.name}'s post`}
+          />
+          <div className="post__likes">
+            <button className="post__like-button"></button>
+            {likes}
+          </div>
         </div>
+        <p className="post__text">{text}</p>
       </div>
-      <p>{text}</p>
     </li>
   );
 };

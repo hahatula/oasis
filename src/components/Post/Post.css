@@ -1,6 +1,17 @@
+.post__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post__body:hover {
+  cursor: pointer;
+}
+
 .author {
   display: flex;
   gap: 12px;
+  margin-bottom: 10px;
 }
 
 .author__avatar {
@@ -34,46 +45,63 @@
 }
 
 .post__image-wrapper {
-    position: relative;
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  aspect-ratio: 1;
 }
 
 .post__image {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: 30px;
-  }
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: .5s;
+}
 
-  .post__likes {
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    background-color: rgba(255, 252, 241, 0.5);
-    padding: 0 8px 0 0;
-    border-radius: 20px;
-    backdrop-filter: blur(2px);
-  }
+.post__body:hover .post__image {
+  transform: scale(1.1);
+}
 
-  .post__like-button {
-    width: 28px;
-    height: 28px;
-    background-color: transparent;
-    border: none;
-    background-image: url(../../assets/flower-stroke.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: inherit;
-    cursor: url(../../assets/flower-fill.svg) 12 12, auto;
-  }
+.post__likes {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: rgba(255, 252, 241, 0.5);
+  padding: 0 8px 0 0;
+  border-radius: 20px;
+  backdrop-filter: blur(2px);
+}
 
-  .post__like-button_checked{
-    background-image: url(../../assets/flower-fill.svg);
-    cursor: url(../../assets/flower-stroke.svg) 12 12, auto;
-  }
+.post__like-button {
+  width: 28px;
+  height: 28px;
+  background-color: transparent;
+  border: none;
+  background-image: url(../../assets/flower-stroke.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: inherit;
+  cursor: url(../../assets/flower-fill.svg) 12 12, auto;
+}
 
-  .post__like-button:hover {
-    box-shadow: 0 0 15px 2px var(--pink);
-  }
+.post__like-button_checked {
+  background-image: url(../../assets/flower-fill.svg);
+  cursor: url(../../assets/flower-stroke.svg) 12 12, auto;
+}
+
+.post__like-button:hover {
+  box-shadow: 0 0 15px 2px var(--pink);
+}
+
+.post__text {
+  max-width: 100%;
+  overflow: hidden;
+  line-clamp: 5;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}

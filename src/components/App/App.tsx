@@ -1,4 +1,3 @@
-//import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
@@ -11,8 +10,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/profile" element={<div>profile</div>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <div></div>
       <Footer />
     </div>
   );
