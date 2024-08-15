@@ -1,24 +1,6 @@
 import React from 'react';
 import './Post.css';
-
-type PostProps = {
-  id: number;
-  text: string;
-  photoUrl: string;
-  authors: {
-    host: {
-      name: string;
-      avatarUrl: string;
-    };
-    resident: {
-      name: string;
-      avatarUrl: string;
-    };
-  };
-  likes?: number;
-  createdAt: string;
-  //TODO: use type Date?
-};
+import { PostProps } from '../../types/post';
 
 const Post: React.FC<PostProps> = ({
   text,
@@ -27,6 +9,10 @@ const Post: React.FC<PostProps> = ({
   likes,
   createdAt,
 }) => {
+  const openPostPopup: () => void = () => {
+    console.log('Post opened');
+  };
+
   return (
     <li className="post">
       <div className="post__author author">
@@ -50,7 +36,7 @@ const Post: React.FC<PostProps> = ({
           <p className="author__host-name">Hosted by {authors.host.name}</p>
         </div>
       </div>
-      <div className="post__body">
+      <div onClick={openPostPopup} className="post__body">
         <div className="post__image-wrapper">
           <img
             className="post__image"
