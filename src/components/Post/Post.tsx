@@ -4,14 +4,17 @@ import { PostProps } from '../../types/post';
 import Author from '../Author/Author';
 
 const Post: React.FC<PostProps> = ({
+  id,
   text,
   photoUrl,
   authors,
   likes,
   createdAt,
+  handlePostClick,
 }) => {
   const openPostPopup: () => void = () => {
     console.log('Post opened');
+    handlePostClick({ id, text, photoUrl, authors, likes, createdAt });
   };
 
   return (
@@ -36,7 +39,7 @@ const Post: React.FC<PostProps> = ({
             {likes}
           </div>
         </div>
-        <p className="post__date">{createdAt}</p>
+        <p className="post__date">Posted {createdAt}</p>
         <p className="post__text">{text}</p>
       </div>
     </li>

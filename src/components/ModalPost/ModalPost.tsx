@@ -3,6 +3,7 @@ import { Modal } from '../Modal/Modal';
 import { ModalPostProps } from '../../types/post';
 import Author from '../Author/Author';
 
+// TODO: correct button styling and class naming
 
 function ModalPost({
   text,
@@ -14,7 +15,7 @@ function ModalPost({
 }: ModalPostProps) {
   return (
     <Modal name="post" onClose={onClose}>
-      <article className="modal-post">
+      <article className="post modal-post">
         <Author
           hostAvatar={authors.host.avatarUrl}
           hostName={authors.host.name}
@@ -23,7 +24,7 @@ function ModalPost({
           residentSpecies={authors.resident.species}
           placement="modal-post"
         />
-        <div className="post__body">
+        <div className="modal-post__body">
           <div className="post__image-wrapper">
             <img
               className="post__image"
@@ -34,9 +35,14 @@ function ModalPost({
               <button className="post__like-button"></button>
               {likes}
             </div>
+          </div>      
+          <div className='modal-post__content-wrapper'>
+            <p className="post__text modal-post__text">{text}</p>
+            <span className='modal-post__options'>
+                <p className="post__date">Posted {createdAt}</p>
+                <button className="toolbar__button">Do somthing</button>
+            </span>
           </div>
-          <p className="post__date">{createdAt}</p>
-          <p className="post__text">{text}</p>
         </div>
       </article>
     </Modal>

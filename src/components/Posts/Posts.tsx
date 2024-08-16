@@ -1,8 +1,9 @@
 import './Posts.css';
 import Post from '../Post/Post';
 import { posts } from '../../utils/tempDB';
+import { PostData } from '../../types/post';
 
-function Posts() {
+function Posts({ handlePostClick }: { handlePostClick: (post: PostData) => void }) {
   return (
     <ul className="posts-grid">
       {posts.map((post) => (
@@ -14,6 +15,7 @@ function Posts() {
           authors={post.authors}
           likes={post.likes}
           createdAt={post.createdAt}
+          handlePostClick={handlePostClick}
         />
       ))}
     </ul>

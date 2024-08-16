@@ -1,4 +1,4 @@
-export type PostProps = {
+export type PostData = {
   id: number;
   text: string;
   photoUrl: string;
@@ -18,6 +18,10 @@ export type PostProps = {
   //TODO: use type Date?
 };
 
-export type ModalPostProps = PostProps & {
-    onClose: () => void;
-  };
+export type PostProps = PostData & {
+  handlePostClick: (data: PostData) => void;
+};
+
+export type ModalPostProps = PostData & {
+  onClose: () => void;
+};
