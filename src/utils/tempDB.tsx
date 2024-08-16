@@ -11,6 +11,7 @@ export const posts = [
         resident: {
           name: 'Alice',
           avatarUrl: 'https://images.pexels.com/photos/2395251/pexels-photo-2395251.jpeg?auto=compress&cs=tinysrgb&w=200',
+          species: 'Monstera'
         },
       },
       likes: 120,
@@ -28,6 +29,7 @@ export const posts = [
         resident: {
           name: 'Зеленушка',
           avatarUrl: 'https://images.pexels.com/photos/1600130/pexels-photo-1600130.jpeg?auto=compress&cs=tinysrgb&w=200',
+          species: 'Aloe Vera'
         },
       },
       likes: 85,
@@ -45,6 +47,7 @@ export const posts = [
         resident: {
           name: 'Charlie',
           avatarUrl: 'https://images.pexels.com/photos/60606/flowers-plant-tender-fine-60606.jpeg?auto=compress&cs=tinysrgb&w=200',
+          species: 'Epipremnum aureum'
         },
       },
       likes: 150,
@@ -62,6 +65,7 @@ export const posts = [
         resident: {
           name: 'Dana',
           avatarUrl: 'https://images.pexels.com/photos/1445417/pexels-photo-1445417.jpeg?auto=compress&cs=tinysrgb&w=200',
+          species: 'Snake Plant (Dracaena trifasciata)'
         },
       },
       likes: 95,
@@ -79,6 +83,7 @@ export const posts = [
         resident: {
           name: 'Eve',
           avatarUrl: 'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=200',
+          species: 'Moth Orchid (Phalaenopsis amabilis)'
         },
       },
       likes: 200,

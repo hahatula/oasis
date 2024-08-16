@@ -1,8 +1,8 @@
 import './Main.css';
+import { useState } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
 import Posts from '../Posts/Posts';
-import { Modal } from '../Modal/Modal';
-import { ModalPostProps } from '../../types/post';
+import ModalPost from '../ModalPost/ModalPost';
 
 const TitleTexts: string[] = [
   'Oasis Latest News',
@@ -24,6 +24,8 @@ const onClose = (): void => {
 };
 
 function Main() {
+  const [selectedPost, setSelectedPost] = useState({});
+
   return (
     <>
       <article className="main">
@@ -31,10 +33,10 @@ function Main() {
         <Posts />
       </article>
       <ModalPost
-        id={5}
-        text="texttttt"
-        photoUrl="ddd"
-        authors={{
+        id={selectedPost.id || 5}
+        text={selectedPost.text || "text placeholder"}
+        photoUrl={selectedPost.photoUrl || "https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png"}
+        authors={selectedPost.authors || {
           host: {
             name: 'Sunset Chaser',
             avatarUrl:
@@ -44,29 +46,14 @@ function Main() {
             name: 'Eve',
             avatarUrl:
               'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=200',
+              species: 'Peace Lily'
           },
         }}
-        createdAt="dddfdsf"
+        createdAt={selectedPost.createdAt || "now"}
+        likes={selectedPost.likes || 0}
         onClose={onClose}
       />
     </>
-  );
-}
-
-function ModalPost({
-  text,
-  photoUrl,
-  authors,
-  likes,
-  createdAt,
-  onClose,
-}: ModalPostProps) {
-  return (
-    <Modal name="post" onClose={onClose}>
-      <article className="modal-post">
-        popup {text} {photoUrl}, {authors.resident.name}, {likes}, {createdAt},{' '}
-      </article>
-    </Modal>
   );
 }
 

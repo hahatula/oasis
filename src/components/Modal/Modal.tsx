@@ -1,11 +1,6 @@
 import './Modal.css';
 import { useEffect } from 'react';
-
-type ModalProps = {
-  name: string;
-  onClose: () => void;
-  children?: React.ReactNode;
-};
+import { ModalProps } from './types';
 
 export const Modal: React.FC<ModalProps> = ({ name, onClose, children }) => {
   useEffect(() => {

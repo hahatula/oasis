@@ -10,6 +10,7 @@ export type PostProps = {
     resident: {
       name: string;
       avatarUrl: string;
+      species: string;
     };
   };
   likes?: number;
