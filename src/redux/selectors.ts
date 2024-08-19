@@ -1,0 +1,1 @@
+export const getModal = (state: { modal: string | null }) => state.modal;

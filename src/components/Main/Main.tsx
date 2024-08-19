@@ -1,9 +1,12 @@
 import './Main.css';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
 import Posts from '../Posts/Posts';
 import ModalPost from '../ModalPost/ModalPost';
 import { PostData } from '../../types/post';
+import { getModal } from '../../redux/selectors';
+import { openModal, closeModal } from '../../redux/actions';
 
 const TitleTexts: string[] = [
   'Oasis Latest News',
@@ -21,17 +24,18 @@ const getTitleText = (): string => {
 };
 
 function Main() {
-  const [modalIsActive, setModalIsActive] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const modalIsActive = useSelector(getModal);
   const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
 
   const handleActiveModalClose = (): void => {
     console.log('close modal post');
-    setModalIsActive(null);
+    dispatch(closeModal());
   };
 
   const handlePostClick = (post: PostData): void => {
-    setModalIsActive('view-post');
     setSelectedPost(post);
+    dispatch(openModal('view-post'));
   };
 
   return (
@@ -40,7 +44,10 @@ function Main() {
         <PageTitle titleText={getTitleText()} />
         <Posts handlePostClick={handlePostClick} />
       </article>
-      {modalIsActive === 'view-post' && selectedPost && (<ModalPost
+      {modalIsActive === 'view-post' && selectedPost && (
+        console.log(selectedPost),
+        console.log('Rendering ModalPost'),
+        <ModalPost
         id={selectedPost.id || 5}
         text={selectedPost.text || 'text placeholder'}
         photoUrl={

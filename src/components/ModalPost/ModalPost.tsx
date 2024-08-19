@@ -40,7 +40,7 @@ function ModalPost({
             <p className="post__text modal-post__text">{text}</p>
             <span className='modal-post__options'>
                 <p className="post__date">Posted {createdAt}</p>
-                <button className="toolbar__button">Do somthing</button>
+                <button className="toolbar__button">Do something</button>
             </span>
           </div>
         </div>
