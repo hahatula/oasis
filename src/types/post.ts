@@ -13,7 +13,7 @@ export type PostData = {
       species: string;
     };
   };
-  likes?: number;
+  likes: number;
   createdAt: string;
   //TODO: use type Date?
 };

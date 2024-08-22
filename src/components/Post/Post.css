@@ -26,40 +26,6 @@
   transform: scale(1.1);
 }
 
-.post__likes {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  background-color: rgba(255, 252, 241, 0.5);
-  padding: 0 8px 0 0;
-  border-radius: 20px;
-  backdrop-filter: blur(2px);
-}
-
-.post__like-button {
-  width: 28px;
-  height: 28px;
-  background-color: transparent;
-  border: none;
-  background-image: url(../../assets/flower-stroke.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: inherit;
-  cursor: url(../../assets/flower-fill.svg) 12 12, auto;
-}
-
-.post__like-button_checked {
-  background-image: url(../../assets/flower-fill.svg);
-  cursor: url(../../assets/flower-stroke.svg) 12 12, auto;
-}
-
-.post__like-button:hover {
-  box-shadow: 0 0 15px 2px var(--pink);
-}
-
 .post__date {
   opacity: 0.6;
   font-size: 12px;

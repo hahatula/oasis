@@ -2,10 +2,12 @@ import './ModalPost.css';
 import { Modal } from '../Modal/Modal';
 import { ModalPostProps } from '../../types/post';
 import Author from '../Author/Author';
+import Likes from '../Likes/Likes';
 
 // TODO: correct button styling and class naming
 
 function ModalPost({
+  id,
   text,
   photoUrl,
   authors,
@@ -13,6 +15,7 @@ function ModalPost({
   createdAt,
   onClose,
 }: ModalPostProps) {
+
   return (
     <Modal name="post" onClose={onClose}>
       <article className="post modal-post">
@@ -31,16 +34,13 @@ function ModalPost({
               src={photoUrl}
               alt={`${authors.resident.name}'s post`}
             />
-            <div className="post__likes">
-              <button className="post__like-button"></button>
-              {likes}
-            </div>
-          </div>      
-          <div className='modal-post__content-wrapper'>
+            <Likes id={id} likes={likes}/>
+          </div>
+          <div className="modal-post__content-wrapper">
             <p className="post__text modal-post__text">{text}</p>
-            <span className='modal-post__options'>
-                <p className="post__date">Posted {createdAt}</p>
-                <button className="toolbar__button">Do something</button>
+            <span className="modal-post__options">
+              <p className="post__date">Posted {createdAt}</p>
+              <button className="toolbar__button">Do something</button>
             </span>
           </div>
         </div>

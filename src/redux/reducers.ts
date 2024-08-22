@@ -1,17 +1,10 @@
-import { OPEN_MODAL, CLOSE_MODAL } from './action-types';
+import { combineReducers } from '@reduxjs/toolkit';
+import { modalReducer } from './modalSlice';
+import likesSlice from './likesSlice';
 
-type Action = {
-  type: string;
-  payload?: string;
-};
+const rootReducer = combineReducers({
+  modal: modalReducer,
+  likes: likesSlice,
+});
 
-export const modalReducer = (state: string | null = null, action: Action) => {
-  switch (action.type) {
-    case OPEN_MODAL:
-      return (state = action.payload || null);
-    case CLOSE_MODAL:
-      return (state = null);
-    default:
-      return state;
-  }
-};
+export default rootReducer;

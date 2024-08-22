@@ -1,7 +1,9 @@
-import React from 'react';
 import './Post.css';
 import { PostProps } from '../../types/post';
 import Author from '../Author/Author';
+import Likes from '../Likes/Likes';
+
+// TODO: separate likes to generic component
 
 const Post: React.FC<PostProps> = ({
   id,
@@ -34,10 +36,7 @@ const Post: React.FC<PostProps> = ({
             src={photoUrl}
             alt={`${authors.resident.name}'s post`}
           />
-          <div className="post__likes">
-            <button className="post__like-button"></button>
-            {likes}
-          </div>
+          <Likes id={id} likes={likes} />
         </div>
         <p className="post__date">Posted {createdAt}</p>
         <p className="post__text">{text}</p>
