@@ -1,5 +1,5 @@
 import './Profile.css';
-import { PageTitle, SectionTitle } from '../Titles/PageTitle';
+import { PageTitle } from '../Titles/PageTitle';
 import { users } from '../../utils/tempDB';
 import {
   differenceInYears,
@@ -8,9 +8,10 @@ import {
   subMonths,
   subYears,
 } from 'date-fns';
+import Residents from '../Residents/Residents';
 
 function Profile() {
-  const currentUser = users[0];
+  const currentUser = users[0]; //TODO: shouldn't be hardcoded in the future
   const registrationDate = new Date(currentUser.registeredAt);
   const currentDate = new Date();
 
@@ -62,21 +63,21 @@ function Profile() {
         />
         <article className="profile__host-info">
           <div className="profile__host-info-item">
-            <label>Oasis host time:</label>
+            <label className="profile__host-info-label">Oasis host time:</label>
             <p>{findHostTime()}</p>
           </div>
           <div className="profile__host-info-item">
-            <label>Number of hosted residents:</label>
+            <label className="profile__host-info-label">Number of hosted residents:</label>
             <p>{currentUser.posts.length}</p>
           </div>
           <div className="profile__host-info-item">
-            <label>Bio:</label>
+            <label className="profile__host-info-label">Bio:</label>
             <p>{currentUser.bio}</p>
           </div>
         </article>
       </article>
       <section className="profile__residents">
-        <SectionTitle titleText="Residents" />
+        <Residents hostId={currentUser.id} />
       </section>
     </section>
   );

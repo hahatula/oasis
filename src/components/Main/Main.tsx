@@ -45,34 +45,16 @@ function Main() {
         <Posts handlePostClick={handlePostClick} />
       </article>
       {modalIsActive === 'view-post' && selectedPost && (
-        console.log(selectedPost),
-        console.log('Rendering ModalPost'),
         <ModalPost
-        id={selectedPost.id || 5}
-        text={selectedPost.text || 'text placeholder'}
-        photoUrl={
-          selectedPost.photoUrl ||
-          'https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png'
-        }
-        authors={
-          selectedPost.authors || {
-            host: {
-              name: 'Sunset Chaser',
-              avatarUrl:
-                'https://images.pexels.com/photos/1800456/pexels-photo-1800456.jpeg?auto=compress&cs=tinysrgb&w=200',
-            },
-            resident: {
-              name: 'Eve',
-              avatarUrl:
-                'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=200',
-              species: 'Peace Lily',
-            },
-          }
-        }
-        createdAt={selectedPost.createdAt || 'now'}
-        likes={selectedPost.likes || 0}
-        onClose={handleActiveModalClose}
-      />)}
+          id={selectedPost.id}
+          text={selectedPost.text}
+          photoUrl={selectedPost.photoUrl}
+          authors={selectedPost.authors}
+          createdAt={selectedPost.createdAt}
+          likes={selectedPost.likes}
+          onClose={handleActiveModalClose}
+        />
+      )}
     </>
   );
 }

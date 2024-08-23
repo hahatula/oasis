@@ -5,7 +5,7 @@ export const posts = [
     id: 1,
     text: 'The Monstera Deliciosa, also known as the Swiss Cheese Plant, is a tropical vine native to Central America. It is famous for its large, glossy, and deeply lobed leaves that develop unique holes as they mature. This plant thrives in bright, indirect light and high humidity, making it a popular choice for indoor gardening enthusiasts. The Monstera Deliciosa, also known as the Swiss Cheese Plant, is a tropical vine native to Central America. It is famous for its large, glossy, and deeply lobed leaves that develop unique holes as they mature.',
     photoUrl:
-    'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=600',
+      'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
         name: 'Joanne Rowling',
@@ -193,15 +193,18 @@ export const posts = [
   {
     id: 10,
     text: 'Bob is basking in the sunlight today. He’s growing taller and stronger!',
-    photoUrl: 'https://images.pexels.com/photos/7084309/pexels-photo-7084309.jpeg?auto=compress&cs=tinysrgb&w=600',
+    photoUrl:
+      'https://images.pexels.com/photos/7084309/pexels-photo-7084309.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
         name: 'Joanne Rowling',
-        avatarUrl: 'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
+        avatarUrl:
+          'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
         name: 'Bob',
-        avatarUrl: 'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
+        avatarUrl:
+          'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Fiddle Leaf Fig',
       },
     },
@@ -297,5 +300,78 @@ export const users = [
       },
     ],
     posts: [5],
+  },
+];
+
+export const residents = [
+  {
+    id: 1,
+    name: 'Alice',
+    avatarUrl:
+      'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
+    species: 'Monstera',
+    hostId: 1,
+    posts: [1, 6, 8],
+    bio: 'A lively Monstera thriving in the heart of the home.',
+  },
+  {
+    id: 2,
+    name: 'Зеленушка',
+    avatarUrl:
+      'https://images.pexels.com/photos/1600130/pexels-photo-1600130.jpeg?auto=compress&cs=tinysrgb&w=400',
+    species: 'Aloe Vera',
+    hostId: 2,
+    posts: [2],
+    bio: 'A resilient Aloe Vera full of healing power.',
+  },
+  {
+    id: 3,
+    name: 'Charlie',
+    avatarUrl:
+      'https://images.pexels.com/photos/60606/flowers-plant-tender-fine-60606.jpeg?auto=compress&cs=tinysrgb&w=400',
+    species: 'Epipremnum aureum',
+    hostId: 3,
+    posts: [3, 9],
+    bio: 'An adventurous Epipremnum climbing to new heights.',
+  },
+  {
+    id: 4,
+    name: 'Dana',
+    avatarUrl:
+      'https://images.pexels.com/photos/1445417/pexels-photo-1445417.jpeg?auto=compress&cs=tinysrgb&w=400',
+    species: 'Snake Plant (Dracaena trifasciata)',
+    hostId: 4,
+    posts: [4],
+    bio: 'A tough Snake Plant standing tall in any situation.',
+  },
+  {
+    id: 5,
+    name: 'Eve',
+    avatarUrl:
+      'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=400',
+    species: 'Moth Orchid (Phalaenopsis amabilis)',
+    hostId: 5,
+    posts: [5],
+    bio: 'A delicate Orchid that adds a touch of elegance.',
+  },
+  {
+    id: 6,
+    name: 'Bob',
+    avatarUrl:
+      'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
+    species: 'Fiddle Leaf Fig',
+    hostId: 1,
+    posts: [ 8, 10],
+    bio: 'A sturdy Fiddle Leaf Fig reaching for the sky.',
+  },
+  {
+    id: 7,
+    name: 'Charlie',
+    avatarUrl:
+      'https://images.pexels.com/photos/4378134/pexels-photo-4378134.jpeg?auto=compress&cs=tinysrgb&w=400',
+    species: 'Peace Lily',
+    hostId: 1,
+    posts: [9],
+    bio: 'A graceful Peace Lily blooming with serenity.',
   },
 ];
