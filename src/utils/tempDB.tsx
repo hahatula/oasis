@@ -8,14 +8,14 @@ export const posts = [
     'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
-        name: 'Desert Guide',
+        name: 'Joanne Rowling',
         avatarUrl:
-          'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
         name: 'Alice',
         avatarUrl:
-          'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Monstera',
       },
     },
@@ -31,12 +31,12 @@ export const posts = [
       host: {
         name: 'Марья Петровна',
         avatarUrl:
-          'https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg?auto=compress&cs=tinysrgb&w=400',
       },
       resident: {
         name: 'Зеленушка',
         avatarUrl:
-          'https://images.pexels.com/photos/1600130/pexels-photo-1600130.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/1600130/pexels-photo-1600130.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Aloe Vera',
       },
     },
@@ -52,12 +52,12 @@ export const posts = [
       host: {
         name: 'Stargazer',
         avatarUrl:
-          'https://images.pexels.com/photos/904276/pexels-photo-904276.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/904276/pexels-photo-904276.jpeg?auto=compress&cs=tinysrgb&w=400',
       },
       resident: {
         name: 'Charlie',
         avatarUrl:
-          'https://images.pexels.com/photos/60606/flowers-plant-tender-fine-60606.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/60606/flowers-plant-tender-fine-60606.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Epipremnum aureum',
       },
     },
@@ -73,12 +73,12 @@ export const posts = [
       host: {
         name: 'Botanist',
         avatarUrl:
-          'https://images.pexels.com/photos/428338/pexels-photo-428338.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/428338/pexels-photo-428338.jpeg?auto=compress&cs=tinysrgb&w=400',
       },
       resident: {
         name: 'Dana',
         avatarUrl:
-          'https://images.pexels.com/photos/1445417/pexels-photo-1445417.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/1445417/pexels-photo-1445417.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Snake Plant (Dracaena trifasciata)',
       },
     },
@@ -94,12 +94,12 @@ export const posts = [
       host: {
         name: 'Sunset Chaser',
         avatarUrl:
-          'https://images.pexels.com/photos/1800456/pexels-photo-1800456.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/1800456/pexels-photo-1800456.jpeg?auto=compress&cs=tinysrgb&w=400',
       },
       resident: {
         name: 'Eve',
         avatarUrl:
-          'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Moth Orchid (Phalaenopsis amabilis)',
       },
     },
@@ -113,14 +113,14 @@ export const posts = [
       'https://images.pexels.com/photos/5075473/pexels-photo-5075473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=600',
     authors: {
       host: {
-        name: 'Desert Guide',
+        name: 'Joanne Rowling',
         avatarUrl:
-          'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
         name: 'Alice',
         avatarUrl:
-          'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Monstera',
       },
     },
@@ -134,14 +134,14 @@ export const posts = [
       'https://images.pexels.com/photos/7084312/pexels-photo-7084312.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
-        name: 'Desert Guide',
+        name: 'Joanne Rowling',
         avatarUrl:
-          'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
         name: 'Bob',
         avatarUrl:
-          'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Fiddle Leaf Fig',
       },
     },
@@ -155,14 +155,14 @@ export const posts = [
       'https://images.pexels.com/photos/4709814/pexels-photo-4709814.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
-        name: 'Desert Guide',
+        name: 'Joanne Rowling',
         avatarUrl:
-          'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
         name: 'Alice',
         avatarUrl:
-          'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Monstera',
       },
     },
@@ -176,14 +176,14 @@ export const posts = [
       'https://images.pexels.com/photos/4751967/pexels-photo-4751967.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
-        name: 'Desert Guide',
+        name: 'Joanne Rowling',
         avatarUrl:
-          'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
         name: 'Charlie',
         avatarUrl:
-          'https://images.pexels.com/photos/4378134/pexels-photo-4378134.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/4378134/pexels-photo-4378134.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Peace Lily',
       },
     },
@@ -196,12 +196,12 @@ export const posts = [
     photoUrl: 'https://images.pexels.com/photos/7084309/pexels-photo-7084309.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
-        name: 'Desert Guide',
-        avatarUrl: 'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=200',
+        name: 'Joanne Rowling',
+        avatarUrl: 'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
         name: 'Bob',
-        avatarUrl: 'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=200',
+        avatarUrl: 'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Fiddle Leaf Fig',
       },
     },
@@ -215,29 +215,33 @@ export const posts = [
 export const users = [
   {
     id: 1,
-    name: 'Desert Guide',
+    name: 'Joanne Rowling',
+    bio: 'Writer. From a young age, I dreamed of becoming a writer. My imagination was always filled with stories, and one day, during a long train journey, the idea of a boy discovering he was a wizard came to me. This marked the beginning of my work on the Harry Potter series, a project that would eventually change my life. I wrote the first book under challenging circumstances, often in cafes with my young daughter by my side. Despite numerous rejections from publishers, I never stopped believing in my story.',
+    registeredAt: '2024-05-22T08:30:00Z',
     avatarUrl:
-      'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=200',
+      'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
     residents: [
       {
         name: 'Alice',
         avatarUrl:
-          'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Monstera',
       },
     ],
-    posts: [1],
+    posts: [1, 6, 7, 8, 9, 10],
   },
   {
     id: 2,
     name: 'Марья Петровна',
+    bio: 'Couple of words',
+    registeredAt: '2024-08-13T08:30:00Z',
     avatarUrl:
-      'https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg?auto=compress&cs=tinysrgb&w=200',
+      'https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg?auto=compress&cs=tinysrgb&w=400',
     residents: [
       {
         name: 'Зеленушка',
         avatarUrl:
-          'https://images.pexels.com/photos/1600130/pexels-photo-1600130.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/1600130/pexels-photo-1600130.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Aloe Vera',
       },
     ],
@@ -246,13 +250,15 @@ export const users = [
   {
     id: 3,
     name: 'Stargazer',
+    bio: 'Couple of words',
+    registeredAt: '2024-08-13T08:30:00Z',
     avatarUrl:
-      'https://images.pexels.com/photos/904276/pexels-photo-904276.jpeg?auto=compress&cs=tinysrgb&w=200',
+      'https://images.pexels.com/photos/904276/pexels-photo-904276.jpeg?auto=compress&cs=tinysrgb&w=400',
     residents: [
       {
         name: 'Charlie',
         avatarUrl:
-          'https://images.pexels.com/photos/60606/flowers-plant-tender-fine-60606.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/60606/flowers-plant-tender-fine-60606.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Epipremnum aureum',
       },
     ],
@@ -261,13 +267,15 @@ export const users = [
   {
     id: 4,
     name: 'Botanist',
+    bio: 'Couple of words',
+    registeredAt: '2024-08-13T08:30:00Z',
     avatarUrl:
-      'https://images.pexels.com/photos/428338/pexels-photo-428338.jpeg?auto=compress&cs=tinysrgb&w=200',
+      'https://images.pexels.com/photos/428338/pexels-photo-428338.jpeg?auto=compress&cs=tinysrgb&w=400',
     residents: [
       {
         name: 'Dana',
         avatarUrl:
-          'https://images.pexels.com/photos/1445417/pexels-photo-1445417.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/1445417/pexels-photo-1445417.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Snake Plant (Dracaena trifasciata)',
       },
     ],
@@ -276,13 +284,15 @@ export const users = [
   {
     id: 5,
     name: 'Sunset Chaser',
+    bio: 'Couple of words',
+    registeredAt: '2024-08-13T08:30:00Z',
     avatarUrl:
-      'https://images.pexels.com/photos/1800456/pexels-photo-1800456.jpeg?auto=compress&cs=tinysrgb&w=200',
+      'https://images.pexels.com/photos/1800456/pexels-photo-1800456.jpeg?auto=compress&cs=tinysrgb&w=400',
     residents: [
       {
         name: 'Eve',
         avatarUrl:
-          'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=200',
+          'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Moth Orchid (Phalaenopsis amabilis)',
       },
     ],

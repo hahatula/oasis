@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: space-between;
   border-radius: 0 0 40px 40px;
+  z-index: 1;
 }
 
 .header__nav {
