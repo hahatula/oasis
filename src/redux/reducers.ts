@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { modalReducer } from './modalSlice';
+import modalSlice from './modalSlice';
 import likesSlice from './likesSlice';
 
 const rootReducer = combineReducers({
-  modal: modalReducer,
+  modal: modalSlice,
   likes: likesSlice,
 });
 

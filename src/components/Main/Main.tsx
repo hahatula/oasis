@@ -6,7 +6,7 @@ import Posts from '../Posts/Posts';
 import ModalPost from '../ModalPost/ModalPost';
 import { PostData } from '../../types/post';
 import { getModal } from '../../redux/selectors';
-import { openModal, closeModal } from '../../redux/actions';
+import { openModal, closeModal } from '../../redux/modalSlice';
 
 const TitleTexts: string[] = [
   'Oasis Latest News',

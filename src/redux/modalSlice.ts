@@ -1,17 +1,20 @@
-import { OPEN_MODAL, CLOSE_MODAL } from './action-types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Action = {
-    type: string;
-    payload?: string;
-  };
+type ModalState = string | null;
 
-  export const modalReducer = (state: string | null = null, action: Action) => {
-    switch (action.type) {
-      case OPEN_MODAL:
-        return (state = action.payload || null);
-      case CLOSE_MODAL:
-        return (state = null);
-      default:
-        return state;
-    }
-  };
+const modalSlice = createSlice({
+  name: 'modal',
+  initialState: null as ModalState,
+  reducers: {
+    //the state parameter is replaced with _, which is commonly used in TypeScript and JavaScript to indicate an unused parameter (for linter).
+    openModal(_, action: PayloadAction<string | null>) {
+      return action.payload;
+    },
+    closeModal() {
+      return null;
+    },
+  },
+});
+
+export const { openModal, closeModal } = modalSlice.actions;
+export default modalSlice.reducer;
