@@ -14,6 +14,10 @@
    margin: 12px 0;
 }
 
+.footer__link:hover {
+color: var(--natural-green);
+}
+
 .footer__year {
     text-align: right;
 }
