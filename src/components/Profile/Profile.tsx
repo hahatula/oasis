@@ -1,4 +1,5 @@
 import './Profile.css';
+import { CURRENT_USER_TEMP } from '../../utils/constants';
 import { PageTitle } from '../Titles/PageTitle';
 import { users } from '../../utils/tempDB';
 import {
@@ -11,7 +12,12 @@ import {
 import Residents from '../Residents/Residents';
 
 function Profile() {
-  const currentUser = users[0]; //TODO: shouldn't be hardcoded in the future
+  const currentUser = users.find(user => user.id === CURRENT_USER_TEMP); //TODO: shouldn't be hardcoded in the future
+  
+  if (!currentUser) {
+    return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
+  }
+
   const registrationDate = new Date(currentUser.registeredAt);
   const currentDate = new Date();
 

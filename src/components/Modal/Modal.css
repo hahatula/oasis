@@ -1,37 +1,41 @@
 .modal {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(255, 107, 205, .8);
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    justify-items: center;
-    align-items: center;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(255, 107, 205, 0.8);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
 }
 
 .modal__container {
-    background-color: var(--light);
-    padding: 30px;
-    border-radius: 30px;
-    min-width: 30%;
-    position: relative;
-    margin: 30px;
+  background-color: var(--light);
+  padding: 30px;
+  border-radius: 30px;
+  min-width: 30%;
+  position: relative;
+  margin: 30px;
 }
 
 .modal__close-btn {
-    position: absolute;
-    top:0;
-    right: 0;
-    width: 63px;
-    height: 63px;
-    background-image: url(../../assets/cross.svg);
-    border: none;
-    background-color: transparent;
-    transition: .5s;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 63px;
+  height: 63px;
+  background-image: url(../../assets/cross.svg);
+  border: none;
+  background-color: transparent;
+  transition: 0.5s;
 }
 
 .modal__close-btn:hover {
-    transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+.modal_type_add-post .modal__container {
+  background-color: var(--vibrant-green);
 }

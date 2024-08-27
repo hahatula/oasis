@@ -8,11 +8,13 @@ export const posts = [
       'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 1,
         name: 'Joanne Rowling',
         avatarUrl:
           'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
+        id: 1,
         name: 'Alice',
         avatarUrl:
           'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -29,11 +31,13 @@ export const posts = [
       'https://images.pexels.com/photos/1224158/pexels-photo-1224158.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 2,
         name: 'Марья Петровна',
         avatarUrl:
           'https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg?auto=compress&cs=tinysrgb&w=400',
       },
       resident: {
+        id: 2,
         name: 'Зеленушка',
         avatarUrl:
           'https://images.pexels.com/photos/1600130/pexels-photo-1600130.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -50,11 +54,13 @@ export const posts = [
       'https://images.pexels.com/photos/35196/water-plant-green-fine-layers.jpg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 3,
         name: 'Stargazer',
         avatarUrl:
           'https://images.pexels.com/photos/904276/pexels-photo-904276.jpeg?auto=compress&cs=tinysrgb&w=400',
       },
       resident: {
+        id: 3,
         name: 'Charlie',
         avatarUrl:
           'https://images.pexels.com/photos/60606/flowers-plant-tender-fine-60606.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -71,11 +77,13 @@ export const posts = [
       'https://images.pexels.com/photos/1022922/pexels-photo-1022922.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 4,
         name: 'Botanist',
         avatarUrl:
           'https://images.pexels.com/photos/428338/pexels-photo-428338.jpeg?auto=compress&cs=tinysrgb&w=400',
       },
       resident: {
+        id: 4,
         name: 'Dana',
         avatarUrl:
           'https://images.pexels.com/photos/1445417/pexels-photo-1445417.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -92,11 +100,13 @@ export const posts = [
       'https://images.pexels.com/photos/1151418/pexels-photo-1151418.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 5,
         name: 'Sunset Chaser',
         avatarUrl:
           'https://images.pexels.com/photos/1800456/pexels-photo-1800456.jpeg?auto=compress&cs=tinysrgb&w=400',
       },
       resident: {
+        id: 5,
         name: 'Eve',
         avatarUrl:
           'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -113,11 +123,13 @@ export const posts = [
       'https://images.pexels.com/photos/5075473/pexels-photo-5075473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=600',
     authors: {
       host: {
+        id: 1,
         name: 'Joanne Rowling',
         avatarUrl:
           'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
+        id: 1,
         name: 'Alice',
         avatarUrl:
           'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -134,11 +146,13 @@ export const posts = [
       'https://images.pexels.com/photos/7084312/pexels-photo-7084312.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 1,
         name: 'Joanne Rowling',
         avatarUrl:
           'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
+        id: 6,
         name: 'Bob',
         avatarUrl:
           'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -155,11 +169,13 @@ export const posts = [
       'https://images.pexels.com/photos/4709814/pexels-photo-4709814.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 1,
         name: 'Joanne Rowling',
         avatarUrl:
           'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
+        id: 1,
         name: 'Alice',
         avatarUrl:
           'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -176,11 +192,13 @@ export const posts = [
       'https://images.pexels.com/photos/4751967/pexels-photo-4751967.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 1,
         name: 'Joanne Rowling',
         avatarUrl:
           'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
+        id: 7,
         name: 'Charlie',
         avatarUrl:
           'https://images.pexels.com/photos/4378134/pexels-photo-4378134.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -197,11 +215,13 @@ export const posts = [
       'https://images.pexels.com/photos/7084309/pexels-photo-7084309.jpeg?auto=compress&cs=tinysrgb&w=600',
     authors: {
       host: {
+        id: 1,
         name: 'Joanne Rowling',
         avatarUrl:
           'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
       },
       resident: {
+        id: 6,
         name: 'Bob',
         avatarUrl:
           'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -225,10 +245,25 @@ export const users = [
       'https://m.media-amazon.com/images/S/amzn-author-media-prod/8cigckin175jtpsk3gs361r4ss.jpg',
     residents: [
       {
+        id: 1,
         name: 'Alice',
         avatarUrl:
           'https://images.pexels.com/photos/5858235/pexels-photo-5858235.jpeg?auto=compress&cs=tinysrgb&w=400',
         species: 'Monstera',
+      },
+      {
+        id: 6,
+        name: 'Bob',
+        avatarUrl:
+          'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
+        species: 'Fiddle Leaf Fig',
+      },
+      {
+        id: 7,
+        name: 'Charlie',
+        avatarUrl:
+          'https://images.pexels.com/photos/4378134/pexels-photo-4378134.jpeg?auto=compress&cs=tinysrgb&w=400',
+        species: 'Peace Lily',
       },
     ],
     posts: [1, 6, 7, 8, 9, 10],
@@ -242,6 +277,7 @@ export const users = [
       'https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg?auto=compress&cs=tinysrgb&w=400',
     residents: [
       {
+        id: 2,
         name: 'Зеленушка',
         avatarUrl:
           'https://images.pexels.com/photos/1600130/pexels-photo-1600130.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -259,6 +295,7 @@ export const users = [
       'https://images.pexels.com/photos/904276/pexels-photo-904276.jpeg?auto=compress&cs=tinysrgb&w=400',
     residents: [
       {
+        id: 3,
         name: 'Charlie',
         avatarUrl:
           'https://images.pexels.com/photos/60606/flowers-plant-tender-fine-60606.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -276,6 +313,7 @@ export const users = [
       'https://images.pexels.com/photos/428338/pexels-photo-428338.jpeg?auto=compress&cs=tinysrgb&w=400',
     residents: [
       {
+        id: 4,
         name: 'Dana',
         avatarUrl:
           'https://images.pexels.com/photos/1445417/pexels-photo-1445417.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -293,6 +331,7 @@ export const users = [
       'https://images.pexels.com/photos/1800456/pexels-photo-1800456.jpeg?auto=compress&cs=tinysrgb&w=400',
     residents: [
       {
+        id: 5,
         name: 'Eve',
         avatarUrl:
           'https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -361,7 +400,7 @@ export const residents = [
       'https://images.pexels.com/photos/6208087/pexels-photo-6208087.jpeg?auto=compress&cs=tinysrgb&w=400',
     species: 'Fiddle Leaf Fig',
     hostId: 1,
-    posts: [ 8, 10],
+    posts: [8, 10],
     bio: 'A sturdy Fiddle Leaf Fig reaching for the sky.',
   },
   {

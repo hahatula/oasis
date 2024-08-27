@@ -1,0 +1,8 @@
+.form-title {
+    font-family: var(--accent-font);
+    margin-bottom: 20px;
+}
+
+.form__select {
+    width: 100%;
+}

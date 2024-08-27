@@ -1,9 +1,11 @@
 import './Main.css';
+import { CURRENT_USER_TEMP } from '../../utils/constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
 import Posts from '../Posts/Posts';
 import ModalPost from '../ModalPost/ModalPost';
+import ModalForm from '../ModalWithForm/ModalForm';
 import { PostData } from '../../types/post';
 import { getModal } from '../../redux/selectors';
 import { openModal, closeModal } from '../../redux/modalSlice';
@@ -54,6 +56,9 @@ function Main() {
           likes={selectedPost.likes}
           onClose={handleActiveModalClose}
         />
+      )}
+      {modalIsActive === 'add-post' && (
+        <ModalForm formName="add-post" onClose={handleActiveModalClose} userId={CURRENT_USER_TEMP} />
       )}
     </>
   );
