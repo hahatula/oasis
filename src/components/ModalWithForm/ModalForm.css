@@ -1,8 +1,78 @@
 .form-title {
-    font-family: var(--accent-font);
-    margin-bottom: 20px;
+  font-family: var(--accent-font);
+  margin-bottom: 20px;
+}
+.form__select-wrapper {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* custom arrow */
+.form__select-wrapper::after {
+  --size: 0.3rem;
+  position: absolute;
+  content: '';
+  right: 20px;
+  pointer-events: none;
+}
+
+.form__select-wrapper::after {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid var(--natural-green);
+  top: 48%;
 }
 
 .form__select {
-    width: 100%;
+  position: relative;
+  /* hide default arrow */
+  appearance: none;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: var(--light);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.form__select:focus-visible,
+.form__select:active {
+  outline: 1px solid var(--natural-green);
+}
+
+.form__select-default-option,
+.form__select-options_hidden {
+  display: none;
+}
+
+.form__select-options_shown {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--light);
+  border: none;
+  border-radius: 10px;
+}
+
+.form__select-option {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 20px;
+  font-family: var(--accent-font);
+  cursor: pointer;
+}
+
+.form__select-option:hover {
+  padding: 10px 20px;
+  background-color: #d0ff4c33;
+}
+
+.form__select-option-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 20px;
 }
