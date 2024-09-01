@@ -1,3 +1,9 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: end;
+}
 .form-title {
   font-family: var(--accent-font);
   margin-bottom: 20px;
@@ -24,7 +30,8 @@
   top: 48%;
 }
 
-.form__select {
+.form__select,
+.form__input {
   position: relative;
   /* hide default arrow */
   appearance: none;
@@ -34,10 +41,13 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .form__select:focus-visible,
-.form__select:active {
+.form__select:active,
+.form__input:focus-visible,
+.form__input:active {
   outline: 1px solid var(--natural-green);
 }
 
@@ -54,6 +64,7 @@
   background-color: var(--light);
   border: none;
   border-radius: 10px;
+  z-index: 1;
 }
 
 .form__select-option {
@@ -75,4 +86,14 @@
   height: 40px;
   object-fit: cover;
   border-radius: 20px;
+}
+
+.form__button {
+    background-color: #fffcf199;
+    cursor: pointer;
+}
+
+.form__button:hover {
+    background-color: #fffcf1;
+    color: var(--natural-green);
 }

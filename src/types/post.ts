@@ -4,10 +4,12 @@ export type PostData = {
   photoUrl: string;
   authors: {
     host: {
+      id: number;
       name: string;
       avatarUrl: string;
     };
     resident: {
+      id: number;
       name: string;
       avatarUrl: string;
       species: string;

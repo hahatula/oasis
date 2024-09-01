@@ -1,7 +1,9 @@
-import './ModalForm.css';
+import './ModalAddPost.css';
 import { Modal } from '../Modal/Modal';
 import { users } from '../../utils/tempDB';
 import { useState } from 'react';
+
+// TODO: button styles from toolbar are used. Not ok
 
 type ModalFormProps = {
   formName: string;
@@ -9,28 +11,32 @@ type ModalFormProps = {
   onClose: () => void;
 };
 
-function ModalForm({ formName, onClose, userId }: ModalFormProps) {
+function ModalAddPost({ formName, onClose, userId }: ModalFormProps) {
   console.log({ formName, onClose, userId });
   const [selectedResident, setSelectedResident] = useState({
     id: 0,
     name: 'Choose your resident',
   });
-  const [optionsVisibility, setOptionsVisibility] = useState('hidden');
+  const [optionsVisibility, setOptionsVisibility] = useState(false);
 
   const toggleOptionsVisibility = () =>
-    optionsVisibility === 'shown'
-      ? setOptionsVisibility('hidden')
-      : setOptionsVisibility('shown');
+    setOptionsVisibility(!optionsVisibility);
 
-  //   const handleOptionClick = (resident) => {
-  //     setSelectedResident(resident);
-  //     toggleOptionsVisibility();
-  //   };
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log('submitted');
+  };
 
   return (
     <Modal name={formName} onClose={onClose}>
       <h2 className="form-title">New post</h2>
-      <form action="submit" method="post" id={formName} className="form">
+      <form
+        onSubmit={handleSubmit}
+        action="submit"
+        method="post"
+        id={formName}
+        className="form"
+      >
         <div className="form__select-wrapper">
           <select
             className="form__select"
@@ -46,7 +52,11 @@ function ModalForm({ formName, onClose, userId }: ModalFormProps) {
               {selectedResident.name}
             </option>
           </select>
-          <div className={`form__select-options_${optionsVisibility}`}>
+          <div
+            className={`form__select-options_${
+                optionsVisibility ? 'shown' : 'hidden'
+            }`}
+          >
             {
               /* map all the residents of the current user */
               users[userId - 1].residents?.map((resident, index) => (
@@ -67,11 +77,27 @@ function ModalForm({ formName, onClose, userId }: ModalFormProps) {
                 </div>
               ))
             }
+            <div className="form__select-option">Create new resident</div>
           </div>
         </div>
+        {selectedResident.id !== 0 && (
+          <input
+            name="photo"
+            id="photo"
+            type="url"
+            required
+            className="form__input"
+            placeholder="Add photo url"
+          ></input>
+        )}
+        {selectedResident.id !== 0 && (
+          <button type="submit" className="toolbar__button form__button">
+            Next
+          </button>
+        )}
       </form>
     </Modal>
   );
 }
 
-export default ModalForm;
+export default ModalAddPost;

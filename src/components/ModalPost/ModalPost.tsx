@@ -1,10 +1,14 @@
 import './ModalPost.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../redux/selectors';
 import { Modal } from '../Modal/Modal';
 import { ModalPostProps } from '../../types/post';
 import Author from '../Author/Author';
 import Likes from '../Likes/Likes';
 
+
 // TODO: correct button styling and class naming
+// TODO: correct date format in post__date
 
 function ModalPost({
   id,
@@ -15,6 +19,10 @@ function ModalPost({
   createdAt,
   onClose,
 }: ModalPostProps) {
+ // const dispatch = useDispatch();
+  const currentUser = useSelector(getUser);
+  console.log(currentUser);
+  console.log(authors.host.id);
 
   return (
     <Modal name="post" onClose={onClose}>
@@ -40,7 +48,7 @@ function ModalPost({
             <p className="post__text modal-post__text">{text}</p>
             <span className="modal-post__options">
               <p className="post__date">Posted {createdAt}</p>
-              <button className="toolbar__button">Do something</button>
+              {authors.host.id === currentUser && <button className="toolbar__button">Edit post</button>}
             </span>
           </div>
         </div>

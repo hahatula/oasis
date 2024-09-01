@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
 import Posts from '../Posts/Posts';
 import ModalPost from '../ModalPost/ModalPost';
-import ModalForm from '../ModalWithForm/ModalForm';
+import ModalAddPost from '../ModalAddPost/ModalAddPost';
 import { PostData } from '../../types/post';
 import { getModal } from '../../redux/selectors';
 import { openModal, closeModal } from '../../redux/modalSlice';
@@ -58,7 +58,7 @@ function Main() {
         />
       )}
       {modalIsActive === 'add-post' && (
-        <ModalForm formName="add-post" onClose={handleActiveModalClose} userId={CURRENT_USER_TEMP} />
+        <ModalAddPost formName="add-post" onClose={handleActiveModalClose} userId={CURRENT_USER_TEMP} />
       )}
     </>
   );
