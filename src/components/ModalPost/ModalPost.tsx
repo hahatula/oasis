@@ -1,11 +1,12 @@
 import './ModalPost.css';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../redux/selectors';
 import { Modal } from '../Modal/Modal';
 import { ModalPostProps } from '../../types/post';
 import Author from '../Author/Author';
 import Likes from '../Likes/Likes';
-
+import { updatePost } from '../../redux/postSlice';
 
 // TODO: correct button styling and class naming
 // TODO: correct date format in post__date
@@ -19,10 +20,28 @@ function ModalPost({
   createdAt,
   onClose,
 }: ModalPostProps) {
- // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const currentUser = useSelector(getUser);
   console.log(currentUser);
   console.log(authors.host.id);
+  const [postModalMode, setPostModalMode] = useState('view');
+  const [postText, setPostText] = useState(text);
+
+  const handleEditClick = () => {
+    console.log('edit');
+    setPostModalMode('edit');
+  };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPostText(e.target.value);
+  };
+
+  const handleSaveClick = () => {
+    dispatch(updatePost({id, newText: postText}))
+    console.log('save post');
+    setPostModalMode('view');
+    onClose();
+  };
 
   return (
     <Modal name="post" onClose={onClose}>
@@ -42,15 +61,41 @@ function ModalPost({
               src={photoUrl}
               alt={`${authors.resident.name}'s post`}
             />
-            <Likes id={id} likes={likes}/>
+            <Likes id={id} likes={likes} />
           </div>
-          <div className="modal-post__content-wrapper">
-            <p className="post__text modal-post__text">{text}</p>
-            <span className="modal-post__options">
-              <p className="post__date">Posted {createdAt}</p>
-              {authors.host.id === currentUser && <button className="toolbar__button">Edit post</button>}
-            </span>
-          </div>
+          {postModalMode === 'view' && (
+            <div className="modal-post__content-wrapper">
+              <p className="post__text modal-post__text">{postText}</p>
+              <span className="modal-post__options">
+                <p className="post__date">Posted {createdAt}</p>
+                {authors.host.id === currentUser && (
+                  <button className="toolbar__button" onClick={handleEditClick}>
+                    Edit post
+                  </button>
+                )}
+              </span>
+            </div>
+          )}
+          {postModalMode === 'edit' && (
+            <div className="modal-post__content-wrapper">
+              <textarea
+                name="text"
+                id="text"
+                className="modal-post__textarea"
+                placeholder="What does your plant want to share?"
+                value={postText}
+                onChange={handleTextChange}
+              />
+              <span className="modal-post__options">
+                <p className="post__date">Posted {createdAt}</p>
+                {authors.host.id === currentUser && (
+                  <button className="toolbar__button" onClick={handleSaveClick}>
+                    Save
+                  </button>
+                )}
+              </span>
+            </div>
+          )}
         </div>
       </article>
     </Modal>

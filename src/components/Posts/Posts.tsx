@@ -1,9 +1,12 @@
 import './Posts.css';
+import { useSelector } from 'react-redux';
 import Post from '../Post/Post';
-import { posts } from '../../utils/tempDB';
 import { PostData } from '../../types/post';
+import { getPosts } from '../../redux/selectors';
 
 function Posts({ handlePostClick }: { handlePostClick: (post: PostData) => void }) {
+  const posts = useSelector(getPosts);
+
   return (
     <ul className="posts-grid">
       {posts.map((post) => (
