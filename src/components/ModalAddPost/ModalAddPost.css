@@ -3,11 +3,15 @@
   flex-direction: column;
   gap: 20px;
   align-items: end;
+  position: relative;
+  max-width: 500px;
 }
-.form-title {
+
+.form__title {
   font-family: var(--accent-font);
   margin-bottom: 20px;
 }
+
 .form__select-wrapper {
   width: 100%;
   position: relative;
@@ -89,11 +93,11 @@
 }
 
 .form__button {
-    background-color: #fffcf199;
-    cursor: pointer;
+  background-color: #fffcf199;
+  cursor: pointer;
 }
 
 .form__button:hover {
-    background-color: #fffcf1;
-    color: var(--natural-green);
+  background-color: #fffcf1;
+  color: var(--natural-green);
 }

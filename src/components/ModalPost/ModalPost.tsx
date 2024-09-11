@@ -1,12 +1,12 @@
 import './ModalPost.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../../redux/selectors';
+import { getUser, getModal } from '../../redux/selectors';
 import { Modal } from '../Modal/Modal';
 import { ModalPostProps } from '../../types/post';
 import Author from '../Author/Author';
 import Likes from '../Likes/Likes';
-import { updatePost } from '../../redux/postSlice';
+import { addPost, updatePost } from '../../redux/postSlice';
 
 // TODO: correct button styling and class naming
 // TODO: correct date format in post__date
@@ -22,9 +22,10 @@ function ModalPost({
 }: ModalPostProps) {
   const dispatch = useDispatch();
   const currentUser = useSelector(getUser);
-  console.log(currentUser);
-  console.log(authors.host.id);
-  const [postModalMode, setPostModalMode] = useState('view');
+  const modalIsActive = useSelector(getModal);
+  const [postModalMode, setPostModalMode] = useState(
+    modalIsActive === 'add-post-next' ? 'edit' : 'view'
+  );
   const [postText, setPostText] = useState(text);
 
   const handleEditClick = () => {
@@ -37,8 +38,22 @@ function ModalPost({
   };
 
   const handleSaveClick = () => {
-    dispatch(updatePost({id, newText: postText}))
-    console.log('save post');
+    const create = () => {
+      const newPost = {
+        id: Date.now(), // temp ID
+        text: postText,
+        photoUrl: photoUrl,
+        authors: authors,
+        createdAt: new Date().toISOString(),
+        likes: 0,
+      };
+      dispatch(addPost(newPost))
+    };
+    const update = () => {
+      dispatch(updatePost({ id, newText: postText }));
+      console.log('save post');
+    };
+    modalIsActive === 'add-post-next' ? create() : update();
     setPostModalMode('view');
     onClose();
   };

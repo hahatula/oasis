@@ -26,7 +26,7 @@ const postsSlice = createSlice({
         },
         addPost(state, action: PayloadAction<PostData>) {
             const newPost = action.payload;
-            state.entities.push(newPost);
+            state.entities.unshift(newPost);
         }
     }
 });
