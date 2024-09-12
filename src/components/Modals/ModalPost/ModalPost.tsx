@@ -1,12 +1,13 @@
 import './ModalPost.css';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, getModal } from '../../redux/selectors';
-import { Modal } from '../Modal/Modal';
-import { ModalPostProps } from '../../types/post';
-import Author from '../Author/Author';
-import Likes from '../Likes/Likes';
-import { addPost, updatePost } from '../../redux/postSlice';
+import { getUser, getModal } from '../../../redux/selectors';
+import { Modal } from '../../Modal/Modal';
+import { ModalPostProps } from '../../../types/post';
+import Author from '../../Author/Author';
+import Likes from '../../Likes/Likes';
+import { addPost, updatePost } from '../../../redux/postSlice';
 
 // TODO: correct button styling and class naming
 // TODO: correct date format in post__date
@@ -20,6 +21,7 @@ function ModalPost({
   createdAt,
   onClose,
 }: ModalPostProps) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector(getUser);
   const modalIsActive = useSelector(getModal);
@@ -47,7 +49,8 @@ function ModalPost({
         createdAt: new Date().toISOString(),
         likes: 0,
       };
-      dispatch(addPost(newPost))
+      dispatch(addPost(newPost));
+      navigate('/');
     };
     const update = () => {
       dispatch(updatePost({ id, newText: postText }));

@@ -1,23 +1,22 @@
 import '../ModalAddPost/ModalAddPost.css';
 import './ModalAddResident.css';
-import { Modal } from '../Modal/Modal';
-import { users, residents } from '../../utils/tempDB';
-import { CURRENT_USER_TEMP } from '../../utils/constants';
+import { Modal } from '../../Modal/Modal';
+import { users, residents } from '../../../utils/tempDB';
+import { CURRENT_USER_TEMP } from '../../../utils/constants';
 import { useState } from 'react';
-import Author from '../Author/Author';
+import { useNavigate } from 'react-router-dom';
+import Author from '../../Author/Author';
 
 // TODO: button styles from toolbar are used. Not ok
+// TODO: add birthday to resident schema
 
 type AddResidentFormProps = {
   formName: string;
   onClose: () => void;
-  onNext: (
-    resident: { id: number; name: string; avatarUrl: string; species: string },
-    photoUrl: string
-  ) => void;
 };
 
-function ModalAddResident({ formName, onClose, onNext }: AddResidentFormProps) {
+function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [photoUrl, setPhotoUrl] = useState('');
   const [species, setSpecies] = useState('');
@@ -58,15 +57,16 @@ function ModalAddResident({ formName, onClose, onNext }: AddResidentFormProps) {
         species: species,
         hostId: CURRENT_USER_TEMP,
         posts: [],
-        bio: bio
+        bio: bio,
       };
       residents.push(newResident);
+      navigate('/profile');
     }
     setStep(step + 1);
   };
 
   if (step === 5) {
-    setTimeout(() => onClose(), 3000);
+    setTimeout(() => onClose(), 1800);
   }
 
   return (
@@ -102,7 +102,7 @@ function ModalAddResident({ formName, onClose, onNext }: AddResidentFormProps) {
               <img className="form__resident-img" src={photoUrl}></img>
               {species && <p>{species}</p>}
               <p>Oh! Is it a {suggestion}?</p>
-              <div className='form__btn-container'>
+              <div className="form__btn-container">
                 <button
                   type="button"
                   className="toolbar__button form__button"
@@ -213,7 +213,9 @@ function ModalAddResident({ formName, onClose, onNext }: AddResidentFormProps) {
             </>
           )}
           {step === 5 && (
-            <p>Congrats, a new resident has successfully moved into your oasis!</p>
+            <p>
+              Congrats, a new resident has successfully moved into your oasis!
+            </p>
           )}
         </form>
       </Modal>

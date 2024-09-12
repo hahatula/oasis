@@ -1,6 +1,6 @@
 import './ModalAddPost.css';
-import { Modal } from '../Modal/Modal';
-import { users } from '../../utils/tempDB';
+import { Modal } from '../../Modal/Modal';
+import { users } from '../../../utils/tempDB';
 import { useState } from 'react';
 
 // TODO: button styles from toolbar are used. Not ok
@@ -9,7 +9,10 @@ type AddPostFormProps = {
   formName: string;
   userId: number;
   onClose: () => void;
-  onNext: (resident: { id: number; name: string; avatarUrl: string; species: string }, photoUrl: string) => void;
+  onNext: (
+    resident: { id: number; name: string; avatarUrl: string; species: string },
+    photoUrl: string
+  ) => void;
 };
 
 function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
