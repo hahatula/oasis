@@ -60,6 +60,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
         bio: bio,
       };
       residents.push(newResident);
+      users[CURRENT_USER_TEMP-1].residents.push(newResident);
       navigate('/profile');
     }
     setStep(step + 1);

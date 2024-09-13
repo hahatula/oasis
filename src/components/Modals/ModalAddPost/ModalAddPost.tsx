@@ -2,6 +2,8 @@ import './ModalAddPost.css';
 import { Modal } from '../../Modal/Modal';
 import { users } from '../../../utils/tempDB';
 import { useState } from 'react';
+import { openModal } from '../../../redux/modalSlice';
+import { useDispatch } from 'react-redux';
 
 // TODO: button styles from toolbar are used. Not ok
 
@@ -16,6 +18,7 @@ type AddPostFormProps = {
 };
 
 function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
+  const dispatch = useDispatch();
   const [selectedResident, setSelectedResident] = useState({
     id: 0,
     name: 'Choose your resident',
@@ -84,7 +87,9 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
                   </div>
                 ))
               }
-              <div className="form__select-option">Create new resident</div>
+              <div className="form__select-option" onClick={() => {dispatch(openModal('add-resident'))}}>
+                Create new resident
+              </div>
             </div>
           </div>
           {selectedResident.id !== 0 && (

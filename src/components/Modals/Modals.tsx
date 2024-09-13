@@ -25,7 +25,7 @@ export const Modals = ({ post }: { post: PostData | null }) => {
 
   const handleActiveModalClose = (): void => {
     dispatch(closeModal());
-    setSelectedPost(null);
+    selectedPost && setSelectedPost(null);
     setNewPostData(null);
   };
 

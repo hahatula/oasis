@@ -4,12 +4,13 @@
   gap: 20px;
   align-items: end;
   position: relative;
+  width: 100%;
   max-width: 500px;
+  align-self: center;
 }
 
 .form__title {
   font-family: var(--accent-font);
-  margin-bottom: 20px;
 }
 
 .form__select-wrapper {

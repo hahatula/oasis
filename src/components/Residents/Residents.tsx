@@ -13,14 +13,14 @@ function Residents({ hostId }: { hostId: number }) {
         {residents
           .filter((resident) => resident.hostId === hostId)
           .map((resident) => (
-            <Resident id={resident.id} name={resident.name} avatarUrl={resident.avatarUrl} posts={resident.posts} species={resident.species} bio={resident.bio}/>
-            // <li key={resident.id}>
-            //   <img src={resident.avatarUrl} alt={resident.name} />
-            //   {resident.name}
-            //   {resident.posts.length}
-            //   {resident.species}
-            //   {resident.bio}
-            // </li>
+            <Resident
+              id={resident.id}
+              name={resident.name}
+              avatarUrl={resident.avatarUrl}
+              posts={resident.posts}
+              species={resident.species}
+              bio={resident.bio}
+            />
           ))}
       </ul>
     </>

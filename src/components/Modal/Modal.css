@@ -12,6 +12,9 @@
 }
 
 .modal__container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   background-color: var(--light);
   padding: 30px;
   border-radius: 30px;
