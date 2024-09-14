@@ -6,6 +6,8 @@ import { CURRENT_USER_TEMP } from '../../../utils/constants';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Author from '../../Author/Author';
+import { getPlantTip } from '../../../utils/plantNetApi';
+import { plantNetApiKey } from '../../../utils/constants';
 
 // TODO: button styles from toolbar are used. Not ok
 // TODO: add birthday to resident schema
@@ -22,7 +24,8 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const [species, setSpecies] = useState('');
   const [name, setName] = useState('');
   const [bday, setBday] = useState(new Date());
-  const [bio, setBio] = useState('');
+  const [suggestion, setSuggestion] = useState('');
+  const [urlError, setUrlError] = useState('');
 
   const userInput = {
     species: '',
@@ -31,25 +34,58 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
     bio: '',
   };
 
-  const getSuggestion = (photoUrl: string) => {
-    console.log(`${photoUrl} will be analyzed`);
-    const suggestion = 'Magic plant';
-    return suggestion;
+  const formatUrl = (photoUrl: string) => {
+    const extensions = ['.jpeg', '.jpg', '.png', '.webp'];
+    const imgExtension = extensions.find((ext) => photoUrl.includes(ext));
+
+    if (!imgExtension) {
+      setUrlError('Please enter a valid IMAGE url.');
+      console.error('Invalid image URL, no valid image extension found.');
+      return '';
+    }
+
+    setUrlError('');
+    return photoUrl.slice(
+      0,
+      photoUrl.indexOf(imgExtension) + imgExtension.length
+    );
   };
 
-  const suggestion = getSuggestion(photoUrl);
+  const getSuggestion = async (photoUrl: string) => {
+    try {
+      const data = await getPlantTip(photoUrl, plantNetApiKey);
+      return data.results[0]?.species?.commonNames[0] || '';
+    } catch (error) {
+      console.error('Error fetching plant suggestion:', error);
+      return '';
+    }
+  };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (step === 1) {
+      const cleanUrl = formatUrl(photoUrl);
+
+      if (!cleanUrl) {
+        console.error('Invalid URL, skipping plant suggestion.');
+        return;
+      }
+
+      const plantNetSuggestion = await getSuggestion(cleanUrl);
+      setSuggestion(plantNetSuggestion);
+
+      if (!plantNetSuggestion || plantNetSuggestion === '') {
+        console.error('No suggestion from API, moving to next step.');
+        setStep(3);
+        return;
+      }
+    }
     if (step === 3) {
       setSpecies(userInput.species ? userInput.species : suggestion);
       setName(userInput.name);
     }
     if (step === 4) {
       if (userInput.bday !== null) setBday(userInput.bday);
-      if (userInput.bio) setBio(userInput.bio);
-      // TODO: bio is not logged
-      console.log(bio);
       const newResident = {
         id: residents.length,
         name: name,
@@ -57,10 +93,10 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
         species: species,
         hostId: CURRENT_USER_TEMP,
         posts: [],
-        bio: bio,
+        bio: userInput.bio,
       };
       residents.push(newResident);
-      users[CURRENT_USER_TEMP-1].residents.push(newResident);
+      users[CURRENT_USER_TEMP - 1].residents.push(newResident);
       navigate('/profile');
     }
     setStep(step + 1);
@@ -91,8 +127,12 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 className="form__input"
                 placeholder="Add photo url for your resident's avatar"
                 value={photoUrl}
-                onChange={(e) => setPhotoUrl(e.target.value)}
+                onChange={(e) => {
+                  setUrlError('');
+                  setPhotoUrl(e.target.value);
+                }}
               ></input>
+              {urlError && <p className="form__error">{urlError}</p>}
               <button type="submit" className="toolbar__button form__button">
                 Next
               </button>
