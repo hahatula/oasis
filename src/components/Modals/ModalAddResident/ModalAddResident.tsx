@@ -11,10 +11,19 @@ import { plantNetApiKey } from '../../../utils/constants';
 
 // TODO: button styles from toolbar are used. Not ok
 // TODO: add birthday to resident schema
+// TODO: loading while waiting for api response
 
 type AddResidentFormProps = {
   formName: string;
   onClose: () => void;
+};
+
+type PlantTipResponse = {
+  results: Array<{
+    species?: {
+      commonNames: string[];
+    };
+  }>;
 };
 
 function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
@@ -53,7 +62,10 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
 
   const getSuggestion = async (photoUrl: string) => {
     try {
-      const data = await getPlantTip(photoUrl, plantNetApiKey);
+      const data = (await getPlantTip(
+        photoUrl,
+        plantNetApiKey
+      )) as PlantTipResponse;
       return data.results[0]?.species?.commonNames[0] || '';
     } catch (error) {
       console.error('Error fetching plant suggestion:', error);
@@ -100,6 +112,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
       navigate('/profile');
     }
     setStep(step + 1);
+    console.log(bday);
   };
 
   if (step === 5) {
