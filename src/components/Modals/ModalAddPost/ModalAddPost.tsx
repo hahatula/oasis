@@ -85,7 +85,12 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
                   </div>
                 ))
               }
-              <div className="form__select-option" onClick={() => {dispatch(openModal('add-resident'))}}>
+              <div
+                className="form__select-option"
+                onClick={() => {
+                  dispatch(openModal('add-resident'));
+                }}
+              >
                 Create new resident
               </div>
             </div>

@@ -1,31 +1,31 @@
 .resident {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .resident__image {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    transition: 0.5s;
-    border-radius: 30px;
-  }
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: 0.5s;
+  border-radius: 30px;
+}
 
-  .resident__info {
-    display: flex;
+.resident__info {
+  display: flex;
   justify-content: space-between;
-    gap: 10px;
-  }
+  gap: 10px;
+}
 
-  .resident__name {
-    font-family: var(--accent-font);
-    font-size: 24px;
-  }
+.resident__name {
+  font-family: var(--accent-font);
+  font-size: 24px;
+}
 
-  .resident__species {
-    opacity: 0.6;
-  }
+.resident__species {
+  opacity: 0.6;
+}
 
-  .resident__buttons {
-    margin-top: auto;
-  }
+.resident__buttons {
+  margin-top: auto;
+}

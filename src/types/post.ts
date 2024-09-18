@@ -27,4 +27,3 @@ export type PostProps = PostData & {
 export type ModalPostProps = PostData & {
   onClose: () => void;
 };
-

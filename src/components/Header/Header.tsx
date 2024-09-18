@@ -29,7 +29,11 @@ function Header() {
 
       {burgerOpened && (
         <nav className="header__burger-nav">
-           <button className="header__close-btn" type="button" onClick={closeBurger} />
+          <button
+            className="header__close-btn"
+            type="button"
+            onClick={closeBurger}
+          />
           <Link to="/" className="header__link" onClick={closeBurger}>
             Home
           </Link>

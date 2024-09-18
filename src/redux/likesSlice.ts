@@ -28,15 +28,18 @@ const likeSlice = createSlice({
         like.count = like.liked ? like.count + 1 : like.count - 1;
       }
     },
-    setInitialLikes(state, action: PayloadAction<{ id: number; count: number }>) {
-        const { id, count } = action.payload;
-        const like = state.entities.find((entity) => entity.id === id);
-        if (like) {
-          like.count = count;
-        } else {
-          state.entities.push({ id, count, liked: false });
-        }
-      },
+    setInitialLikes(
+      state,
+      action: PayloadAction<{ id: number; count: number }>
+    ) {
+      const { id, count } = action.payload;
+      const like = state.entities.find((entity) => entity.id === id);
+      if (like) {
+        like.count = count;
+      } else {
+        state.entities.push({ id, count, liked: false });
+      }
+    },
   },
 });
 

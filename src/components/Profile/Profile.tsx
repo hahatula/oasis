@@ -12,8 +12,8 @@ import {
 import Residents from '../Residents/Residents';
 
 function Profile() {
-  const currentUser = users.find(user => user.id === CURRENT_USER_TEMP); //TODO: shouldn't be hardcoded in the future
-  
+  const currentUser = users.find((user) => user.id === CURRENT_USER_TEMP); //TODO: shouldn't be hardcoded in the future
+
   if (!currentUser) {
     return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
   }
@@ -73,7 +73,9 @@ function Profile() {
             <p>{findHostTime()}</p>
           </div>
           <div className="profile__host-info-item">
-            <label className="profile__host-info-label">Number of hosted residents:</label>
+            <label className="profile__host-info-label">
+              Number of hosted residents:
+            </label>
             <p>{currentUser.posts.length}</p>
           </div>
           <div className="profile__host-info-item">

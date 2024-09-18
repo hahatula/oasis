@@ -3,33 +3,33 @@ import { PostData } from '../types/post';
 import { posts } from '../utils/tempDB';
 
 type PostsState = {
-    entities: PostData[];
-} 
+  entities: PostData[];
+};
 
 const initialState: PostsState = {
-    entities: posts,
-}
+  entities: posts,
+};
 
 const postsSlice = createSlice({
-    name: 'posts',
-    initialState,
-    reducers: {
-        setInitialPosts(state, action: PayloadAction<PostData[]>) {
-            state.entities = action.payload;
-        },
-        updatePost(state, action: PayloadAction<{id: number; newText: string}>) {
-            const { id, newText } = action.payload;
-            const post = state.entities.find((entity) => entity.id === id);
-            if (post) {
-                post.text = newText;
-            }
-        },
-        addPost(state, action: PayloadAction<PostData>) {
-            const newPost = action.payload;
-            state.entities.unshift(newPost);
-        }
-    }
+  name: 'posts',
+  initialState,
+  reducers: {
+    setInitialPosts(state, action: PayloadAction<PostData[]>) {
+      state.entities = action.payload;
+    },
+    updatePost(state, action: PayloadAction<{ id: number; newText: string }>) {
+      const { id, newText } = action.payload;
+      const post = state.entities.find((entity) => entity.id === id);
+      if (post) {
+        post.text = newText;
+      }
+    },
+    addPost(state, action: PayloadAction<PostData>) {
+      const newPost = action.payload;
+      state.entities.unshift(newPost);
+    },
+  },
 });
 
-export const {setInitialPosts, updatePost, addPost} = postsSlice.actions;
+export const { setInitialPosts, updatePost, addPost } = postsSlice.actions;
 export default postsSlice.reducer;

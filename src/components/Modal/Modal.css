@@ -40,7 +40,7 @@
 }
 
 .modal_type_add-post .modal__container,
-.modal_type_add-resident .modal__container  {
+.modal_type_add-resident .modal__container {
   background-color: var(--vibrant-green);
 }
 
