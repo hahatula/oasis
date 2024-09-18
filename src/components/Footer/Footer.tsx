@@ -11,7 +11,7 @@ function Footer() {
           target="_blank"
           className="footer__link"
         >
-          Olga Golubev
+          Olga&nbsp;Golubev
         </a>
       </p>
       <Toolbar />

@@ -7,3 +7,10 @@
 .title__section {
   text-align: left;
 }
+
+@media (width <= 480px) {
+  .title {
+    font-size: 30px;
+    margin: 30px 0;
+  }
+}

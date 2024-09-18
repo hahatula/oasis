@@ -4,6 +4,10 @@
   margin-bottom: 10px;
 }
 
+.author__avatars {
+flex-shrink: 0;
+}
+
 .author__avatar {
   width: 40px;
   height: 40px;
@@ -17,7 +21,8 @@
 
 .author__info-wrapper {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  column-gap: 10px;
   align-items: baseline;
 }
 

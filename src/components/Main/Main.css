@@ -5,3 +5,11 @@
   margin-top: -70px; /* to keep page on the top without touching the header's display parameters */
   box-sizing: border-box;
 }
+
+@media (width <= 900px) {
+  .main {
+    height: calc(100vh - 60px);
+    padding: 60px 30px 30px 30px;
+    margin-top: -60px;
+  }
+}

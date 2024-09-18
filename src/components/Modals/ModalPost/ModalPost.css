@@ -37,3 +37,9 @@
   box-sizing: border-box;
   outline: 1px solid var(--natural-green);
 }
+
+@media (width <= 480px) {
+  .modal-post__body {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

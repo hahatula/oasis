@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 30px;
   align-self: end;
   justify-self: end;
   border-radius: 40px 40px 0 0;
@@ -14,11 +14,14 @@
 }
 
 .toolbar__button {
-    padding: 5px 20px;
-    border-radius: 30px;
-    border: solid 1px var(--natural-green);
-    background-color: #fffcf199;
-    cursor: pointer;
+  display: flex;
+  gap: 10px;
+  padding: 5px 20px;
+  border-radius: 30px;
+  border: solid 1px var(--natural-green);
+  background-color: #fffcf199;
+  cursor: pointer;
+  text-wrap: nowrap;
 }
 
 .toolbar__button:hover {
@@ -28,5 +31,43 @@
 
 .toolbar__button:disabled {
   pointer-events: none;
-  opacity: .6;
+  opacity: 0.6;
+}
+
+.toolbar__button-tip {
+  position: absolute;
+  bottom: 45px;
+  background-color: var(--light);
+  color: var(--natural-green);
+  padding: 5px 10px;
+  border-radius: 10px;
+  display: none;
+}
+
+@media (width <= 1200px) {
+  .toolbar {
+    gap: 20px;
+  }
+}
+
+@media (width <= 900px) {
+  .toolbar {
+    height: 60px;
+    gap: 10px;
+  }
+
+  .toolbar__button {
+    gap: 5px;
+    padding: 5px 15px;
+  }
+}
+
+@media (width <= 480px) {
+  .toolbar__button-text {
+    display: none;
+  }
+
+  .toolbar__button:hover .toolbar__button-tip {
+    display: block;
+  }
 }

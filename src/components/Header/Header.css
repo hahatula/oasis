@@ -14,6 +14,78 @@
   gap: 30px;
 }
 
+.header__burger-nav, .header__burger-button, .header__additional-info {
+  display: none;
+}
+
 .header__link:hover {
   color: var(--pink);
 }
+
+.header__info-link:hover {
+  color: var(--natural-green);
+}
+
+.header__close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 63px;
+  height: 63px;
+  background-image: url(../../assets/cross.svg);
+  border: none;
+  background-color: transparent;
+  transition: 0.5s;
+}
+
+.header__close-btn:hover {
+  transform: scale(1.2);
+}
+
+@media (width <= 900px) {
+  .header {
+    height: 60px;
+    padding: 0 30px;
+  }
+}
+
+@media (width <= 480px) {
+  .header__nav {
+    display: none;
+  }
+
+  .header__burger-nav, .header__burger-button {
+    display: block;
+    transition: .3s cubic-bezier(1, 0, 0, 1);
+  }
+
+  .header__burger-button:hover {
+    filter: drop-shadow(0 0 2px #ff6bce79);
+    cursor: url(../../assets/flower-stroke.svg) 12 12, auto;
+  }
+
+  .header__burger-nav {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 60px;
+    width: 100%;
+    height: calc(100% - 120px);
+    background-color: var(--light);
+    padding: 30px;
+    box-sizing: border-box;
+    left: 0;
+    align-items: center;
+    border-radius: 30px;
+    gap: 20px;
+    /* padding-bottom: 160px; */
+  }
+
+  .header__additional-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: auto;
+  }
+}
+

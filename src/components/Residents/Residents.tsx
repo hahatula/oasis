@@ -12,8 +12,9 @@ function Residents({ hostId }: { hostId: number }) {
       <ul className="residents-grid">
         {residents
           .filter((resident) => resident.hostId === hostId)
-          .map((resident) => (
+          .map((resident, index) => (
             <Resident
+              key={index}
               id={resident.id}
               name={resident.name}
               avatarUrl={resident.avatarUrl}

@@ -43,3 +43,9 @@
 .modal_type_add-resident .modal__container  {
   background-color: var(--vibrant-green);
 }
+
+@media (width <= 900px) {
+  .modal__container {
+    padding: 20px;
+  }
+}
