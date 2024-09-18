@@ -20,9 +20,9 @@ const Resident: React.FC<ResidentProps> = ({
         <p className="resident__stats">{posts.length} posts</p>
       </div>
       <p className="resident__bio">{bio}</p>
-      <div className="resident__buttons">
+      {/* <div className="resident__buttons">
         <button className="toolbar__button">Do something</button>
-      </div>
+      </div> */}
     </li>
   );
 };

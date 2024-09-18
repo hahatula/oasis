@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { openModal } from '../../../redux/modalSlice';
 import { useDispatch } from 'react-redux';
 
-// TODO: button styles from toolbar are used. Not ok
-
 type AddPostFormProps = {
   formName: string;
   userId: number;
@@ -105,7 +103,7 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
             ></input>
           )}
           {selectedResident.id !== 0 && (
-            <button type="submit" className="toolbar__button form__button">
+            <button type="submit" className="form__button">
               Next
             </button>
           )}

@@ -26,7 +26,6 @@
 
 .toolbar__button:hover {
   background-color: #fffcf1;
-  /* color: var(--natural-green); */
 }
 
 .toolbar__button:disabled {

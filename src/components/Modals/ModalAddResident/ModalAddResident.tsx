@@ -9,7 +9,6 @@ import Author from '../../Author/Author';
 import { getPlantTip } from '../../../utils/plantNetApi';
 import { plantNetApiKey } from '../../../utils/constants';
 
-// TODO: button styles from toolbar are used. Not ok
 // TODO: add birthday to resident schema
 // TODO: loading while waiting for api response
 

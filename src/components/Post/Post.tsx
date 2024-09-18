@@ -3,8 +3,6 @@ import { PostProps } from '../../types/post';
 import Author from '../Author/Author';
 import Likes from '../Likes/Likes';
 
-// TODO: separate likes to generic component
-
 const Post: React.FC<PostProps> = ({
   id,
   text,

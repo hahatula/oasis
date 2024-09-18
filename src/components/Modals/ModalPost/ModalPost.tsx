@@ -9,7 +9,6 @@ import Author from '../../Author/Author';
 import Likes from '../../Likes/Likes';
 import { addPost, updatePost } from '../../../redux/postSlice';
 
-// TODO: correct button styling and class naming
 // TODO: correct date format in post__date
 
 function ModalPost({
@@ -87,7 +86,7 @@ function ModalPost({
               <span className="modal-post__options">
                 <p className="post__date">Posted {createdAt}</p>
                 {authors.host.id === currentUser && (
-                  <button className="toolbar__button" onClick={handleEditClick}>
+                  <button className="post__button" onClick={handleEditClick}>
                     Edit post
                   </button>
                 )}
@@ -107,7 +106,7 @@ function ModalPost({
               <span className="modal-post__options">
                 <p className="post__date">Posted {createdAt}</p>
                 {authors.host.id === currentUser && (
-                  <button className="toolbar__button" onClick={handleSaveClick}>
+                  <button className="post__button" onClick={handleSaveClick}>
                     Save
                   </button>
                 )}
