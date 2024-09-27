@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import { Modal } from '../Modal/Modal';
-import '../Modals/ModalAddPost/ModalAddPost.css';
+import { useState, useEffect } from 'react';
+import "./SignUp.css";
 import { authorize, register } from '../../utils/auth';
 import { setToken } from '../../utils/token';
 import { getUserInfo } from '../../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
-
-type ModalSingUpProps = {
-  formName: string;
-};
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { setUser } from '../../redux/userSlice';
+import Form from '../Form/Form';
 
 type FormData = {
   name: string;
@@ -18,12 +17,12 @@ type FormData = {
   bio?: string;
 };
 
-const defaultAvatarPath = '../../assets/avatar-placeholder.jpg';
+// const defaultAvatarPath = '../../assets/avatar-placeholder.jpg';
 
-function SingUp({ formName }: ModalSingUpProps) {
+function SingUp() {
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     name: '',
@@ -59,31 +58,42 @@ function SingUp({ formName }: ModalSingUpProps) {
   };
 
   const makeRequest = (formData: FormData) => {
-    return register(formData.name, formData.email, formData.password, formData.avatar, formData.bio).then(() => {
-        authorize(formData.email, formData.password).then((data) => {
-            if (data.token) {
-              console.log('try to authorize');
-              setToken(data.token);
-              getUserInfo(data.token).then((user) => {
-                setCurrentUser(user);
-                setIsLoggedIn(true);
-                console.log('return currentUser');
-                return currentUser;
-              });
-            }
+    return register(
+      formData.name,
+      formData.email,
+      formData.password,
+      formData.avatar,
+      formData.bio
+    ).then(() => {
+      authorize(formData.email, formData.password).then((data) => {
+        if (data.token) {
+          console.log('try to authorize');
+          setToken(data.token);
+          getUserInfo(data.token).then((user) => {
+            console.log(user);
+            dispatch(setUser(user._id));
+            console.log('user logged in');
           });
+        }
+      });
     });
   };
 
+  useEffect(() => {
+    if (user) {
+      console.log('User is logged in, navigating to home');
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   return (
-    <Modal name={formName} onClose={() => console.log('change the element')}>
-      <h2 className="form__title">Log In</h2>
-      <form
+    <div className='sign-up'>
+      <Form
+        formName="sign-up"
+        title="Sign Up"
         onSubmit={handleSubmit}
         action="submit"
         method="post"
-        id={formName}
-        className="form"
       >
         <input
           type="text"
@@ -124,7 +134,6 @@ function SingUp({ formName }: ModalSingUpProps) {
           value={data.avatar}
           onChange={handleChange}
           className="form__input"
-          
         />
         <input
           type="text"
@@ -134,7 +143,6 @@ function SingUp({ formName }: ModalSingUpProps) {
           value={data.bio}
           onChange={handleChange}
           className="form__input"
-          
         />
         <div className="form__btn-container">
           <button className="toolbar__button form__button" type="submit">
@@ -144,8 +152,8 @@ function SingUp({ formName }: ModalSingUpProps) {
             or Log In
           </Link>
         </div>
-      </form>
-    </Modal>
+      </Form>
+    </div>
   );
 }
 

@@ -1,25 +1,24 @@
-import { useState } from 'react';
-import { Modal } from '../Modal/Modal';
-import '../Modals/ModalAddPost/ModalAddPost.css';
+import './SignIn.css';
+import { useState, useEffect } from 'react';
 import { authorize } from '../../utils/auth';
 import { setToken } from '../../utils/token';
 import { getUserInfo } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
-type ModalSingInProps = {
-  formName: string;
-};
+import { setUser } from '../../redux/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import Form from '../Form/Form';
 
 type FormData = {
   email: string;
   password: string;
 };
 
-function SingIn({ formName }: ModalSingInProps) {
+function SingIn() {
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     email: '',
@@ -57,24 +56,29 @@ function SingIn({ formName }: ModalSingInProps) {
         console.log('try to authorize');
         setToken(data.token);
         getUserInfo(data.token).then((user) => {
-          setCurrentUser(user);
-          setIsLoggedIn(true);
-          console.log('return currentUser');
-          return currentUser;
+          console.log(user);
+          dispatch(setUser(user._id));
+          console.log('user logged in');
         });
       }
     });
   };
 
+  useEffect(() => {
+    if (user) {
+      console.log('User is logged in, navigating to home');
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   return (
-    <Modal name={formName} onClose={() => console.log('change the element')}>
-      <h2 className="form__title">Log In</h2>
-      <form
+    <div className="sign-in">
+      <Form
+        formName="sign-in"
+        title="Log In"
         onSubmit={handleSubmit}
         action="submit"
         method="post"
-        id={formName}
-        className="form"
       >
         <input
           type="email"
@@ -97,15 +101,15 @@ function SingIn({ formName }: ModalSingInProps) {
           required
         />
         <div className="form__btn-container">
-          <button className="toolbar__button form__button" type="submit">
+          <button className="form__button" type="submit">
             {isLoading ? 'Logging In...' : 'Log In'}
           </button>
           <Link className="form__button_alt-option" to="/signup">
             or Sign Up
           </Link>
         </div>
-      </form>
-    </Modal>
+      </Form>
+    </div>
   );
 }
 

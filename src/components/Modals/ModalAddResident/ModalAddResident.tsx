@@ -1,5 +1,3 @@
-import '../ModalAddPost/ModalAddPost.css';
-import './ModalAddResident.css';
 import { Modal } from '../../Modal/Modal';
 import { users, residents } from '../../../utils/tempDB';
 import { CURRENT_USER_TEMP } from '../../../utils/constants';
@@ -8,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Author from '../../Author/Author';
 import { getPlantTip } from '../../../utils/plantNetApi';
 import { plantNetApiKey } from '../../../utils/constants';
+import Form from '../../Form/Form';
 
 // TODO: add birthday to resident schema
 // TODO: loading while waiting for api response
@@ -121,13 +120,12 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   return (
     <>
       <Modal name={formName} onClose={onClose}>
-        <h2 className="form__title">New resident</h2>
-        <form
+        <Form
+          formName={formName}
+          title="New resident"
           onSubmit={handleSubmit}
           action="submit"
           method="post"
-          id={formName}
-          className="form"
         >
           {step === 1 && (
             <>
@@ -270,7 +268,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
               Congrats, a new resident has successfully moved into your oasis!
             </p>
           )}
-        </form>
+        </Form>
       </Modal>
     </>
   );

@@ -11,6 +11,7 @@ import Profile from '../Profile/Profile';
 import { Modals } from '../Modals/Modals';
 import SingIn from '../SingIn/SigIn';
 import SingUp from '../SignUp/SignUp';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,10 +26,25 @@ function App() {
     <div className="app">
       <Header />
       <Routes>
-        <Route path="/" element={<Main handlePostClick={handlePostClick} />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/signin" element={<SingIn  formName="sign-in"/>} />
-        <Route path="/signup" element={<SingUp  formName="sign-up"/>} />
+        <Route path="/signin" element={<SingIn />} />
+        <Route path="/signup" element={<SingUp />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Main handlePostClick={handlePostClick} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Footer />

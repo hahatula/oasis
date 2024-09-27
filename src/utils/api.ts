@@ -26,8 +26,12 @@ export const getUserInfo = (token: string): Promise<User> => {
 };
 
 type User = {
-  id: number;
+  _id: string;
   name: string;
   email: string;
-  // Add other user properties as needed
+  avatar: string;
+  bio: string;
+  posts: [];
+  residents: [];
+  registeredAt: string;
 };

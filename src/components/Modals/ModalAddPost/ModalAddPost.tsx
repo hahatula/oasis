@@ -1,9 +1,9 @@
-import './ModalAddPost.css';
 import { Modal } from '../../Modal/Modal';
 import { users } from '../../../utils/tempDB';
 import { useState } from 'react';
 import { openModal } from '../../../redux/modalSlice';
 import { useDispatch } from 'react-redux';
+import Form from '../../Form/Form';
 
 type AddPostFormProps = {
   formName: string;
@@ -37,13 +37,12 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
   return (
     <>
       <Modal name={formName} onClose={onClose}>
-        <h2 className="form__title">New post</h2>
-        <form
+        <Form
+          formName={formName}
+          title="New post"
           onSubmit={handleSubmit}
           action="submit"
           method="post"
-          id={formName}
-          className="form"
         >
           <div className="form__select-wrapper">
             <select
@@ -112,7 +111,7 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
               Next
             </button>
           )}
-        </form>
+        </Form>
       </Modal>
     </>
   );

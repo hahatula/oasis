@@ -9,4 +9,4 @@ export const getLikes = (
   },
   id: number
 ) => state.likes.entities.find((entity) => entity.id === id);
-export const getUser = (state: { user: number }) => state.user;
+export const getUser = (state: { user: string }) => state.user;

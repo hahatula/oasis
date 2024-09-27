@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type currentUser = {
-  id: number;
-};
+// type currentUser = {
+//   id: string;
+// };
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: 1,
+  initialState: null as string | null,
   reducers: {
-    setUser(_, action: PayloadAction<currentUser>) {
-      return action.payload.id;
+    setUser(_, action: PayloadAction<string>) {
+      return action.payload;
     },
   },
 });
