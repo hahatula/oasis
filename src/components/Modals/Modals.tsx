@@ -6,6 +6,7 @@ import { openModal, closeModal } from '../../redux/modalSlice';
 import ModalAddPost from './ModalAddPost/ModalAddPost';
 import ModalAddResident from './ModalAddResident/ModalAddResident';
 import ModalPost from './ModalPost/ModalPost';
+import ModalSingIn from '../SingIn/SigIn';
 import { CURRENT_USER_TEMP } from '../../utils/constants';
 import { users } from '../../utils/tempDB';
 
@@ -87,6 +88,9 @@ export const Modals = ({ post }: { post: PostData | null }) => {
           onClose={handleActiveModalClose}
         />
       )}
+      {/* {modalIsActive === 'sign-in' && (
+        <ModalSingIn formName="sign-in" onClose={handleActiveModalClose} />
+      )} */}
     </>
   );
 };

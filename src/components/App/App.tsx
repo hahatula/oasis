@@ -9,6 +9,8 @@ import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import Profile from '../Profile/Profile';
 import { Modals } from '../Modals/Modals';
+import SingIn from '../SingIn/SigIn';
+import SingUp from '../SignUp/SignUp';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +27,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Main handlePostClick={handlePostClick} />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/signin" element={<SingIn  formName="sign-in"/>} />
+        <Route path="/signup" element={<SingUp  formName="sign-up"/>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Footer />

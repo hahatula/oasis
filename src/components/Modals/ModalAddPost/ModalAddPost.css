@@ -103,6 +103,10 @@
   color: var(--natural-green);
 }
 
+.form__button_alt-option:hover {
+ color: var(--pink); 
+}
+
 .form__error {
   font-size: 16px;
   width: 100%;
