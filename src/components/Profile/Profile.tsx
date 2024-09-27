@@ -10,16 +10,20 @@ import {
   subYears,
 } from 'date-fns';
 import Residents from '../Residents/Residents';
+import { useSelector } from 'react-redux';
+import { getUser } from '../../redux/selectors';
+import avatarPlaceholder from '../../assets/avatar-placeholder.jpg'
 
 function Profile() {
   const currentUser = users.find((user) => user.id === CURRENT_USER_TEMP); //TODO: shouldn't be hardcoded in the future
+  const user = useSelector(getUser);
 
-  if (!currentUser) {
+  if (!user) {
     return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
   }
 
-  const registrationDate = new Date(currentUser.registeredAt);
   const currentDate = new Date();
+  const registrationDate = user ? new Date(user.registeredAt) : currentDate;
 
   const findHostTime = () => {
     const years = differenceInYears(currentDate, registrationDate);
@@ -61,11 +65,11 @@ function Profile() {
   return (
     <section className="profile">
       <article className="profile__host">
-        <PageTitle titleText={currentUser.name} />
+        <PageTitle titleText={user.name} />
         <img
           className="profile__host-img"
-          src={currentUser.avatarUrl}
-          alt={currentUser.name}
+          src={user.avatar ? user.avatar : avatarPlaceholder}
+          alt={user.name}
         />
         <article className="profile__host-info">
           <div className="profile__host-info-item">
@@ -76,11 +80,11 @@ function Profile() {
             <label className="profile__host-info-label">
               Number of hosted residents:
             </label>
-            <p>{currentUser.posts.length}</p>
+            <p>{user.posts.length}</p>
           </div>
           <div className="profile__host-info-item">
             <label className="profile__host-info-label">Bio:</label>
-            <p>{currentUser.bio}</p>
+            <p>{user.bio}</p>
           </div>
         </article>
       </article>
