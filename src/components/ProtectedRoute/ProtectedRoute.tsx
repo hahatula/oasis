@@ -16,7 +16,7 @@ function ProtectedRoute({
   const location = useLocation();
   const user = useSelector((state: RootState) => state.user);
   const from = location.state?.from || '/';
-//   const currentUser = useSelector(getUser);
+
 useEffect(() => {
     console.log('User state changed in ProtectedRoute:', user);
   }, [user]);

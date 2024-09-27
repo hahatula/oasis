@@ -57,7 +57,7 @@ function SingIn() {
         setToken(data.token);
         getUserInfo(data.token).then((user) => {
           console.log(user);
-          dispatch(setUser(user._id));
+          dispatch(setUser(user));
           console.log('user logged in');
         });
       }

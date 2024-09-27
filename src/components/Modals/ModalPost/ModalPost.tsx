@@ -22,7 +22,7 @@ function ModalPost({
 }: ModalPostProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentUser = useSelector(getUser);
+  const user = useSelector(getUser);
   const modalIsActive = useSelector(getModal);
   const [postModalMode, setPostModalMode] = useState(
     modalIsActive === 'add-post-next' ? 'edit' : 'view'
@@ -85,7 +85,7 @@ function ModalPost({
               <p className="post__text modal-post__text">{postText}</p>
               <span className="modal-post__options">
                 <p className="post__date">Posted {createdAt}</p>
-                {authors.host.id === currentUser && (
+                {authors.host.id === user?._id && (
                   <button className="post__button" onClick={handleEditClick}>
                     Edit post
                   </button>
@@ -105,7 +105,7 @@ function ModalPost({
               />
               <span className="modal-post__options">
                 <p className="post__date">Posted {createdAt}</p>
-                {authors.host.id === currentUser && (
+                {authors.host.id === user?._id && (
                   <button className="post__button" onClick={handleSaveClick}>
                     Save
                   </button>

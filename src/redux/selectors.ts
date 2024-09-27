@@ -1,4 +1,5 @@
 import { PostData } from '../types/post';
+import { User } from '../types/user';
 
 export const getModal = (state: { modal: string | null }) => state.modal;
 export const getPosts = (state: { posts: { entities: PostData[] } }) =>
@@ -9,4 +10,4 @@ export const getLikes = (
   },
   id: number
 ) => state.likes.entities.find((entity) => entity.id === id);
-export const getUser = (state: { user: string }) => state.user;
+export const getUser = (state: { user: User | null }) => state.user;

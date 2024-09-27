@@ -64,14 +64,14 @@ export const Modals = ({ post }: { post: PostData | null }) => {
           onNext={handleNextFromAddPost}
         />
       )}
-      {modalIsActive === 'add-post-next' && newPostData && (
+      {modalIsActive === 'add-post-next' && newPostData && user &&(
         <ModalPost
           id={10000000} // TODO: remove временный id для нового поста
           text={''} 
           photoUrl={newPostData.photoUrl}
           authors={{
             host: {
-              id: user,
+              id: user._id,
               name: users[CURRENT_USER_TEMP - 1].name,
               avatarUrl: users[CURRENT_USER_TEMP - 1].avatarUrl,
             },
@@ -88,9 +88,6 @@ export const Modals = ({ post }: { post: PostData | null }) => {
           onClose={handleActiveModalClose}
         />
       )}
-      {/* {modalIsActive === 'sign-in' && (
-        <ModalSingIn formName="sign-in" onClose={handleActiveModalClose} />
-      )} */}
     </>
   );
 };

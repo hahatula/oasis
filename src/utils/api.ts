@@ -1,4 +1,5 @@
 import { BASE_URL } from './constants';
+import { User } from '../types/user';
 
 export const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
@@ -23,15 +24,4 @@ export const getUserInfo = (token: string): Promise<User> => {
       Authorization: `Bearer ${token}`,
     },
   });
-};
-
-type User = {
-  _id: string;
-  name: string;
-  email: string;
-  avatar: string;
-  bio: string;
-  posts: [];
-  residents: [];
-  registeredAt: string;
 };
