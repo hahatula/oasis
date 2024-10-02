@@ -2,13 +2,13 @@ import './Profile.css';
 import { CURRENT_USER_TEMP } from '../../utils/constants';
 import { PageTitle } from '../Titles/PageTitle';
 import { users } from '../../utils/tempDB';
-import {
-  differenceInYears,
-  differenceInMonths,
-  differenceInDays,
-  subMonths,
-  subYears,
-} from 'date-fns';
+// import {
+//   differenceInYears,
+//   differenceInMonths,
+//   differenceInDays,
+//   subMonths,
+//   subYears,
+// } from 'date-fns';
 import Residents from '../Residents/Residents';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, getModal } from '../../redux/selectors';
@@ -16,6 +16,7 @@ import avatarPlaceholder from '../../assets/avatar-placeholder.jpg';
 import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
 import ModalChangeProfile from '../Modals/ModalChangeProfile/ModalChangeProfile';
 import { openModal, closeModal } from '../../redux/modalSlice';
+import { formatTime } from '../../utils/helpers';
 
 function Profile() {
   const dispatch = useDispatch();
@@ -29,42 +30,42 @@ function Profile() {
 
   const currentDate = new Date();
   const registrationDate = user ? new Date(user.registeredAt) : currentDate;
+  const hostingTime = formatTime(registrationDate);
+  // const findHostTime = () => {
+  //   const years = differenceInYears(currentDate, registrationDate);
+  //   const dateAfterYears = subYears(currentDate, years);
+  //   const months = differenceInMonths(dateAfterYears, registrationDate);
+  //   const dateAfterMonths = subMonths(dateAfterYears, months);
+  //   const days = differenceInDays(dateAfterMonths, registrationDate);
 
-  const findHostTime = () => {
-    const years = differenceInYears(currentDate, registrationDate);
-    const dateAfterYears = subYears(currentDate, years);
-    const months = differenceInMonths(dateAfterYears, registrationDate);
-    const dateAfterMonths = subMonths(dateAfterYears, months);
-    const days = differenceInDays(dateAfterMonths, registrationDate);
+  //   const showYears = years > 0 ? true : false;
+  //   const showMonths = months > 0 ? true : false;
+  //   const showDays = !showYears
+  //     ? true
+  //     : !showMonths
+  //     ? days > 0
+  //       ? true
+  //       : false
+  //     : false;
 
-    const showYears = years > 0 ? true : false;
-    const showMonths = months > 0 ? true : false;
-    const showDays = !showYears
-      ? true
-      : !showMonths
-      ? days > 0
-        ? true
-        : false
-      : false;
+  //   const resultYears = !showYears
+  //     ? ''
+  //     : years === 1
+  //     ? `${years} year`
+  //     : `${years} years`;
+  //   const resultMonths = !showMonths
+  //     ? ''
+  //     : months === 1
+  //     ? `${months} month`
+  //     : `${months} months`;
+  //   const resultDays = !showDays
+  //     ? ''
+  //     : days === 1
+  //     ? `${days} day`
+  //     : `${days} days`;
 
-    const resultYears = !showYears
-      ? ''
-      : years === 1
-      ? `${years} year`
-      : `${years} years`;
-    const resultMonths = !showMonths
-      ? ''
-      : months === 1
-      ? `${months} month`
-      : `${months} months`;
-    const resultDays = !showDays
-      ? ''
-      : days === 1
-      ? `${days} day`
-      : `${days} days`;
-
-    return `${resultYears} ${resultMonths} ${resultDays}`;
-  };
+  //   return `${resultYears} ${resultMonths} ${resultDays}`;
+  // };
   // console.log(findHostTime());
 
   const changeAvatar = () => {
@@ -107,7 +108,7 @@ function Profile() {
               <label className="profile__host-info-label">
                 Oasis host time:
               </label>
-              <p>{findHostTime()}</p>
+              <p>{hostingTime}</p>
             </div>
             <div className="profile__host-info-item">
               <label className="profile__host-info-label">

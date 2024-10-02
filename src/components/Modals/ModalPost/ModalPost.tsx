@@ -8,8 +8,7 @@ import { ModalPostProps } from '../../../types/post';
 import Author from '../../Author/Author';
 import Likes from '../../Likes/Likes';
 import { addPost, updatePost } from '../../../redux/postSlice';
-
-// TODO: correct date format in post__date
+import { formatTime } from '../../../utils/helpers';
 
 function ModalPost({
   id,
@@ -29,6 +28,8 @@ function ModalPost({
   );
   const [postText, setPostText] = useState(text);
 
+  const postingTime = formatTime(createdAt);
+
   const handleEditClick = () => {
     console.log('edit');
     setPostModalMode('edit');
@@ -37,6 +38,10 @@ function ModalPost({
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPostText(e.target.value);
   };
+
+  const handleDeleteClick = () => {
+    console.log('delete it')
+  }
 
   const handleSaveClick = () => {
     const create = () => {
@@ -84,7 +89,12 @@ function ModalPost({
             <div className="modal-post__content-wrapper">
               <p className="post__text modal-post__text">{postText}</p>
               <span className="modal-post__options">
-                <p className="post__date">Posted {createdAt}</p>
+                <p className="post__date">
+                  Posted{' '}
+                  {postingTime.trim() === '0 days'
+                    ? 'today'
+                    : `${postingTime} ago`}
+                </p>
                 {authors.host.id === user?._id && (
                   <button className="post__button" onClick={handleEditClick}>
                     Edit post
@@ -103,14 +113,16 @@ function ModalPost({
                 value={postText}
                 onChange={handleTextChange}
               />
-              <span className="modal-post__options">
-                <p className="post__date">Posted {createdAt}</p>
-                {authors.host.id === user?._id && (
+              {authors.host.id === user?._id && (
+                <span className="modal-post__options">
+                  <button className="post__button" onClick={handleDeleteClick}>
+                    Delete
+                  </button>
                   <button className="post__button" onClick={handleSaveClick}>
                     Save
                   </button>
-                )}
-              </span>
+                </span>
+              )}
             </div>
           )}
         </div>

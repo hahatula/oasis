@@ -2,6 +2,7 @@ import './Post.css';
 import { PostProps } from '../../types/post';
 import Author from '../Author/Author';
 import Likes from '../Likes/Likes';
+import { formatTime } from '../../utils/helpers';
 
 const Post: React.FC<PostProps> = ({
   id,
@@ -16,6 +17,8 @@ const Post: React.FC<PostProps> = ({
     console.log('Post opened');
     handlePostClick({ id, text, photoUrl, authors, likes, createdAt });
   };
+
+  const postingTime = formatTime(createdAt);
 
   return (
     <li className="post">
@@ -36,7 +39,7 @@ const Post: React.FC<PostProps> = ({
           />
           <Likes id={id} likes={likes} />
         </div>
-        <p className="post__date">Posted {createdAt}</p>
+        <p className="post__date">Posted {postingTime.trim() === '0 days' ? 'today' : `${postingTime} ago`}</p>
         <p className="post__text">{text}</p>
       </div>
     </li>
