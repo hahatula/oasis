@@ -65,10 +65,35 @@
 .profile__host-info-item {
   display: flex;
   gap: 20px;
+  align-items: baseline;
 }
 
 .profile__host-info-label {
   font-size: 16px;
+}
+
+.profile__btn-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: end;
+  margin-top: 20px;
+}
+
+.profile__button {
+  display: flex;
+  gap: 10px;
+  padding: 5px 20px;
+  border-radius: 30px;
+  border: solid 1px var(--natural-green);
+  background-color: #fffcf199;
+  cursor: pointer;
+  text-wrap: nowrap;
+}
+
+.profile__button:hover {
+  background-color: var(--vibrant-green);
 }
 
 .profile__residents {

@@ -44,7 +44,8 @@
 .modal_type_add-resident .modal__container,
 .modal_type_sign-in .modal__container,
 .modal_type_sign-up .modal__container,
-.modal_type_change-avatar .modal__container {
+.modal_type_change-avatar .modal__container,
+.modal_type_change-profile .modal__container {
   background-color: var(--vibrant-green);
 }
 

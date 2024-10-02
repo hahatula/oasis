@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUser, getModal } from '../../redux/selectors';
 import avatarPlaceholder from '../../assets/avatar-placeholder.jpg';
 import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
+import ModalChangeProfile from '../Modals/ModalChangeProfile/ModalChangeProfile';
 import { openModal, closeModal } from '../../redux/modalSlice';
 
 function Profile() {
@@ -75,6 +76,16 @@ function Profile() {
     dispatch(closeModal());
   };
 
+  const handleEditClick = () => {
+    console.log("Let's edit user");
+    dispatch(openModal('change-profile'));
+  };
+
+  const handleLogOut = () => {
+    console.log("Log out");
+    // TODO: log out
+  };
+
   return (
     <>
       <section className="profile">
@@ -106,7 +117,15 @@ function Profile() {
             </div>
             <div className="profile__host-info-item">
               <label className="profile__host-info-label">Bio:</label>
-              <p>{user.bio}</p>
+              <p>{user.bio ? user.bio : 'The host of this oasis'}</p>
+            </div>
+            <div className="profile__btn-container">
+              <button className="profile__button" onClick={handleLogOut}>
+                Log Out
+              </button>
+              <button className="profile__button" onClick={handleEditClick}>
+                Edit profile
+              </button>
             </div>
           </article>
         </article>
@@ -117,6 +136,12 @@ function Profile() {
       {modalIsActive === 'change-avatar' && (
         <ModalChangeAvatar
           formName="change-avatar"
+          onClose={handleModalClose}
+        />
+      )}
+      {modalIsActive === 'change-profile' && (
+        <ModalChangeProfile
+          formName="change-profile"
           onClose={handleModalClose}
         />
       )}
