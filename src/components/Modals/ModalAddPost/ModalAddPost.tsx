@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { openModal } from '../../../redux/modalSlice';
 import { useDispatch } from 'react-redux';
 import Form from '../../Form/Form';
+import { formatImgUrl } from '../../../utils/helpers';
 
 type AddPostFormProps = {
   formName: string;
@@ -25,13 +26,21 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
   });
   const [photoUrl, setPhotoUrl] = useState('');
   const [optionsVisibility, setOptionsVisibility] = useState(false);
+  const [urlError, setUrlError] = useState('');
 
   const toggleOptionsVisibility = () =>
     setOptionsVisibility(!optionsVisibility);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onNext(selectedResident, photoUrl);
+    const cleanUrl = formatImgUrl(photoUrl, setUrlError);
+
+      if (!cleanUrl) {
+        console.error('Invalid URL, skipping plant suggestion.');
+        return;
+      }
+
+    onNext(selectedResident, cleanUrl);
   };
 
   return (
@@ -95,16 +104,22 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
             </div>
           </div>
           {selectedResident.id !== 0 && (
-            <input
-              name="photo"
-              id="photo"
-              type="url"
-              required
-              className="form__input"
-              placeholder="Add photo url"
-              value={photoUrl}
-              onChange={(e) => setPhotoUrl(e.target.value)}
-            ></input>
+            <>
+              <input
+                name="photo"
+                id="photo"
+                type="url"
+                required
+                className="form__input"
+                placeholder="Add photo url"
+                value={photoUrl}
+                onChange={(e) => {
+                  setUrlError('');
+                  setPhotoUrl(e.target.value);
+                }}
+              ></input>
+              {urlError && <p className="form__error">{urlError}</p>}
+            </>
           )}
           {selectedResident.id !== 0 && (
             <button type="submit" className="form__button">

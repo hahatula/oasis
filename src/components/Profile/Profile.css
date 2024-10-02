@@ -32,6 +32,27 @@
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 5% 30%;
+  position: relative;
+}
+
+.profile__host-img-edit {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 20px;
+  background-color: transparent;
+  backdrop-filter: blur(2px);
+  background-image: url(../../assets/change-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: url(../../assets/flower-fill.svg) 12 12, auto;
+}
+
+.profile__host-img-edit:hover {
+  box-shadow: 0 0 15px 2px var(--pink);
 }
 
 .profile__host-info {

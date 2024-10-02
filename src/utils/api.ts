@@ -19,9 +19,33 @@ export const getUserInfo = (token: string): Promise<User> => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      // Specify an authorization header with an appropriately
-      // formatted value.
+      // Specify an authorization header with an appropriately formatted value.
       Authorization: `Bearer ${token}`,
     },
+  });
+};
+
+export const updateUserProfile = (token: string, name: string, bio: string): Promise<User> => {
+  return request(`${BASE_URL}/users/me/profile`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, bio }),
+  });
+};
+
+// Function to update the user's avatar
+export const updateAvatar = (token: string, avatar: string): Promise<User> => {
+  return request(`${BASE_URL}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ avatar }),
   });
 };

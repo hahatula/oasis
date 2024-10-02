@@ -33,6 +33,7 @@
   border: none;
   background-color: transparent;
   transition: 0.5s;
+  cursor: pointer;
 }
 
 .modal__close-btn:hover {
@@ -42,7 +43,8 @@
 .modal_type_add-post .modal__container,
 .modal_type_add-resident .modal__container,
 .modal_type_sign-in .modal__container,
-.modal_type_sign-up .modal__container {
+.modal_type_sign-up .modal__container,
+.modal_type_change-avatar .modal__container {
   background-color: var(--vibrant-green);
 }
 

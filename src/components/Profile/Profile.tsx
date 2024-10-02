@@ -10,13 +10,17 @@ import {
   subYears,
 } from 'date-fns';
 import Residents from '../Residents/Residents';
-import { useSelector } from 'react-redux';
-import { getUser } from '../../redux/selectors';
-import avatarPlaceholder from '../../assets/avatar-placeholder.jpg'
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser, getModal } from '../../redux/selectors';
+import avatarPlaceholder from '../../assets/avatar-placeholder.jpg';
+import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
+import { openModal, closeModal } from '../../redux/modalSlice';
 
 function Profile() {
+  const dispatch = useDispatch();
   const currentUser = users.find((user) => user.id === CURRENT_USER_TEMP); //TODO: shouldn't be hardcoded in the future
   const user = useSelector(getUser);
+  const modalIsActive = useSelector(getModal);
 
   if (!user) {
     return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
@@ -60,38 +64,63 @@ function Profile() {
 
     return `${resultYears} ${resultMonths} ${resultDays}`;
   };
+  // console.log(findHostTime());
 
-  console.log(findHostTime());
+  const changeAvatar = () => {
+    dispatch(openModal('change-avatar'));
+  };
+
+  const handleModalClose = () => {
+    console.log('close modal');
+    dispatch(closeModal());
+  };
+
   return (
-    <section className="profile">
-      <article className="profile__host">
-        <PageTitle titleText={user.name} />
-        <img
-          className="profile__host-img"
-          src={user.avatar ? user.avatar : avatarPlaceholder}
-          alt={user.name}
-        />
-        <article className="profile__host-info">
-          <div className="profile__host-info-item">
-            <label className="profile__host-info-label">Oasis host time:</label>
-            <p>{findHostTime()}</p>
+    <>
+      <section className="profile">
+        <article className="profile__host">
+          <PageTitle titleText={user.name} />
+          <div className="profile__host-img">
+            <img
+              className="profile__host-img"
+              src={user.avatar ? user.avatar : avatarPlaceholder}
+              alt={user.name}
+            />
+            <button
+              className="profile__host-img-edit"
+              onClick={changeAvatar}
+            ></button>
           </div>
-          <div className="profile__host-info-item">
-            <label className="profile__host-info-label">
-              Number of hosted residents:
-            </label>
-            <p>{user.posts.length}</p>
-          </div>
-          <div className="profile__host-info-item">
-            <label className="profile__host-info-label">Bio:</label>
-            <p>{user.bio}</p>
-          </div>
+          <article className="profile__host-info">
+            <div className="profile__host-info-item">
+              <label className="profile__host-info-label">
+                Oasis host time:
+              </label>
+              <p>{findHostTime()}</p>
+            </div>
+            <div className="profile__host-info-item">
+              <label className="profile__host-info-label">
+                Number of hosted residents:
+              </label>
+              <p>{user.posts?.length}</p>
+            </div>
+            <div className="profile__host-info-item">
+              <label className="profile__host-info-label">Bio:</label>
+              <p>{user.bio}</p>
+            </div>
+          </article>
         </article>
-      </article>
-      <section className="profile__residents">
-        <Residents hostId={currentUser.id} />
+        <section className="profile__residents">
+          <Residents hostId={currentUser.id} />
+        </section>
       </section>
-    </section>
+      {modalIsActive === 'change-avatar' && (
+        <ModalChangeAvatar
+          formName="change-avatar"
+          onClose={handleModalClose}
+        />
+      )}
+    </>
   );
 }
 

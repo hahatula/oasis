@@ -7,6 +7,7 @@ import Author from '../../Author/Author';
 import { getPlantTip } from '../../../utils/plantNetApi';
 import { plantNetApiKey } from '../../../utils/constants';
 import Form from '../../Form/Form';
+import { formatImgUrl } from '../../../utils/helpers';
 
 // TODO: add birthday to resident schema
 // TODO: loading while waiting for api response
@@ -41,23 +42,6 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
     bio: '',
   };
 
-  const formatUrl = (photoUrl: string) => {
-    const extensions = ['.jpeg', '.jpg', '.png', '.webp'];
-    const imgExtension = extensions.find((ext) => photoUrl.includes(ext));
-
-    if (!imgExtension) {
-      setUrlError('Please enter a valid IMAGE url.');
-      console.error('Invalid image URL, no valid image extension found.');
-      return '';
-    }
-
-    setUrlError('');
-    return photoUrl.slice(
-      0,
-      photoUrl.indexOf(imgExtension) + imgExtension.length
-    );
-  };
-
   const getSuggestion = async (photoUrl: string) => {
     try {
       const data = (await getPlantTip(
@@ -74,7 +58,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (step === 1) {
-      const cleanUrl = formatUrl(photoUrl);
+      const cleanUrl = formatImgUrl(photoUrl, setUrlError);
 
       if (!cleanUrl) {
         console.error('Invalid URL, skipping plant suggestion.');
