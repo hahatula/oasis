@@ -1,15 +1,9 @@
 import './Profile.css';
-import { CURRENT_USER_TEMP } from '../../utils/constants';
+import { useState, useEffect } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
-import { users } from '../../utils/tempDB';
-// import {
-//   differenceInYears,
-//   differenceInMonths,
-//   differenceInDays,
-//   subMonths,
-//   subYears,
-// } from 'date-fns';
 import Residents from '../Residents/Residents';
+import { getResidents } from '../../utils/api';
+import { ResidentData } from '../../types/resident';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, getModal } from '../../redux/selectors';
 import avatarPlaceholder from '../../assets/avatar-placeholder.jpg';
@@ -17,12 +11,32 @@ import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
 import ModalChangeProfile from '../Modals/ModalChangeProfile/ModalChangeProfile';
 import { openModal, closeModal } from '../../redux/modalSlice';
 import { formatTime } from '../../utils/helpers';
+import { getUserInfo } from '../../utils/api';
+import { setUser } from '../../redux/userSlice';
 
 function Profile() {
   const dispatch = useDispatch();
-  const currentUser = users.find((user) => user.id === CURRENT_USER_TEMP); //TODO: shouldn't be hardcoded in the future
   const user = useSelector(getUser);
   const modalIsActive = useSelector(getModal);
+  const [myResidents, setMyResidents] = useState<ResidentData[]>([]);
+
+  useEffect(() => {
+    getUserInfo(localStorage.jwt)
+      .then((user) => {
+        dispatch(setUser(user));
+        console.log('view profile page and fetch me');
+      })
+      .then(() => {
+        if (user) {
+          getResidents(localStorage.jwt, user.residents)
+            .then((residents) => setMyResidents(residents))
+            .catch((err) => {
+              console.error('Failed to fetch residents:', err);
+            });
+          console.log('request residents');
+        }
+      });
+  }, [setUser]);
 
   if (!user) {
     return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
@@ -31,42 +45,6 @@ function Profile() {
   const currentDate = new Date();
   const registrationDate = user ? new Date(user.registeredAt) : currentDate;
   const hostingTime = formatTime(registrationDate);
-  // const findHostTime = () => {
-  //   const years = differenceInYears(currentDate, registrationDate);
-  //   const dateAfterYears = subYears(currentDate, years);
-  //   const months = differenceInMonths(dateAfterYears, registrationDate);
-  //   const dateAfterMonths = subMonths(dateAfterYears, months);
-  //   const days = differenceInDays(dateAfterMonths, registrationDate);
-
-  //   const showYears = years > 0 ? true : false;
-  //   const showMonths = months > 0 ? true : false;
-  //   const showDays = !showYears
-  //     ? true
-  //     : !showMonths
-  //     ? days > 0
-  //       ? true
-  //       : false
-  //     : false;
-
-  //   const resultYears = !showYears
-  //     ? ''
-  //     : years === 1
-  //     ? `${years} year`
-  //     : `${years} years`;
-  //   const resultMonths = !showMonths
-  //     ? ''
-  //     : months === 1
-  //     ? `${months} month`
-  //     : `${months} months`;
-  //   const resultDays = !showDays
-  //     ? ''
-  //     : days === 1
-  //     ? `${days} day`
-  //     : `${days} days`;
-
-  //   return `${resultYears} ${resultMonths} ${resultDays}`;
-  // };
-  // console.log(findHostTime());
 
   const changeAvatar = () => {
     dispatch(openModal('change-avatar'));
@@ -83,7 +61,7 @@ function Profile() {
   };
 
   const handleLogOut = () => {
-    console.log("Log out");
+    console.log('Log out');
     // TODO: log out
   };
 
@@ -131,7 +109,7 @@ function Profile() {
           </article>
         </article>
         <section className="profile__residents">
-          <Residents hostId={currentUser.id} />
+          <Residents residents={myResidents} />
         </section>
       </section>
       {modalIsActive === 'change-avatar' && (

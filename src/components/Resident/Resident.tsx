@@ -17,7 +17,7 @@ const Resident: React.FC<ResidentProps> = ({
           <p className="resident__name">{name}</p>
           <p className="resident__species">{species}</p>
         </div>
-        <p className="resident__stats">{posts.length} posts</p>
+        <p className="resident__stats">{posts?.length} posts</p>
       </div>
       <p className="resident__bio">{bio}</p>
       {/* <div className="resident__buttons">

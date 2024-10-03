@@ -18,7 +18,7 @@ const Post: React.FC<PostProps> = ({
     handlePostClick({ id, text, photoUrl, authors, likes, createdAt });
   };
 
-  const postingTime = formatTime(createdAt);
+  const postingTime = formatTime(new Date(createdAt));
 
   return (
     <li className="post">
@@ -39,7 +39,10 @@ const Post: React.FC<PostProps> = ({
           />
           <Likes id={id} likes={likes} />
         </div>
-        <p className="post__date">Posted {postingTime.trim() === '0 days' ? 'today' : `${postingTime} ago`}</p>
+        <p className="post__date">
+          Posted{' '}
+          {postingTime.trim() === '0 days' ? 'today' : `${postingTime} ago`}
+        </p>
         <p className="post__text">{text}</p>
       </div>
     </li>

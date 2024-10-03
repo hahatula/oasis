@@ -8,6 +8,9 @@ import { getPlantTip } from '../../../utils/plantNetApi';
 import { plantNetApiKey } from '../../../utils/constants';
 import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../../redux/selectors';
+import { createResident } from '../../../utils/api';
 
 // TODO: add birthday to resident schema
 // TODO: loading while waiting for api response
@@ -27,6 +30,8 @@ type PlantTipResponse = {
 
 function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(getUser);
   const [step, setStep] = useState(1);
   const [photoUrl, setPhotoUrl] = useState('');
   const [species, setSpecies] = useState('');
@@ -34,6 +39,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const [bday, setBday] = useState(new Date());
   const [suggestion, setSuggestion] = useState('');
   const [urlError, setUrlError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const userInput = {
     species: '',
@@ -43,14 +49,16 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   };
 
   const getSuggestion = async (photoUrl: string) => {
+    setIsLoading(true);
     try {
       const data = (await getPlantTip(
         photoUrl,
         plantNetApiKey
       )) as PlantTipResponse;
+      setIsLoading(false);
       return data.results[0]?.species?.commonNames[0] || '';
     } catch (error) {
-      console.error('Error fetching plant suggestion:', error);
+      setIsLoading(false);
       return '';
     }
   };
@@ -81,16 +89,17 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
     if (step === 4) {
       if (userInput.bday !== null) setBday(userInput.bday);
       const newResident = {
-        id: residents.length,
         name: name,
-        avatarUrl: photoUrl,
+        avatar: photoUrl,
         species: species,
-        hostId: CURRENT_USER_TEMP,
-        posts: [],
         bio: userInput.bio,
+        bday: userInput.bday,
       };
-      residents.push(newResident);
-      users[CURRENT_USER_TEMP - 1].residents.push(newResident);
+
+      createResident(localStorage.jwt, newResident).then((resident) => {
+        console.log(resident);
+      });
+
       navigate('/profile');
     }
     setStep(step + 1);
@@ -128,7 +137,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
               ></input>
               {urlError && <p className="form__error">{urlError}</p>}
               <button type="submit" className="toolbar__button form__button">
-                Next
+                {isLoading ? 'Scanning...' : 'Next'}
               </button>
             </>
           )}
@@ -162,6 +171,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 className="form__edit form__edit_image"
                 onClick={() => {
                   setPhotoUrl('');
+                  setSpecies('');
                   setStep(1);
                 }}
               >
@@ -176,7 +186,6 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                   required
                   className="form__input"
                   placeholder="What kind is your plant?"
-                  //value={species}
                   onChange={(e) => (userInput.species = e.target.value)}
                 ></input>
               )}
@@ -195,12 +204,12 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
               </button>
             </>
           )}
-          {step === 4 && (
+          {step === 4 && user && (
             <>
               <div className="form__author-header">
                 <Author
-                  hostAvatar={users[CURRENT_USER_TEMP - 1].avatarUrl}
-                  hostName={users[CURRENT_USER_TEMP - 1].name}
+                  hostAvatar={user.avatar}
+                  hostName={user.name}
                   residentAvatar={photoUrl}
                   residentName={name}
                   residentSpecies={species}

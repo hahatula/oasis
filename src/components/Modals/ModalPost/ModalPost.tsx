@@ -28,7 +28,7 @@ function ModalPost({
   );
   const [postText, setPostText] = useState(text);
 
-  const postingTime = formatTime(createdAt);
+  const postingTime = formatTime(new Date(createdAt));
 
   const handleEditClick = () => {
     console.log('edit');
@@ -40,8 +40,8 @@ function ModalPost({
   };
 
   const handleDeleteClick = () => {
-    console.log('delete it')
-  }
+    console.log('delete it');
+  };
 
   const handleSaveClick = () => {
     const create = () => {

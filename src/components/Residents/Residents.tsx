@@ -1,26 +1,29 @@
 import './Residents.css';
-// import Post from '../Post/Post';
-import { residents } from '../../utils/tempDB';
-// import { PostData } from '../../types/post';
 import { SectionTitle } from '../Titles/PageTitle';
 import Resident from '../Resident/Resident';
+import { ResidentData } from '../../types/resident';
 
-function Residents({ hostId }: { hostId: number }) {
+interface ResidentsProps {
+  residents: ResidentData[];
+}
+
+function Residents({residents}: ResidentsProps) {
+
   return (
     <>
       <SectionTitle titleText="Residents" />
       <ul className="residents-grid">
-        {residents
-          .filter((resident) => resident.hostId === hostId)
-          .map((resident, index) => (
+        {residents &&
+          residents.map((resident, index) => (
             <Resident
               key={index}
-              id={resident.id}
+              id={index}
               name={resident.name}
-              avatarUrl={resident.avatarUrl}
+              avatarUrl={resident.avatar}
               posts={resident.posts}
               species={resident.species}
               bio={resident.bio}
+              bday={resident.bday}
             />
           ))}
       </ul>

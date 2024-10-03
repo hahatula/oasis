@@ -1,5 +1,6 @@
 import { BASE_URL } from './constants';
 import { User } from '../types/user';
+import { ResidentData, newResidentData } from '../types/resident';
 
 export const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
@@ -25,7 +26,11 @@ export const getUserInfo = (token: string): Promise<User> => {
   });
 };
 
-export const updateUserProfile = (token: string, name: string, bio: string): Promise<User> => {
+export const updateUserProfile = (
+  token: string,
+  name: string,
+  bio: string
+): Promise<User> => {
   return request(`${BASE_URL}/users/me/profile`, {
     method: 'PATCH',
     headers: {
@@ -37,7 +42,6 @@ export const updateUserProfile = (token: string, name: string, bio: string): Pro
   });
 };
 
-// Function to update the user's avatar
 export const updateAvatar = (token: string, avatar: string): Promise<User> => {
   return request(`${BASE_URL}/users/me/avatar`, {
     method: 'PATCH',
@@ -47,5 +51,39 @@ export const updateAvatar = (token: string, avatar: string): Promise<User> => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ avatar }),
+  });
+};
+
+export const createResident = (
+  token: string,
+  { name, avatar, species, bio, bday }: newResidentData
+): Promise<ResidentData> => {
+  return request(`${BASE_URL}/residents`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar, species, bio, bday }),
+  });
+};
+
+export const getResidents = (
+  token: string,
+  residentIds: string[]
+): Promise<ResidentData[]> => {
+  // Convert the array of IDs into a query string
+  const queryString = residentIds.map((id) => `id=${id}`).join('&');
+
+  // Send a GET request to /users/me
+  return request(`${BASE_URL}/residents?${queryString}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      // Specify an authorization header with an appropriately formatted value.
+      Authorization: `Bearer ${token}`,
+    },
   });
 };

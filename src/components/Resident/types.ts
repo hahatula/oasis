@@ -5,4 +5,5 @@ export type ResidentProps = {
   species: string;
   bio: string;
   posts: number[];
+  bday: string;
 };

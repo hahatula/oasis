@@ -24,7 +24,7 @@ export const formatImgUrl = (photoUrl: string, setUrlError: (message: string) =>
     );
   };
 
-  export const formatTime = (date: string) => {
+  export const formatTime = (date: Date) => {
     const today = new Date();
     const years = differenceInYears(today, date);
     const dateAfterYears = subYears(today, years);
