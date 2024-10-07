@@ -1,11 +1,10 @@
 import './Profile.css';
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
 import Residents from '../Residents/Residents';
 import { getResidents } from '../../utils/api';
-import { ResidentData } from '../../types/resident';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUser, getModal } from '../../redux/selectors';
+import { getUser, getModal, getResidentsList } from '../../redux/selectors';
 import avatarPlaceholder from '../../assets/avatar-placeholder.jpg';
 import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
 import ModalChangeProfile from '../Modals/ModalChangeProfile/ModalChangeProfile';
@@ -13,30 +12,42 @@ import { openModal, closeModal } from '../../redux/modalSlice';
 import { formatTime } from '../../utils/helpers';
 import { getUserInfo } from '../../utils/api';
 import { setUser } from '../../redux/userSlice';
+import { setResidents } from '../../redux/residentsSlice';
 
 function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
+  const memedUser = useMemo(() => user, [user])
   const modalIsActive = useSelector(getModal);
-  const [myResidents, setMyResidents] = useState<ResidentData[]>([]);
+  const residents = useSelector(getResidentsList);
+  // console.log(residents);
+  useEffect(() => {
+    if (!user) {
+      getUserInfo(localStorage.jwt)
+        .then((user) => {
+          dispatch(setUser(user));
+          console.log('Fetched user info');
+        })
+        .catch((err) => {
+          console.error('Failed to fetch user info:', err);
+        });
+      console.log(user);
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
-    getUserInfo(localStorage.jwt)
-      .then((user) => {
-        dispatch(setUser(user));
-        console.log('view profile page and fetch me');
-      })
-      .then(() => {
-        if (user) {
-          getResidents(localStorage.jwt, user.residents)
-            .then((residents) => setMyResidents(residents))
-            .catch((err) => {
-              console.error('Failed to fetch residents:', err);
-            });
-          console.log('request residents');
-        }
-      });
-  }, [setUser]);
+    //TODO: find out why getResidents fires two times
+    if (memedUser && residents.length === 0) {
+      getResidents(localStorage.jwt, memedUser.residents)
+        .then((residents) =>
+          dispatch(setResidents({ userId: memedUser._id, residents }))
+        )
+        .catch((err) => {
+          console.error('Failed to fetch residents:', err);
+        });
+      console.log('request residents');
+    }
+  }, [dispatch, memedUser, residents.length]);
 
   if (!user) {
     return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
@@ -109,7 +120,7 @@ function Profile() {
           </article>
         </article>
         <section className="profile__residents">
-          <Residents residents={myResidents} />
+          {residents.length > 0 && <Residents />}
         </section>
       </section>
       {modalIsActive === 'change-avatar' && (

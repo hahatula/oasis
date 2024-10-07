@@ -14,7 +14,6 @@ export const request = <T>(url: string, options?: RequestInit): Promise<T> => {
 };
 
 export const getUserInfo = (token: string): Promise<User> => {
-  // Send a GET request to /users/me
   return request(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
@@ -54,6 +53,19 @@ export const updateAvatar = (token: string, avatar: string): Promise<User> => {
   });
 };
 
+// TODO: maybe use later to view other hosts profiles
+// export const getHostInfo = (token: string, hostId: string): Promise<User> => {
+//   return request(`${BASE_URL}/users/${hostId}`, {
+//     method: 'GET',
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json',
+//       // Specify an authorization header with an appropriately formatted value.
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+// };
+
 export const createResident = (
   token: string,
   { name, avatar, species, bio, bday }: newResidentData
@@ -76,7 +88,6 @@ export const getResidents = (
   // Convert the array of IDs into a query string
   const queryString = residentIds.map((id) => `id=${id}`).join('&');
 
-  // Send a GET request to /users/me
   return request(`${BASE_URL}/residents?${queryString}`, {
     method: 'GET',
     headers: {

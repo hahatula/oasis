@@ -1,6 +1,4 @@
 import { Modal } from '../../Modal/Modal';
-import { users, residents } from '../../../utils/tempDB';
-import { CURRENT_USER_TEMP } from '../../../utils/constants';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Author from '../../Author/Author';
@@ -10,7 +8,10 @@ import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/selectors';
-import { createResident } from '../../../utils/api';
+import { createResident, getUserInfo } from '../../../utils/api';
+import { setUser } from '../../../redux/userSlice';
+import { getResidents } from '../../../utils/api';
+import { setResidents } from '../../../redux/residentsSlice';
 
 // TODO: add birthday to resident schema
 // TODO: loading while waiting for api response
@@ -96,11 +97,32 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
         bday: userInput.bday,
       };
 
-      createResident(localStorage.jwt, newResident).then((resident) => {
-        console.log(resident);
-      });
-
-      navigate('/profile');
+      try {
+        const createdResident = await createResident(
+          localStorage.jwt,
+          newResident
+        );
+        const updatedUser = await getUserInfo(localStorage.jwt);
+        dispatch(setUser(updatedUser));
+        console.log(createdResident);
+        console.log(updatedUser);
+        console.log(user);
+        if (updatedUser) {
+          const updatedResidents = await getResidents(
+            localStorage.jwt,
+            updatedUser.residents
+          );
+          dispatch(
+            setResidents({
+              userId: updatedUser._id,
+              residents: updatedResidents,
+            })
+          );
+        }
+        navigate('/profile');
+      } catch (err) {
+        console.error('Failed to create new resident or update list:', err);
+      }
     }
     setStep(step + 1);
     console.log(bday);

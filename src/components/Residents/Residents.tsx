@@ -1,20 +1,25 @@
 import './Residents.css';
+import { useMemo } from 'react'; 
 import { SectionTitle } from '../Titles/PageTitle';
 import Resident from '../Resident/Resident';
-import { ResidentData } from '../../types/resident';
+import { useSelector } from 'react-redux';
+import { getResidentsList } from '../../redux/selectors';
 
-interface ResidentsProps {
-  residents: ResidentData[];
-}
+function Residents() {
+  // TODO: Find out if component renders two times and why
+  const residents = useSelector(getResidentsList);
 
-function Residents({residents}: ResidentsProps) {
+  const residentsToShow = useMemo(() => {
+    return [...residents].reverse();
+  }, [residents]);
+  // console.table(residents);
 
   return (
     <>
       <SectionTitle titleText="Residents" />
       <ul className="residents-grid">
         {residents &&
-          residents.map((resident, index) => (
+          residentsToShow.map((resident, index) => (
             <Resident
               key={index}
               id={index}
