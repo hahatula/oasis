@@ -22,10 +22,34 @@
   font-size: 24px;
 }
 
-.resident__species {
+.resident__species,
+.resident__bday {
   opacity: 0.6;
+}
+
+.resident__bday {
+  font-size: 16px;
 }
 
 .resident__buttons {
   margin-top: auto;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.resident__button {
+  display: flex;
+  gap: 10px;
+  padding: 5px 20px;
+  border-radius: 30px;
+  border: solid 1px var(--natural-green);
+  background-color: #fffcf199;
+  cursor: pointer;
+  text-wrap: nowrap;
+}
+
+.resident__button:hover {
+  background-color: #fffcf1;
+  color: var(--natural-green);
 }

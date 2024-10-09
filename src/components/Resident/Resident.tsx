@@ -1,6 +1,7 @@
 import './Resident.css';
 import { ResidentProps } from './types';
 
+// TODO: edit resident and add post functionality
 const Resident: React.FC<ResidentProps> = ({
   id,
   avatarUrl,
@@ -8,7 +9,13 @@ const Resident: React.FC<ResidentProps> = ({
   posts,
   species,
   bio,
+  bday,
 }) => {
+  const formatedBday = new Date(bday).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
   return (
     <li className="resident" key={id}>
       <img className="resident__image" src={avatarUrl} alt={name} />
@@ -19,10 +26,12 @@ const Resident: React.FC<ResidentProps> = ({
         </div>
         <p className="resident__stats">{posts?.length} posts</p>
       </div>
-      <p className="resident__bio">{bio}</p>
-      {/* <div className="resident__buttons">
-        <button className="toolbar__button">Do something</button>
-      </div> */}
+      {bio && <p className="resident__bio">{bio}</p>}
+      {bday && <p className="resident__bday">Alive since {formatedBday}</p>}
+      <div className="resident__buttons">
+        {/* <button className="resident__button">Edit</button> */}
+        {/* <button className="resident__button">Add post</button> */}
+      </div>
     </li>
   );
 };

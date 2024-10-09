@@ -273,7 +273,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 placeholder="A few words about the plant's story"
                 onChange={(e) => (userInput.bio = e.target.value)}
               />
-              <button type="submit" className="toolbar__button form__button">
+              <button type="submit" className="form__button">
                 Create new resident
               </button>
             </>
