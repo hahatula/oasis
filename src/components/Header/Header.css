@@ -14,7 +14,9 @@
   gap: 30px;
 }
 
-.header__burger-nav, .header__burger-button, .header__additional-info {
+.header__burger-nav,
+.header__burger-button,
+.header__additional-info {
   display: none;
 }
 
@@ -54,9 +56,10 @@
     display: none;
   }
 
-  .header__burger-nav, .header__burger-button {
+  .header__burger-nav,
+  .header__burger-button {
     display: block;
-    transition: .3s cubic-bezier(1, 0, 0, 1);
+    transition: 0.3s cubic-bezier(1, 0, 0, 1);
   }
 
   .header__burger-button:hover {
@@ -88,4 +91,3 @@
     margin-top: auto;
   }
 }
-

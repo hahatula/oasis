@@ -4,7 +4,7 @@ export type PostData = {
   photoUrl: string;
   authors: {
     host: {
-      id: number;
+      id: string;
       name: string;
       avatarUrl: string;
     };
@@ -27,4 +27,3 @@ export type PostProps = PostData & {
 export type ModalPostProps = PostData & {
   onClose: () => void;
 };
-

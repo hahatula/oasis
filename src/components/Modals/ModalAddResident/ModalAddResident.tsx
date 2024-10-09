@@ -1,13 +1,17 @@
-import '../ModalAddPost/ModalAddPost.css';
-import './ModalAddResident.css';
 import { Modal } from '../../Modal/Modal';
-import { users, residents } from '../../../utils/tempDB';
-import { CURRENT_USER_TEMP } from '../../../utils/constants';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Author from '../../Author/Author';
 import { getPlantTip } from '../../../utils/plantNetApi';
 import { plantNetApiKey } from '../../../utils/constants';
+import Form from '../../Form/Form';
+import { formatImgUrl } from '../../../utils/helpers';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../../redux/selectors';
+import { createResident, getUserInfo } from '../../../utils/api';
+import { setUser } from '../../../redux/userSlice';
+import { getResidents } from '../../../utils/api';
+import { setResidents } from '../../../redux/residentsSlice';
 
 // TODO: add birthday to resident schema
 // TODO: loading while waiting for api response
@@ -27,6 +31,8 @@ type PlantTipResponse = {
 
 function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(getUser);
   const [step, setStep] = useState(1);
   const [photoUrl, setPhotoUrl] = useState('');
   const [species, setSpecies] = useState('');
@@ -34,6 +40,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const [bday, setBday] = useState(new Date());
   const [suggestion, setSuggestion] = useState('');
   const [urlError, setUrlError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const userInput = {
     species: '',
@@ -42,32 +49,17 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
     bio: '',
   };
 
-  const formatUrl = (photoUrl: string) => {
-    const extensions = ['.jpeg', '.jpg', '.png', '.webp'];
-    const imgExtension = extensions.find((ext) => photoUrl.includes(ext));
-
-    if (!imgExtension) {
-      setUrlError('Please enter a valid IMAGE url.');
-      console.error('Invalid image URL, no valid image extension found.');
-      return '';
-    }
-
-    setUrlError('');
-    return photoUrl.slice(
-      0,
-      photoUrl.indexOf(imgExtension) + imgExtension.length
-    );
-  };
-
   const getSuggestion = async (photoUrl: string) => {
+    setIsLoading(true);
     try {
       const data = (await getPlantTip(
         photoUrl,
         plantNetApiKey
       )) as PlantTipResponse;
+      setIsLoading(false);
       return data.results[0]?.species?.commonNames[0] || '';
     } catch (error) {
-      console.error('Error fetching plant suggestion:', error);
+      setIsLoading(false);
       return '';
     }
   };
@@ -75,7 +67,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (step === 1) {
-      const cleanUrl = formatUrl(photoUrl);
+      const cleanUrl = formatImgUrl(photoUrl, setUrlError);
 
       if (!cleanUrl) {
         console.error('Invalid URL, skipping plant suggestion.');
@@ -98,17 +90,39 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
     if (step === 4) {
       if (userInput.bday !== null) setBday(userInput.bday);
       const newResident = {
-        id: residents.length,
         name: name,
-        avatarUrl: photoUrl,
+        avatar: photoUrl,
         species: species,
-        hostId: CURRENT_USER_TEMP,
-        posts: [],
         bio: userInput.bio,
+        bday: userInput.bday,
       };
-      residents.push(newResident);
-      users[CURRENT_USER_TEMP - 1].residents.push(newResident);
-      navigate('/profile');
+
+      try {
+        const createdResident = await createResident(
+          localStorage.jwt,
+          newResident
+        );
+        const updatedUser = await getUserInfo(localStorage.jwt);
+        dispatch(setUser(updatedUser));
+        console.log(createdResident);
+        console.log(updatedUser);
+        console.log(user);
+        if (updatedUser) {
+          const updatedResidents = await getResidents(
+            localStorage.jwt,
+            updatedUser.residents
+          );
+          dispatch(
+            setResidents({
+              userId: updatedUser._id,
+              residents: updatedResidents,
+            })
+          );
+        }
+        navigate('/profile');
+      } catch (err) {
+        console.error('Failed to create new resident or update list:', err);
+      }
     }
     setStep(step + 1);
     console.log(bday);
@@ -121,13 +135,12 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   return (
     <>
       <Modal name={formName} onClose={onClose}>
-        <h2 className="form__title">New resident</h2>
-        <form
+        <Form
+          formName={formName}
+          title="New resident"
           onSubmit={handleSubmit}
           action="submit"
           method="post"
-          id={formName}
-          className="form"
         >
           {step === 1 && (
             <>
@@ -146,7 +159,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
               ></input>
               {urlError && <p className="form__error">{urlError}</p>}
               <button type="submit" className="toolbar__button form__button">
-                Next
+                {isLoading ? 'Scanning...' : 'Next'}
               </button>
             </>
           )}
@@ -180,6 +193,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 className="form__edit form__edit_image"
                 onClick={() => {
                   setPhotoUrl('');
+                  setSpecies('');
                   setStep(1);
                 }}
               >
@@ -194,7 +208,6 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                   required
                   className="form__input"
                   placeholder="What kind is your plant?"
-                  //value={species}
                   onChange={(e) => (userInput.species = e.target.value)}
                 ></input>
               )}
@@ -213,12 +226,12 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
               </button>
             </>
           )}
-          {step === 4 && (
+          {step === 4 && user && (
             <>
               <div className="form__author-header">
                 <Author
-                  hostAvatar={users[CURRENT_USER_TEMP - 1].avatarUrl}
-                  hostName={users[CURRENT_USER_TEMP - 1].name}
+                  hostAvatar={user.avatar}
+                  hostName={user.name}
                   residentAvatar={photoUrl}
                   residentName={name}
                   residentSpecies={species}
@@ -260,7 +273,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 placeholder="A few words about the plant's story"
                 onChange={(e) => (userInput.bio = e.target.value)}
               />
-              <button type="submit" className="toolbar__button form__button">
+              <button type="submit" className="form__button">
                 Create new resident
               </button>
             </>
@@ -270,7 +283,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
               Congrats, a new resident has successfully moved into your oasis!
             </p>
           )}
-        </form>
+        </Form>
       </Modal>
     </>
   );

@@ -18,8 +18,11 @@ const getTitleText = (): string => {
   return TitleTexts[0];
 };
 
-function Main({handlePostClick} : { handlePostClick: (post: PostData) => void }) {
-
+function Main({
+  handlePostClick,
+}: {
+  handlePostClick: (post: PostData) => void;
+}) {
   return (
     <>
       <article className="main">

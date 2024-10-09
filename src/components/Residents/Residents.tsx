@@ -1,26 +1,34 @@
 import './Residents.css';
-// import Post from '../Post/Post';
-import { residents } from '../../utils/tempDB';
-// import { PostData } from '../../types/post';
+import { useMemo } from 'react'; 
 import { SectionTitle } from '../Titles/PageTitle';
 import Resident from '../Resident/Resident';
+import { useSelector } from 'react-redux';
+import { getResidentsList } from '../../redux/selectors';
 
-function Residents({ hostId }: { hostId: number }) {
+function Residents() {
+  // TODO: Find out if component renders two times and why
+  const residents = useSelector(getResidentsList);
+
+  const residentsToShow = useMemo(() => {
+    return [...residents].reverse();
+  }, [residents]);
+  // console.table(residents);
+
   return (
     <>
       <SectionTitle titleText="Residents" />
       <ul className="residents-grid">
-        {residents
-          .filter((resident) => resident.hostId === hostId)
-          .map((resident, index) => (
+        {residents &&
+          residentsToShow.map((resident, index) => (
             <Resident
               key={index}
-              id={resident.id}
+              id={index}
               name={resident.name}
-              avatarUrl={resident.avatarUrl}
+              avatarUrl={resident.avatar}
               posts={resident.posts}
               species={resident.species}
               bio={resident.bio}
+              bday={resident.bday}
             />
           ))}
       </ul>

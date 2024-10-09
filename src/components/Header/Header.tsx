@@ -3,15 +3,19 @@ import logo from '../../assets/oasis-logo-pink.svg';
 import menuIcon from '../../assets/menu.svg';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+// import { openModal } from '../../redux/modalSlice';
+// import { useDispatch } from 'react-redux';
 
 function Header() {
+  // const dispatch = useDispatch();
   const [burgerOpened, setBurgerOpened] = useState(false);
 
   const closeBurger = () => setBurgerOpened(false);
 
   return (
     <div className="header">
-      <img src={logo} alt="Oasis Logo" />
+      <Link to='/'><img src={logo} alt="Oasis Logo" /></Link>
+      {/* <div onClick={() => dispatch(openModal('sign-in')) } >Temp button</div> */}
       <nav className="header__nav">
         <Link to="/" className="header__link">
           Home
@@ -29,7 +33,11 @@ function Header() {
 
       {burgerOpened && (
         <nav className="header__burger-nav">
-           <button className="header__close-btn" type="button" onClick={closeBurger} />
+          <button
+            className="header__close-btn"
+            type="button"
+            onClick={closeBurger}
+          />
           <Link to="/" className="header__link" onClick={closeBurger}>
             Home
           </Link>

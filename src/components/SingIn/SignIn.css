@@ -1,0 +1,13 @@
+.sign-in {
+    /* don't forget to change sign-up if change here */
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    background-color: var(--vibrant-green);
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}

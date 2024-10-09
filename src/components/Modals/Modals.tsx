@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getModal } from '../../redux/selectors';
+import { getModal, getUser } from '../../redux/selectors';
 import { PostData } from '../../types/post';
 import { openModal, closeModal } from '../../redux/modalSlice';
 import ModalAddPost from './ModalAddPost/ModalAddPost';
@@ -12,6 +12,7 @@ import { users } from '../../utils/tempDB';
 export const Modals = ({ post }: { post: PostData | null }) => {
   const dispatch = useDispatch();
   const modalIsActive = useSelector(getModal);
+  const user = useSelector(getUser);
   const [selectedPost, setSelectedPost] = useState<PostData | null>(post);
   const [newPostData, setNewPostData] = useState<{
     resident: {
@@ -63,14 +64,14 @@ export const Modals = ({ post }: { post: PostData | null }) => {
           onNext={handleNextFromAddPost}
         />
       )}
-      {modalIsActive === 'add-post-next' && newPostData && (
+      {modalIsActive === 'add-post-next' && newPostData && user &&(
         <ModalPost
-          id={10000000} // временный id для нового поста
-          text={''} // Пустое поле для текста
+          id={10000000} // TODO: remove временный id для нового поста
+          text={''} 
           photoUrl={newPostData.photoUrl}
           authors={{
             host: {
-              id: CURRENT_USER_TEMP,
+              id: user._id,
               name: users[CURRENT_USER_TEMP - 1].name,
               avatarUrl: users[CURRENT_USER_TEMP - 1].avatarUrl,
             },
