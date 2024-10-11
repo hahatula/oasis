@@ -7,9 +7,9 @@ export const getPosts = (state: { posts: { entities: PostData[] } }) =>
   state.posts.entities;
 export const getLikes = (
   state: {
-    likes: { entities: { id: number; liked: boolean; count: number }[] };
+    likes: { entities: { id: string; liked: boolean; count: number }[] };
   },
-  id: number
+  id: string
 ) => state.likes.entities.find((entity) => entity.id === id);
 export const getUser = (state: { user: User | null }) => state.user;
 export const getResidentsList = (state: {

@@ -24,7 +24,7 @@ const Resident: React.FC<ResidentProps> = ({
           <p className="resident__name">{name}</p>
           <p className="resident__species">{species}</p>
         </div>
-        <p className="resident__stats">{posts?.length} posts</p>
+        <p className="resident__stats">{posts?.length} post{posts?.length === 1 ? '' : 's'}</p>
       </div>
       {bio && <p className="resident__bio">{bio}</p>}
       {bday && <p className="resident__bday">Alive since {formatedBday}</p>}

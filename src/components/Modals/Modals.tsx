@@ -6,8 +6,6 @@ import { openModal, closeModal } from '../../redux/modalSlice';
 import ModalAddPost from './ModalAddPost/ModalAddPost';
 import ModalAddResident from './ModalAddResident/ModalAddResident';
 import ModalPost from './ModalPost/ModalPost';
-import { CURRENT_USER_TEMP } from '../../utils/constants';
-import { users } from '../../utils/tempDB';
 
 export const Modals = ({ post }: { post: PostData | null }) => {
   const dispatch = useDispatch();
@@ -16,9 +14,9 @@ export const Modals = ({ post }: { post: PostData | null }) => {
   const [selectedPost, setSelectedPost] = useState<PostData | null>(post);
   const [newPostData, setNewPostData] = useState<{
     resident: {
-      id: number;
+      _id: string;
       name: string;
-      avatarUrl: string;
+      avatar: string;
       species: string;
     };
     photoUrl: string;
@@ -32,9 +30,9 @@ export const Modals = ({ post }: { post: PostData | null }) => {
 
   const handleNextFromAddPost = (
     resident: {
-      id: number;
+      _id: string;
       name: string;
-      avatarUrl: string;
+      avatar: string;
       species: string;
     },
     photoUrl: string
@@ -47,7 +45,7 @@ export const Modals = ({ post }: { post: PostData | null }) => {
     <>
       {modalIsActive === 'view-post' && post && (
         <ModalPost
-          id={post.id}
+          _id={post._id}
           text={post.text}
           photoUrl={post.photoUrl}
           authors={post.authors}
@@ -60,20 +58,19 @@ export const Modals = ({ post }: { post: PostData | null }) => {
         <ModalAddPost
           formName="add-post"
           onClose={handleActiveModalClose}
-          userId={CURRENT_USER_TEMP}
           onNext={handleNextFromAddPost}
         />
       )}
       {modalIsActive === 'add-post-next' && newPostData && user &&(
         <ModalPost
-          id={10000000} // TODO: remove временный id для нового поста
+          _id={'10000000'} // TODO: remove временный id для нового поста
           text={''} 
           photoUrl={newPostData.photoUrl}
           authors={{
             host: {
-              id: user._id,
-              name: users[CURRENT_USER_TEMP - 1].name,
-              avatarUrl: users[CURRENT_USER_TEMP - 1].avatarUrl,
+              _id: user._id,
+              name: user.name,
+              avatarUrl: user.avatar,
             },
             resident: newPostData.resident,
           }}

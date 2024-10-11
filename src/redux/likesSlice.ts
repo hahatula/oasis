@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type LikeEntity = {
-  id: number;
+  id: string;
   count: number;
   liked: boolean;
 };
@@ -30,7 +30,7 @@ const likeSlice = createSlice({
     },
     setInitialLikes(
       state,
-      action: PayloadAction<{ id: number; count: number }>
+      action: PayloadAction<{ id: string; count: number }>
     ) {
       const { id, count } = action.payload;
       const like = state.entities.find((entity) => entity.id === id);

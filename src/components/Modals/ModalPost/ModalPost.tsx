@@ -4,14 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, getModal } from '../../../redux/selectors';
 import { Modal } from '../../Modal/Modal';
-import { ModalPostProps } from '../../../types/post';
+import { ModalPostProps, newPostData } from '../../../types/post';
 import Author from '../../Author/Author';
 import Likes from '../../Likes/Likes';
 import { addPost, updatePost } from '../../../redux/postSlice';
 import { formatTime } from '../../../utils/helpers';
+import { createPost, getUserInfo } from '../../../utils/api';
+import { setUser } from '../../../redux/userSlice';
 
 function ModalPost({
-  id,
+  _id,
   text,
   photoUrl,
   authors,
@@ -44,26 +46,71 @@ function ModalPost({
   };
 
   const handleSaveClick = () => {
-    const create = () => {
-      const newPost = {
-        id: Date.now(), // temp ID
-        text: postText,
-        photoUrl: photoUrl,
-        authors: authors,
-        createdAt: new Date().toISOString(),
-        likes: 0,
-      };
-      dispatch(addPost(newPost));
-      navigate('/');
+    const newPost = {
+      text: postText,
+      photoUrl: photoUrl,
+      residentId: authors.resident._id,
     };
-    const update = () => {
-      dispatch(updatePost({ id, newText: postText }));
-      console.log('save post');
-    };
-    modalIsActive === 'add-post-next' ? create() : update();
+
+    const updatedPost = {};
+
+    modalIsActive === 'add-post-next' ? saveNewPost(newPost) : saveUpdatedPost(updatedPost);
     setPostModalMode('view');
     onClose();
+    // savePost(newPost);
   };
+
+  const saveNewPost = async (post: newPostData) => {
+    try {
+      const createdPost = await createPost(localStorage.jwt, post);
+      const updatedUser = await getUserInfo(localStorage.jwt);
+      dispatch(setUser(updatedUser));
+      console.log(createdPost);
+      console.log(updatedUser);
+      console.log(user);
+      dispatch(addPost(createdPost));
+      navigate('/');
+    } catch (err) {
+      console.error('Failed to create new post or update list:', err);
+    }
+  };
+
+  const saveUpdatedPost = async (post: newPostData) => {
+    try {
+      const updatedPost = await updatePost(localStorage.jwt, post);
+      // const updatedUser = await getUserInfo(localStorage.jwt);
+      // dispatch(setUser(updatedUser));
+      console.log(updatedPost);
+      // console.log(updatedUser);
+      console.log(user);
+      dispatch(addPost(updatedPost));
+      navigate('/');
+    } catch (err) {
+      console.error('Failed to update post or update list:', err);
+    }
+  };
+
+  // const oldhandleSaveClick = () => {
+  //   const create = () => {
+  //     const newPost = {
+  //       id: Date.now(), // temp ID
+  //       text: postText,
+  //       photoUrl: photoUrl,
+  //       authors: authors,
+  //       createdAt: new Date().toISOString(),
+  //       likes: 0,
+  //     };
+  //     dispatch(addPost(newPost));
+  //     navigate('/');
+  //   };
+  //   const update = () => {
+  //     dispatch(updatePost({ id, newText: postText }));
+  //     console.log('save post');
+  //   };
+  //   modalIsActive === 'add-post-next' ? create() : update();
+  //   setPostModalMode('view');
+  //   onClose();
+  // };
 
   return (
     <Modal name="post" onClose={onClose}>
@@ -71,7 +118,7 @@ function ModalPost({
         <Author
           hostAvatar={authors.host.avatarUrl}
           hostName={authors.host.name}
-          residentAvatar={authors.resident.avatarUrl}
+          residentAvatar={authors.resident.avatar}
           residentName={authors.resident.name}
           residentSpecies={authors.resident.species}
           placement="modal-post"
@@ -83,7 +130,7 @@ function ModalPost({
               src={photoUrl}
               alt={`${authors.resident.name}'s post`}
             />
-            <Likes id={id} likes={likes} />
+            <Likes id={_id} likes={likes} />
           </div>
           {postModalMode === 'view' && (
             <div className="modal-post__content-wrapper">
@@ -95,7 +142,7 @@ function ModalPost({
                     ? 'today'
                     : `${postingTime} ago`}
                 </p>
-                {authors.host.id === user?._id && (
+                {authors.host._id === user?._id && (
                   <button className="post__button" onClick={handleEditClick}>
                     Edit post
                   </button>
@@ -113,7 +160,7 @@ function ModalPost({
                 value={postText}
                 onChange={handleTextChange}
               />
-              {authors.host.id === user?._id && (
+              {authors.host._id === user?._id && (
                 <span className="modal-post__options">
                   <button className="post__button" onClick={handleDeleteClick}>
                     Delete

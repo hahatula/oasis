@@ -10,10 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/selectors';
 import { createResident, getUserInfo } from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
-import { getResidents } from '../../../utils/api';
-import { setResidents } from '../../../redux/residentsSlice';
 
-// TODO: add birthday to resident schema
 // TODO: loading while waiting for api response
 
 type AddResidentFormProps = {
@@ -41,6 +38,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const [suggestion, setSuggestion] = useState('');
   const [urlError, setUrlError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const today = new Date().toISOString().split('T')[0];
 
   const userInput = {
     species: '',
@@ -88,6 +86,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
       setName(userInput.name);
     }
     if (step === 4) {
+      // TODO: do I need to set birthday in this file?
       if (userInput.bday !== null) setBday(userInput.bday);
       const newResident = {
         name: name,
@@ -107,25 +106,12 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
         console.log(createdResident);
         console.log(updatedUser);
         console.log(user);
-        if (updatedUser) {
-          const updatedResidents = await getResidents(
-            localStorage.jwt,
-            updatedUser.residents
-          );
-          dispatch(
-            setResidents({
-              userId: updatedUser._id,
-              residents: updatedResidents,
-            })
-          );
-        }
         navigate('/profile');
       } catch (err) {
         console.error('Failed to create new resident or update list:', err);
       }
     }
     setStep(step + 1);
-    console.log(bday);
   };
 
   if (step === 5) {
@@ -257,6 +243,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 name="bday"
                 id="bday"
                 type="date"
+                max={today}
                 className="form__input"
                 placeholder="Date of birth"
                 onChange={(e) =>

@@ -1,4 +1,4 @@
 export type LikesProps = {
-  id: number;
+  id: string;
   likes: number;
 };

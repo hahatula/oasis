@@ -17,7 +17,7 @@ import { setResidents } from '../../redux/residentsSlice';
 function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
-  const memedUser = useMemo(() => user, [user])
+  const memedUser = useMemo(() => user, [user]);
   const modalIsActive = useSelector(getModal);
   const residents = useSelector(getResidentsList);
   // console.log(residents);
@@ -35,19 +35,19 @@ function Profile() {
     }
   }, [dispatch, user]);
 
-  useEffect(() => {
-    //TODO: find out why getResidents fires two times
-    if (memedUser && residents.length === 0) {
-      getResidents(localStorage.jwt, memedUser.residents)
-        .then((residents) =>
-          dispatch(setResidents({ userId: memedUser._id, residents }))
-        )
-        .catch((err) => {
-          console.error('Failed to fetch residents:', err);
-        });
-      console.log('request residents');
-    }
-  }, [dispatch, memedUser, residents.length]);
+  // useEffect(() => {
+  //   //TODO: find out why getResidents fires two times
+  //   if (memedUser && residents.length === 0) {
+  //     getResidents(localStorage.jwt, memedUser.residents)
+  //       .then((residents) =>
+  //         dispatch(setResidents({ userId: memedUser._id, residents }))
+  //       )
+  //       .catch((err) => {
+  //         console.error('Failed to fetch residents:', err);
+  //       });
+  //     console.log('request residents');
+  //   }
+  // }, [dispatch, memedUser, residents.length]);
 
   if (!user) {
     return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
@@ -120,7 +120,8 @@ function Profile() {
           </article>
         </article>
         <section className="profile__residents">
-          {residents.length > 0 && <Residents />}
+          <Residents />
+          {/* {user.residents.length > 0 && <Residents />} */}
         </section>
       </section>
       {modalIsActive === 'change-avatar' && (

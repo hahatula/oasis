@@ -7,7 +7,7 @@ type PostsState = {
 };
 
 const initialState: PostsState = {
-  entities: posts,
+  entities: [],
 };
 
 const postsSlice = createSlice({
@@ -17,9 +17,9 @@ const postsSlice = createSlice({
     setInitialPosts(state, action: PayloadAction<PostData[]>) {
       state.entities = action.payload;
     },
-    updatePost(state, action: PayloadAction<{ id: number; newText: string }>) {
-      const { id, newText } = action.payload;
-      const post = state.entities.find((entity) => entity.id === id);
+    updatePost(state, action: PayloadAction<{ _id: string; newText: string }>) {
+      const { _id, newText } = action.payload;
+      const post = state.entities.find((entity) => entity._id === _id);
       if (post) {
         post.text = newText;
       }

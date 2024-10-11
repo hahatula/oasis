@@ -1,27 +1,30 @@
 import { Modal } from '../../Modal/Modal';
-import { users } from '../../../utils/tempDB';
 import { useState } from 'react';
 import { openModal } from '../../../redux/modalSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
+import { getUser } from '../../../redux/selectors';
+import { ResidentData } from '../../../types/resident';
 
 type AddPostFormProps = {
   formName: string;
-  userId: number;
   onClose: () => void;
   onNext: (
-    resident: { id: number; name: string; avatarUrl: string; species: string },
+    resident: { _id: string; name: string; avatar: string; species: string },
     photoUrl: string
   ) => void;
 };
 
-function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
+function ModalAddPost({ formName, onClose, onNext }: AddPostFormProps) {
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
+  const residents = user?.residents;
+  console.log(user?.residents)
   const [selectedResident, setSelectedResident] = useState({
-    id: 0,
+    _id: '',
     name: 'Choose your resident',
-    avatarUrl: '',
+    avatar: '',
     species: '',
   });
   const [photoUrl, setPhotoUrl] = useState('');
@@ -63,7 +66,7 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
             >
               <option
                 className="form__select-default-option"
-                value={selectedResident.id}
+                value={selectedResident._id}
               >
                 {selectedResident.name}
               </option>
@@ -75,10 +78,10 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
             >
               {
                 /* map all the residents of the current user */
-                users[userId - 1].residents?.map((resident, index) => (
+                residents?.map((resident: ResidentData) => (
                   <div
                     className="form__select-option"
-                    key={index}
+                    key={resident._id}
                     onClick={() => {
                       setSelectedResident(resident);
                       toggleOptionsVisibility();
@@ -86,7 +89,7 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
                   >
                     <img
                       className="form__select-option-img"
-                      src={resident.avatarUrl}
+                      src={resident.avatar}
                       alt={resident.name}
                     />
                     {resident.name}
@@ -103,7 +106,7 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
               </div>
             </div>
           </div>
-          {selectedResident.id !== 0 && (
+          {selectedResident._id && (
             <>
               <input
                 name="photo"
@@ -121,7 +124,7 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
               {urlError && <p className="form__error">{urlError}</p>}
             </>
           )}
-          {selectedResident.id !== 0 && (
+          {selectedResident._id && (
             <button type="submit" className="form__button">
               Next
             </button>

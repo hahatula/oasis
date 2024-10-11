@@ -1,6 +1,7 @@
 import { BASE_URL } from './constants';
 import { User } from '../types/user';
 import { ResidentData, newResidentData } from '../types/resident';
+import { newPostData, PostData } from '../types/post';
 
 export const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
@@ -96,5 +97,20 @@ export const getResidents = (
       // Specify an authorization header with an appropriately formatted value.
       Authorization: `Bearer ${token}`,
     },
+  });
+};
+
+export const createPost = (
+  token: string,
+  { text, photoUrl, residentId }: newPostData
+): Promise<PostData> => {
+  return request(`${BASE_URL}/posts`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ text, photoUrl, residentId }),
   });
 };

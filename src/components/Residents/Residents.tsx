@@ -1,36 +1,38 @@
 import './Residents.css';
-import { useMemo } from 'react'; 
+import { useMemo } from 'react';
 import { SectionTitle } from '../Titles/PageTitle';
 import Resident from '../Resident/Resident';
 import { useSelector } from 'react-redux';
-import { getResidentsList } from '../../redux/selectors';
+import { getUser } from '../../redux/selectors';
+import { ResidentData } from '../../types/resident';
 
 function Residents() {
-  // TODO: Find out if component renders two times and why
-  const residents = useSelector(getResidentsList);
+  const user = useSelector(getUser);
 
   const residentsToShow = useMemo(() => {
-    return [...residents].reverse();
-  }, [residents]);
-  // console.table(residents);
+    if (user) {
+      return [...user.residents].reverse();
+    }
+  }, [user]);
 
   return (
     <>
       <SectionTitle titleText="Residents" />
       <ul className="residents-grid">
-        {residents &&
-          residentsToShow.map((resident, index) => (
-            <Resident
-              key={index}
-              id={index}
-              name={resident.name}
-              avatarUrl={resident.avatar}
-              posts={resident.posts}
-              species={resident.species}
-              bio={resident.bio}
-              bday={resident.bday}
-            />
-          ))}
+        {residentsToShow?.length
+          ? residentsToShow.map((resident: ResidentData, index: number) => (
+              <Resident
+                key={index}
+                id={index}
+                name={resident.name}
+                avatarUrl={resident.avatar}
+                posts={resident.posts}
+                species={resident.species}
+                bio={resident.bio}
+                bday={resident.bday}
+              />
+            ))
+          : <p>No residents yet</p>}
       </ul>
     </>
   );

@@ -4,7 +4,7 @@ import { likeToggled, setInitialLikes } from '../../redux/likesSlice';
 import { getLikes } from '../../redux/selectors';
 import { RootState } from '../../redux/store';
 
-export const useLikes = (id: number, initialLikes: number) => {
+export const useLikes = (id: string, initialLikes: number) => {
   const dispatch = useDispatch();
   const likesState = useSelector((state: RootState) => getLikes(state, id));
 

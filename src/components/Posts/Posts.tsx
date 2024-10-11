@@ -10,22 +10,28 @@ function Posts({
   handlePostClick: (post: PostData) => void;
 }) {
   const posts = useSelector(getPosts);
-
+  
   return (
-    <ul className="posts-grid">
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          id={post.id}
-          text={post.text}
-          photoUrl={post.photoUrl}
-          authors={post.authors}
-          likes={post.likes}
-          createdAt={post.createdAt}
-          handlePostClick={handlePostClick}
-        />
-      ))}
-    </ul>
+    <>
+      {posts.length ? (
+        <ul className="posts-grid">
+          {posts.map((post) => (
+            <Post
+              key={post._id}
+              _id={post._id}
+              text={post.text}
+              photoUrl={post.photoUrl}
+              authors={post.authors}
+              likes={post.likes}
+              createdAt={post.createdAt}
+              handlePostClick={handlePostClick}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p>No posts yet</p>
+      )}
+    </>
   );
 }
 
