@@ -1,10 +1,9 @@
 import './Profile.css';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
 import Residents from '../Residents/Residents';
-import { getResidents } from '../../utils/api';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUser, getModal, getResidentsList } from '../../redux/selectors';
+import { getUser, getModal } from '../../redux/selectors';
 import avatarPlaceholder from '../../assets/avatar-placeholder.jpg';
 import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
 import ModalChangeProfile from '../Modals/ModalChangeProfile/ModalChangeProfile';
@@ -12,15 +11,17 @@ import { openModal, closeModal } from '../../redux/modalSlice';
 import { formatTime } from '../../utils/helpers';
 import { getUserInfo } from '../../utils/api';
 import { setUser } from '../../redux/userSlice';
-import { setResidents } from '../../redux/residentsSlice';
+import { removeToken } from '../../utils/token';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../redux/userSlice';
 
 function Profile() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(getUser);
-  const memedUser = useMemo(() => user, [user]);
   const modalIsActive = useSelector(getModal);
-  const residents = useSelector(getResidentsList);
-  // console.log(residents);
+
+  console.log(user);
   useEffect(() => {
     if (!user) {
       getUserInfo(localStorage.jwt)
@@ -34,20 +35,6 @@ function Profile() {
       console.log(user);
     }
   }, [dispatch, user]);
-
-  // useEffect(() => {
-  //   //TODO: find out why getResidents fires two times
-  //   if (memedUser && residents.length === 0) {
-  //     getResidents(localStorage.jwt, memedUser.residents)
-  //       .then((residents) =>
-  //         dispatch(setResidents({ userId: memedUser._id, residents }))
-  //       )
-  //       .catch((err) => {
-  //         console.error('Failed to fetch residents:', err);
-  //       });
-  //     console.log('request residents');
-  //   }
-  // }, [dispatch, memedUser, residents.length]);
 
   if (!user) {
     return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
@@ -71,9 +58,11 @@ function Profile() {
     dispatch(openModal('change-profile'));
   };
 
-  const handleLogOut = () => {
+  const logOut = () => {
     console.log('Log out');
-    // TODO: log out
+    removeToken();
+    navigate('/');
+    dispatch(logoutUser());
   };
 
   return (
@@ -103,14 +92,14 @@ function Profile() {
               <label className="profile__host-info-label">
                 Number of hosted residents:
               </label>
-              <p>{user.posts?.length}</p>
+              <p>{user.residents?.length}</p>
             </div>
             <div className="profile__host-info-item">
               <label className="profile__host-info-label">Bio:</label>
               <p>{user.bio ? user.bio : 'The host of this oasis'}</p>
             </div>
             <div className="profile__btn-container">
-              <button className="profile__button" onClick={handleLogOut}>
+              <button className="profile__button" onClick={logOut}>
                 Log Out
               </button>
               <button className="profile__button" onClick={handleEditClick}>

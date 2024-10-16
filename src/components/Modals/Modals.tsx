@@ -45,12 +45,12 @@ export const Modals = ({ post }: { post: PostData | null }) => {
     <>
       {modalIsActive === 'view-post' && post && (
         <ModalPost
-          _id={post._id}
-          text={post.text}
-          photoUrl={post.photoUrl}
-          authors={post.authors}
-          createdAt={post.createdAt}
-          likes={post.likes}
+          postId={post._id}
+          // text={post.text}
+          // photoUrl={post.photoUrl}
+          // authors={post.authors}
+          // createdAt={post.createdAt}
+          // likes={post.likes}
           onClose={handleActiveModalClose}
         />
       )}
@@ -61,21 +61,23 @@ export const Modals = ({ post }: { post: PostData | null }) => {
           onNext={handleNextFromAddPost}
         />
       )}
-      {modalIsActive === 'add-post-next' && newPostData && user &&(
+      {modalIsActive === 'add-post-next' && newPostData && user && (
         <ModalPost
-          _id={'10000000'} // TODO: remove временный id для нового поста
-          text={''} 
-          photoUrl={newPostData.photoUrl}
-          authors={{
-            host: {
-              _id: user._id,
-              name: user.name,
-              avatarUrl: user.avatar,
+          postId={'new'}
+          newPost={{
+            text: '',
+            photoUrl: newPostData.photoUrl,
+            authors: {
+              host: {
+                _id: user._id,
+                name: user.name,
+                avatar: user.avatar,
+              },
+              resident: newPostData.resident,
             },
-            resident: newPostData.resident,
+            createdAt: new Date().toISOString(),
+            likes: [],
           }}
-          createdAt={new Date().toISOString()}
-          likes={0}
           onClose={handleActiveModalClose}
         />
       )}

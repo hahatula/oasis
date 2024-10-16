@@ -8,26 +8,29 @@
   background-color: rgba(255, 252, 241, 0.5);
   padding: 0 8px 0 0;
   border-radius: 20px;
+  border: none;
   backdrop-filter: blur(2px);
+  cursor: url(../../assets/flower-fill.svg) 12 12, auto;
 }
 
-.likes__like-button {
+.likes_checked {
+  cursor: url(../../assets/flower-stroke.svg) 12 12, auto;
+}
+
+.likes__icon {
   width: 28px;
   height: 28px;
   background-color: transparent;
-  border: none;
   background-image: url(../../assets/flower-stroke.svg);
   background-repeat: no-repeat;
   background-position: center;
   border-radius: inherit;
-  cursor: url(../../assets/flower-fill.svg) 12 12, auto;
 }
 
-.likes__like-button_checked {
+.likes__icon_checked {
   background-image: url(../../assets/flower-fill.svg);
-  cursor: url(../../assets/flower-stroke.svg) 12 12, auto;
 }
 
-.likes__like-button:hover {
+.likes:hover .likes__icon {
   box-shadow: 0 0 15px 2px var(--pink);
 }

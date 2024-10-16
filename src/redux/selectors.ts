@@ -1,6 +1,6 @@
 import { PostData } from '../types/post';
 import { User } from '../types/user';
-import { ResidentData } from '../types/resident';
+import { ResidentsState } from './residentsSlice';
 
 export const getModal = (state: { modal: string | null }) => state.modal;
 export const getPosts = (state: { posts: { entities: PostData[] } }) =>
@@ -12,6 +12,6 @@ export const getLikes = (
   id: string
 ) => state.likes.entities.find((entity) => entity.id === id);
 export const getUser = (state: { user: User | null }) => state.user;
-export const getResidentsList = (state: {
-  residents: { entities: ResidentData[] } | undefined;
-}) => state.residents?.entities || [];
+export const getResidents = (state: { residentsList: ResidentsState }) =>
+  state.residentsList.entities;
+

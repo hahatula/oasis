@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { setUser } from '../../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { getUser } from '../../redux/selectors';
 import Form from '../Form/Form';
 
 type FormData = {
@@ -18,13 +18,14 @@ type FormData = {
 function SingIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
+  const user = useSelector(getUser);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     email: '',
     password: '',
   });
 
+  console.log(user);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setData((prevData) => ({

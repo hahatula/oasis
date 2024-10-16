@@ -1,6 +1,7 @@
 import './Posts.css';
+import { memo, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import Post from '../Post/Post';
+import { Post } from '../Post/Post';
 import { PostData } from '../../types/post';
 import { getPosts } from '../../redux/selectors';
 
@@ -10,12 +11,18 @@ function Posts({
   handlePostClick: (post: PostData) => void;
 }) {
   const posts = useSelector(getPosts);
-  
+ 
+  const postsToShow = useMemo(() => {
+    if (posts) {
+      return [...posts].reverse();
+    }
+  }, [posts]);
+
   return (
     <>
-      {posts.length ? (
+      {postsToShow?.length ? (
         <ul className="posts-grid">
-          {posts.map((post) => (
+          {postsToShow.map((post) => (
             <Post
               key={post._id}
               _id={post._id}
@@ -35,4 +42,4 @@ function Posts({
   );
 }
 
-export default Posts;
+export default memo(Posts);

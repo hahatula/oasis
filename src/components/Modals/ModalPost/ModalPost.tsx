@@ -2,28 +2,58 @@ import './ModalPost.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, getModal } from '../../../redux/selectors';
+import { getUser, getModal, getPosts } from '../../../redux/selectors';
 import { Modal } from '../../Modal/Modal';
-import { ModalPostProps, newPostData } from '../../../types/post';
+import { newPostData, updatedPostData } from '../../../types/post';
 import Author from '../../Author/Author';
 import Likes from '../../Likes/Likes';
-import { addPost, updatePost } from '../../../redux/postSlice';
+import { addPost, editPost } from '../../../redux/postSlice';
 import { formatTime } from '../../../utils/helpers';
-import { createPost, getUserInfo } from '../../../utils/api';
+import {
+  createPost,
+  deletePosts,
+  getUserInfo,
+  updatePost,
+} from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
 
-function ModalPost({
-  _id,
-  text,
-  photoUrl,
-  authors,
-  likes,
-  createdAt,
-  onClose,
-}: ModalPostProps) {
+export type ModalPostProps = {
+  postId: string;
+  onClose: () => void;
+  newPost?: {
+    text: string;
+    photoUrl: string;
+    authors: {
+      host: {
+        _id: string;
+        name: string;
+        avatar: string;
+      };
+      resident: {
+        _id: string;
+        name: string;
+        avatar: string;
+        species: string;
+      };
+    };
+    createdAt: string;
+    likes: [];
+  };
+};
+
+function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(getUser);
+  const posts = useSelector(getPosts);
+
+  const post = newPost || posts.find((post) => post._id === postId);
+
+  if (!post) {
+    return <p>Post not found</p>;
+  }
+
+  const { text, photoUrl, authors, likes, createdAt } = post;
   const modalIsActive = useSelector(getModal);
   const [postModalMode, setPostModalMode] = useState(
     modalIsActive === 'add-post-next' ? 'edit' : 'view'
@@ -31,6 +61,8 @@ function ModalPost({
   const [postText, setPostText] = useState(text);
 
   const postingTime = formatTime(new Date(createdAt));
+  const isToday =
+    createdAt.slice(0, 10) === new Date().toISOString().slice(0, 10);
 
   const handleEditClick = () => {
     console.log('edit');
@@ -42,7 +74,9 @@ function ModalPost({
   };
 
   const handleDeleteClick = () => {
+    deletePosts(localStorage.jwt, postId);
     console.log('delete it');
+    onClose();
   };
 
   const handleSaveClick = () => {
@@ -52,12 +86,16 @@ function ModalPost({
       residentId: authors.resident._id,
     };
 
-    const updatedPost = {};
+    const updatedPost = {
+      id: postId,
+      text: postText,
+    };
 
-    modalIsActive === 'add-post-next' ? saveNewPost(newPost) : saveUpdatedPost(updatedPost);
+    modalIsActive === 'add-post-next'
+      ? saveNewPost(newPost)
+      : saveUpdatedPost(updatedPost);
     setPostModalMode('view');
     onClose();
-    // savePost(newPost);
   };
 
   const saveNewPost = async (post: newPostData) => {
@@ -75,48 +113,27 @@ function ModalPost({
     }
   };
 
-  const saveUpdatedPost = async (post: newPostData) => {
+  const saveUpdatedPost = async (post: updatedPostData) => {
     try {
-      const updatedPost = await updatePost(localStorage.jwt, post);
-      // const updatedUser = await getUserInfo(localStorage.jwt);
-      // dispatch(setUser(updatedUser));
+      const updatedPost = await updatePost(
+        localStorage.jwt,
+        post.id,
+        post.text
+      );
       console.log(updatedPost);
-      // console.log(updatedUser);
       console.log(user);
-      dispatch(addPost(updatedPost));
+      dispatch(editPost(updatedPost));
       navigate('/');
     } catch (err) {
       console.error('Failed to update post or update list:', err);
     }
   };
 
-  // const oldhandleSaveClick = () => {
-  //   const create = () => {
-  //     const newPost = {
-  //       id: Date.now(), // temp ID
-  //       text: postText,
-  //       photoUrl: photoUrl,
-  //       authors: authors,
-  //       createdAt: new Date().toISOString(),
-  //       likes: 0,
-  //     };
-  //     dispatch(addPost(newPost));
-  //     navigate('/');
-  //   };
-  //   const update = () => {
-  //     dispatch(updatePost({ id, newText: postText }));
-  //     console.log('save post');
-  //   };
-  //   modalIsActive === 'add-post-next' ? create() : update();
-  //   setPostModalMode('view');
-  //   onClose();
-  // };
-
   return (
     <Modal name="post" onClose={onClose}>
       <article className="post modal-post">
         <Author
-          hostAvatar={authors.host.avatarUrl}
+          hostAvatar={authors.host.avatar}
           hostName={authors.host.name}
           residentAvatar={authors.resident.avatar}
           residentName={authors.resident.name}
@@ -130,7 +147,7 @@ function ModalPost({
               src={photoUrl}
               alt={`${authors.resident.name}'s post`}
             />
-            <Likes id={_id} likes={likes} />
+            <Likes id={postId} likes={likes} />
           </div>
           {postModalMode === 'view' && (
             <div className="modal-post__content-wrapper">
@@ -138,7 +155,7 @@ function ModalPost({
               <span className="modal-post__options">
                 <p className="post__date">
                   Posted{' '}
-                  {postingTime.trim() === '0 days'
+                  {postingTime.trim() === '0 days' && isToday
                     ? 'today'
                     : `${postingTime} ago`}
                 </p>

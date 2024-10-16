@@ -1,3 +1,5 @@
+import { User } from './user'
+
 export type PostData = {
   _id: string;
   text: string;
@@ -6,7 +8,7 @@ export type PostData = {
     host: {
       _id: string;
       name: string;
-      avatarUrl: string;
+      avatar: string;
     };
     resident: {
       _id: string;
@@ -15,7 +17,7 @@ export type PostData = {
       species: string;
     };
   };
-  likes: number;
+  likes: User[];
   createdAt: string;
   //TODO: use type Date?
 };
@@ -24,12 +26,17 @@ export type PostProps = PostData & {
   handlePostClick: (data: PostData) => void;
 };
 
-export type ModalPostProps = PostData & {
-  onClose: () => void;
-};
+// export type ModalPostProps = PostData & {
+//   onClose: () => void;
+// };
 
 export type newPostData = {
   text: string;
   photoUrl: string;
   residentId: string;
+};
+
+export type updatedPostData = {
+  id: string;
+  text: string;
 };

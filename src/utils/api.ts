@@ -14,6 +14,9 @@ export const request = <T>(url: string, options?: RequestInit): Promise<T> => {
   return fetch(url, options).then((res) => checkResponse<T>(res));
 };
 
+/**
+ * User requests
+ */
 export const getUserInfo = (token: string): Promise<User> => {
   return request(`${BASE_URL}/users/me`, {
     method: 'GET',
@@ -67,6 +70,9 @@ export const updateAvatar = (token: string, avatar: string): Promise<User> => {
 //   });
 // };
 
+/**
+ * Resident requests
+ */
 export const createResident = (
   token: string,
   { name, avatar, species, bio, bday }: newResidentData
@@ -82,24 +88,9 @@ export const createResident = (
   });
 };
 
-export const getResidents = (
-  token: string,
-  residentIds: string[]
-): Promise<ResidentData[]> => {
-  // Convert the array of IDs into a query string
-  const queryString = residentIds.map((id) => `id=${id}`).join('&');
-
-  return request(`${BASE_URL}/residents?${queryString}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      // Specify an authorization header with an appropriately formatted value.
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-
+/**
+ * Post requests
+ */
 export const createPost = (
   token: string,
   { text, photoUrl, residentId }: newPostData
@@ -112,5 +103,69 @@ export const createPost = (
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ text, photoUrl, residentId }),
+  });
+};
+
+export const updatePost = (
+  token: string,
+  id: string,
+  text: string
+): Promise<PostData> => {
+  return request(`${BASE_URL}/posts/${id}`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ text }),
+  });
+};
+
+export const deletePosts = (token: string, id: string): Promise<PostData[]> => {
+  return request(`${BASE_URL}/posts/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      // Specify an authorization header with an appropriately formatted value.
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getPosts = (token: string): Promise<PostData[]> => {
+  return request(`${BASE_URL}/posts`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      // Specify an authorization header with an appropriately formatted value.
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const likePost = (token: string, id: string): Promise<PostData[]> => {
+  return request(`${BASE_URL}/posts/${id}/likes`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      // Specify an authorization header with an appropriately formatted value.
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const dislikePost = (token: string, id: string): Promise<PostData[]> => {
+  return request(`${BASE_URL}/posts/${id}/likes`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      // Specify an authorization header with an appropriately formatted value.
+      Authorization: `Bearer ${token}`,
+    },
   });
 };

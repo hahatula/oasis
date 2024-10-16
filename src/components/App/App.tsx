@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PostData } from '../../types/post';
 import { openModal } from '../../redux/modalSlice';
 import './App.css';
@@ -12,10 +12,29 @@ import { Modals } from '../Modals/Modals';
 import SingIn from '../SingIn/SigIn';
 import SingUp from '../SignUp/SignUp';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { getToken, removeToken } from '../../utils/token';
+import { getUserInfo } from '../../utils/api';
+import { setUser } from '../../redux/userSlice';
 
 function App() {
   const dispatch = useDispatch();
   const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
+
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      getUserInfo(token)
+        .then((user) => {
+          if (user) {
+            dispatch(setUser(user));
+          }
+        })
+        .catch((error) => {
+          console.error('Failed to fetch user info:', error);
+          removeToken();
+        });
+    }
+  }, [dispatch]);
 
   const handlePostClick = (post: PostData): void => {
     setSelectedPost(post);

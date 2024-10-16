@@ -2,6 +2,9 @@ import './Main.css';
 import { PageTitle } from '../Titles/PageTitle';
 import Posts from '../Posts/Posts';
 import { PostData } from '../../types/post';
+import { setInitialPosts } from '../../redux/postSlice';
+import { useDispatch } from 'react-redux';
+import { getPosts } from '../../utils/api';
 
 const TitleTexts: string[] = [
   'Oasis Latest News',
@@ -23,13 +26,14 @@ function Main({
 }: {
   handlePostClick: (post: PostData) => void;
 }) {
+  const dispatch = useDispatch();
+  getPosts(localStorage.jwt).then((data) => dispatch(setInitialPosts(data)));
+
   return (
-    <>
-      <article className="main">
-        <PageTitle titleText={getTitleText()} />
-        <Posts handlePostClick={handlePostClick} />
-      </article>
-    </>
+    <article className="main">
+      <PageTitle titleText={getTitleText()} />
+      <Posts handlePostClick={handlePostClick} />
+    </article>
   );
 }
 

@@ -8,8 +8,11 @@ const userSlice = createSlice({
     setUser(_, action: PayloadAction<User>) {
       return action.payload;
     },
+    logoutUser() {
+      return null;
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, logoutUser } = userSlice.actions;
 export default userSlice.reducer;

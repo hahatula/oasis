@@ -1,7 +1,8 @@
+// TODO: will be used in future to view other user's residents
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResidentData } from '../types/resident';
 
-type ResidentsState = {
+export type ResidentsState = {
   selectedUserId: string | null;
   entities: ResidentData[];
 };
@@ -12,7 +13,7 @@ const initialState: ResidentsState = {
 };
 
 const residentsSlice = createSlice({
-  name: 'resdentsList',
+  name: 'residentsList',
   initialState,
   reducers: {
     setResidents(
