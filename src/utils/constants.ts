@@ -4,5 +4,5 @@ export const plantNetApiKey: string = '2b10Qarj8Z90lIqFgMpjPmoOSO';
 
 export const BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://oasis.gatesweb.info'
+    ? 'https://api.oasis.gatesweb.info'
     : 'http://localhost:3001';
