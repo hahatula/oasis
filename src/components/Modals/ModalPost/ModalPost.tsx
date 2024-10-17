@@ -46,10 +46,10 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
   const posts = useSelector(getPosts);
-  const modalIsActive = useSelector(getModal);
+  const modal = useSelector(getModal);
   const [postText, setPostText] = useState('');
   const [postModalMode, setPostModalMode] = useState(
-    modalIsActive === 'add-post-next' ? 'edit' : 'view'
+    modal.modalIsActive === 'add-post-next' ? 'edit' : 'view'
   );
 
   const post = newPost || posts.find((post) => post._id === postId);
@@ -96,7 +96,7 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
       text: postText,
     };
 
-    modalIsActive === 'add-post-next'
+    modal.modalIsActive === 'add-post-next'
       ? saveNewPost(newPost)
       : saveUpdatedPost(updatedPost);
     setPostModalMode('view');

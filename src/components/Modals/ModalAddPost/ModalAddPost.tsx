@@ -4,7 +4,7 @@ import { openModal } from '../../../redux/modalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
-import { getUser } from '../../../redux/selectors';
+import { getUser, getModal } from '../../../redux/selectors';
 import { ResidentData } from '../../../types/resident';
 
 type AddPostFormProps = {
@@ -14,18 +14,28 @@ type AddPostFormProps = {
     resident: { _id: string; name: string; avatar: string; species: string },
     photoUrl: string
   ) => void;
+  chosenResident?: ResidentData;
 };
 
-function ModalAddPost({ formName, onClose, onNext }: AddPostFormProps) {
+function ModalAddPost({
+  formName,
+  onClose,
+  onNext,
+
+}: AddPostFormProps) {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
+  const modal = useSelector(getModal)
   const residents = user?.residents;
-  const [selectedResident, setSelectedResident] = useState({
-    _id: '',
-    name: 'Choose your resident',
-    avatar: '',
-    species: '',
-  });
+  const [selectedResident, setSelectedResident] = useState(
+    modal?.chosenResident || {
+      _id: '',
+      name: 'Choose your resident',
+      avatar: '',
+      species: '',
+    }
+  );
+  console.log(selectedResident);
   const [photoUrl, setPhotoUrl] = useState('');
   const [optionsVisibility, setOptionsVisibility] = useState(false);
   const [urlError, setUrlError] = useState('');
@@ -37,10 +47,10 @@ function ModalAddPost({ formName, onClose, onNext }: AddPostFormProps) {
     event.preventDefault();
     const cleanUrl = formatImgUrl(photoUrl, setUrlError);
 
-      if (!cleanUrl) {
-        console.error('Invalid URL, skipping plant suggestion.');
-        return;
-      }
+    if (!cleanUrl) {
+      console.error('Invalid URL, skipping plant suggestion.');
+      return;
+    }
 
     onNext(selectedResident, cleanUrl);
   };

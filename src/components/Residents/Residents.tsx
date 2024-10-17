@@ -23,7 +23,7 @@ function Residents() {
           ? residentsToShow.map((resident: ResidentData, index: number) => (
               <Resident
                 key={index}
-                id={index}
+                id={resident._id}
                 name={resident.name}
                 avatarUrl={resident.avatar}
                 posts={resident.posts}

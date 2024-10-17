@@ -9,7 +9,7 @@ import ModalPost from './ModalPost/ModalPost';
 
 export const Modals = ({ post }: { post: PostData | null }) => {
   const dispatch = useDispatch();
-  const modalIsActive = useSelector(getModal);
+  const modal = useSelector(getModal);
   const user = useSelector(getUser);
   const [selectedPost, setSelectedPost] = useState<PostData | null>(post);
   const [newPostData, setNewPostData] = useState<{
@@ -43,25 +43,20 @@ export const Modals = ({ post }: { post: PostData | null }) => {
 
   return (
     <>
-      {modalIsActive === 'view-post' && post && (
+      {modal.modalIsActive === 'view-post' && post && (
         <ModalPost
           postId={post._id}
-          // text={post.text}
-          // photoUrl={post.photoUrl}
-          // authors={post.authors}
-          // createdAt={post.createdAt}
-          // likes={post.likes}
           onClose={handleActiveModalClose}
         />
       )}
-      {modalIsActive === 'add-post' && (
+      {modal.modalIsActive === 'add-post' && (
         <ModalAddPost
           formName="add-post"
           onClose={handleActiveModalClose}
           onNext={handleNextFromAddPost}
         />
       )}
-      {modalIsActive === 'add-post-next' && newPostData && user && (
+      {modal.modalIsActive === 'add-post-next' && newPostData && user && (
         <ModalPost
           postId={'new'}
           newPost={{
@@ -81,7 +76,7 @@ export const Modals = ({ post }: { post: PostData | null }) => {
           onClose={handleActiveModalClose}
         />
       )}
-      {modalIsActive === 'add-resident' && (
+      {modal.modalIsActive === 'add-resident' && (
         <ModalAddResident
           formName="add-resident"
           onClose={handleActiveModalClose}

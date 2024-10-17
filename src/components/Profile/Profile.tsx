@@ -19,7 +19,7 @@ function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(getUser);
-  const modalIsActive = useSelector(getModal);
+  const modal = useSelector(getModal);
 
   useEffect(() => {
     if (!user) {
@@ -34,7 +34,7 @@ function Profile() {
   }, [dispatch, user]);
 
   if (!user) {
-    return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
+    return <p>User not found.</p>;
   }
 
   const currentDate = new Date();
@@ -107,13 +107,13 @@ function Profile() {
           {/* {user.residents.length > 0 && <Residents />} */}
         </section>
       </section>
-      {modalIsActive === 'change-avatar' && (
+      {modal.modalIsActive === 'change-avatar' && (
         <ModalChangeAvatar
           formName="change-avatar"
           onClose={handleModalClose}
         />
       )}
-      {modalIsActive === 'change-profile' && (
+      {modal.modalIsActive === 'change-profile' && (
         <ModalChangeProfile
           formName="change-profile"
           onClose={handleModalClose}

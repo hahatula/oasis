@@ -26,10 +26,6 @@ export type PostProps = PostData & {
   handlePostClick: (data: PostData) => void;
 };
 
-// export type ModalPostProps = PostData & {
-//   onClose: () => void;
-// };
-
 export type newPostData = {
   text: string;
   photoUrl: string;

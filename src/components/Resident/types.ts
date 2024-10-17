@@ -1,5 +1,5 @@
 export type ResidentProps = {
-  id: number;
+  id: string;
   name: string;
   avatarUrl: string;
   species: string;

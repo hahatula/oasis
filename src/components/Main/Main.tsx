@@ -17,7 +17,7 @@ const TitleTexts: string[] = [
 ];
 
 const getTitleText = (): string => {
-  //TODO: write real logic
+  //TODO: write real logic, when filtring options will be implemented
   return TitleTexts[0];
 };
 

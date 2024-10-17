@@ -94,10 +94,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
       };
 
       try {
-        const createdResident = await createResident(
-          localStorage.jwt,
-          newResident
-        );
+        await createResident(localStorage.jwt, newResident);
         const updatedUser = await getUserInfo(localStorage.jwt);
         dispatch(setUser(updatedUser));
         navigate('/profile');
