@@ -38,7 +38,7 @@ const Likes: React.FC<LikesProps> = memo(({ id, likes }) => {
   };
 
   useEffect(() => {
-    setIsLiked(likes.some((like: any) => like._id === user?._id));
+    setIsLiked(likes.some((like) => like._id === user?._id));
     setLikeCount(likes.length);
   }, [likes, user]);
 

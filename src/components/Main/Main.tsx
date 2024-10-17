@@ -1,6 +1,6 @@
 import './Main.css';
 import { PageTitle } from '../Titles/PageTitle';
-import Posts from '../Posts/Posts';
+import { Posts } from '../Posts/Posts';
 import { PostData } from '../../types/post';
 import { setInitialPosts } from '../../redux/postSlice';
 import { useDispatch } from 'react-redux';

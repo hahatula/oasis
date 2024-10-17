@@ -1,5 +1,5 @@
 import './ModalPost.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, getModal, getPosts } from '../../../redux/selectors';
@@ -7,7 +7,7 @@ import { Modal } from '../../Modal/Modal';
 import { newPostData, updatedPostData } from '../../../types/post';
 import Author from '../../Author/Author';
 import Likes from '../../Likes/Likes';
-import { addPost, editPost } from '../../../redux/postSlice';
+import { addPost, editPost, removePost } from '../../../redux/postSlice';
 import { formatTime } from '../../../utils/helpers';
 import {
   createPost,
@@ -46,26 +46,31 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
   const posts = useSelector(getPosts);
+  const modalIsActive = useSelector(getModal);
+  const [postText, setPostText] = useState('');
+  const [postModalMode, setPostModalMode] = useState(
+    modalIsActive === 'add-post-next' ? 'edit' : 'view'
+  );
 
   const post = newPost || posts.find((post) => post._id === postId);
+
+  useEffect(() => {
+    if (post) {
+      setPostText(post.text);
+    }
+  }, [post]);
 
   if (!post) {
     return <p>Post not found</p>;
   }
 
-  const { text, photoUrl, authors, likes, createdAt } = post;
-  const modalIsActive = useSelector(getModal);
-  const [postModalMode, setPostModalMode] = useState(
-    modalIsActive === 'add-post-next' ? 'edit' : 'view'
-  );
-  const [postText, setPostText] = useState(text);
+  const { photoUrl, authors, likes, createdAt } = post;
 
   const postingTime = formatTime(new Date(createdAt));
   const isToday =
     createdAt.slice(0, 10) === new Date().toISOString().slice(0, 10);
 
   const handleEditClick = () => {
-    console.log('edit');
     setPostModalMode('edit');
   };
 
@@ -75,7 +80,7 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
 
   const handleDeleteClick = () => {
     deletePosts(localStorage.jwt, postId);
-    console.log('delete it');
+    dispatch(removePost({ _id: postId }));
     onClose();
   };
 
@@ -103,9 +108,6 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
       const createdPost = await createPost(localStorage.jwt, post);
       const updatedUser = await getUserInfo(localStorage.jwt);
       dispatch(setUser(updatedUser));
-      console.log(createdPost);
-      console.log(updatedUser);
-      console.log(user);
       dispatch(addPost(createdPost));
       navigate('/');
     } catch (err) {
@@ -120,8 +122,6 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
         post.id,
         post.text
       );
-      console.log(updatedPost);
-      console.log(user);
       dispatch(editPost(updatedPost));
       navigate('/');
     } catch (err) {

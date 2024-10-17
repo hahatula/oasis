@@ -25,7 +25,6 @@ function SingIn() {
     password: '',
   });
 
-  console.log(user);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setData((prevData) => ({
@@ -54,12 +53,9 @@ function SingIn() {
   const makeRequest = (formData: FormData) => {
     return authorize(formData.email, formData.password).then((data) => {
       if (data.token) {
-        console.log('try to authorize');
         setToken(data.token);
         getUserInfo(data.token).then((user) => {
-          console.log(user);
           dispatch(setUser(user));
-          console.log('user logged in');
         });
       }
     });
@@ -67,7 +63,6 @@ function SingIn() {
 
   useEffect(() => {
     if (user) {
-      console.log('User is logged in, navigating to home');
       navigate('/');
     }
   }, [user, navigate]);

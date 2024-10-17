@@ -21,18 +21,15 @@ function Profile() {
   const user = useSelector(getUser);
   const modalIsActive = useSelector(getModal);
 
-  console.log(user);
   useEffect(() => {
     if (!user) {
       getUserInfo(localStorage.jwt)
         .then((user) => {
           dispatch(setUser(user));
-          console.log('Fetched user info');
         })
         .catch((err) => {
           console.error('Failed to fetch user info:', err);
         });
-      console.log(user);
     }
   }, [dispatch, user]);
 
@@ -49,17 +46,14 @@ function Profile() {
   };
 
   const handleModalClose = () => {
-    console.log('close modal');
     dispatch(closeModal());
   };
 
   const handleEditClick = () => {
-    console.log("Let's edit user");
     dispatch(openModal('change-profile'));
   };
 
   const logOut = () => {
-    console.log('Log out');
     removeToken();
     navigate('/');
     dispatch(logoutUser());

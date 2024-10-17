@@ -20,7 +20,6 @@ function ModalAddPost({ formName, onClose, onNext }: AddPostFormProps) {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
   const residents = user?.residents;
-  console.log(user?.residents)
   const [selectedResident, setSelectedResident] = useState({
     _id: '',
     name: 'Choose your resident',

@@ -14,7 +14,6 @@ function ProtectedRoute({
   const from = location.state?.from || '/';
   const isLogged = localStorage.getItem('isLogged') === 'true';
 
-  console.log(isLogged)
   if (anonymous && isLogged) {
     // navigate logged in user back if he tries to reach the route available only for not logged in users
     return <Navigate to={from} />;

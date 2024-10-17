@@ -34,7 +34,6 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const [photoUrl, setPhotoUrl] = useState('');
   const [species, setSpecies] = useState('');
   const [name, setName] = useState('');
-  const [bday, setBday] = useState(new Date());
   const [suggestion, setSuggestion] = useState('');
   const [urlError, setUrlError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -86,8 +85,6 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
       setName(userInput.name);
     }
     if (step === 4) {
-      // TODO: do I need to set birthday in this file?
-      if (userInput.bday !== null) setBday(userInput.bday);
       const newResident = {
         name: name,
         avatar: photoUrl,
@@ -103,9 +100,6 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
         );
         const updatedUser = await getUserInfo(localStorage.jwt);
         dispatch(setUser(updatedUser));
-        console.log(createdResident);
-        console.log(updatedUser);
-        console.log(user);
         navigate('/profile');
       } catch (err) {
         console.error('Failed to create new resident or update list:', err);

@@ -28,6 +28,10 @@ const postsSlice = createSlice({
       const newPost = action.payload;
       state.entities.push(newPost);
     },
+    removePost(state, action: PayloadAction<{_id: string;}>) {
+      const { _id } = action.payload;
+      state.entities = state.entities.filter((entity) => entity._id !== _id);
+    },
     addLike(state, action: PayloadAction<{ _id: string; user: User }>) {
       const { _id, user } = action.payload;
       const post = state.entities.find((entity) => entity._id === _id);
@@ -45,5 +49,5 @@ const postsSlice = createSlice({
   },
 });
 
-export const { setInitialPosts, editPost, addPost, addLike, removeLike } = postsSlice.actions;
+export const { setInitialPosts, editPost, addPost, addLike, removeLike, removePost } = postsSlice.actions;
 export default postsSlice.reducer;

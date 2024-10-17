@@ -9,12 +9,10 @@ function Toolbar() {
   const dispatch = useDispatch();
 
   const handleAddPost = (): void => {
-    console.log('clicked add post');
     dispatch(openModal('add-post'));
   };
 
   const handleAddResident = (): void => {
-    console.log('clicked add resident');
     dispatch(openModal('add-resident'));
   };
 

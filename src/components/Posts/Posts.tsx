@@ -1,17 +1,17 @@
 import './Posts.css';
-import { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Post } from '../Post/Post';
 import { PostData } from '../../types/post';
 import { getPosts } from '../../redux/selectors';
 
-function Posts({
+export const Posts = ({
   handlePostClick,
 }: {
   handlePostClick: (post: PostData) => void;
-}) {
+}) => {
   const posts = useSelector(getPosts);
- 
+
   const postsToShow = useMemo(() => {
     if (posts) {
       return [...posts].reverse();
@@ -40,6 +40,4 @@ function Posts({
       )}
     </>
   );
-}
-
-export default memo(Posts);
+};

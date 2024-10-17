@@ -15,7 +15,6 @@ export const Post: React.FC<PostProps> = memo(({
   handlePostClick,
 }) => {
   const openPostPopup: () => void = () => {
-    console.log('Post opened');
     handlePostClick({ _id, text, photoUrl, authors, likes, createdAt });
   };
 
