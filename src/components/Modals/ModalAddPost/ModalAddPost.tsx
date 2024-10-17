@@ -1,49 +1,69 @@
-import './ModalAddPost.css';
 import { Modal } from '../../Modal/Modal';
-import { users } from '../../../utils/tempDB';
 import { useState } from 'react';
 import { openModal } from '../../../redux/modalSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Form from '../../Form/Form';
+import { formatImgUrl } from '../../../utils/helpers';
+import { getUser, getModal } from '../../../redux/selectors';
+import { ResidentData } from '../../../types/resident';
 
 type AddPostFormProps = {
   formName: string;
-  userId: number;
   onClose: () => void;
   onNext: (
-    resident: { id: number; name: string; avatarUrl: string; species: string },
+    resident: { _id: string; name: string; avatar: string; species: string },
     photoUrl: string
   ) => void;
+  chosenResident?: ResidentData;
 };
 
-function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
+function ModalAddPost({
+  formName,
+  onClose,
+  onNext,
+
+}: AddPostFormProps) {
   const dispatch = useDispatch();
-  const [selectedResident, setSelectedResident] = useState({
-    id: 0,
-    name: 'Choose your resident',
-    avatarUrl: '',
-    species: '',
-  });
+  const user = useSelector(getUser);
+  const modal = useSelector(getModal)
+  const residents = user?.residents;
+  const [selectedResident, setSelectedResident] = useState(
+    modal?.chosenResident || {
+      _id: '',
+      name: 'Choose your resident',
+      avatar: '',
+      species: '',
+    }
+  );
+  console.log(selectedResident);
   const [photoUrl, setPhotoUrl] = useState('');
   const [optionsVisibility, setOptionsVisibility] = useState(false);
+  const [urlError, setUrlError] = useState('');
 
   const toggleOptionsVisibility = () =>
     setOptionsVisibility(!optionsVisibility);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onNext(selectedResident, photoUrl);
+    const cleanUrl = formatImgUrl(photoUrl, setUrlError);
+
+    if (!cleanUrl) {
+      console.error('Invalid URL, skipping plant suggestion.');
+      return;
+    }
+
+    onNext(selectedResident, cleanUrl);
   };
 
   return (
     <>
       <Modal name={formName} onClose={onClose}>
-        <h2 className="form__title">New post</h2>
-        <form
+        <Form
+          formName={formName}
+          title="New post"
           onSubmit={handleSubmit}
           action="submit"
           method="post"
-          id={formName}
-          className="form"
         >
           <div className="form__select-wrapper">
             <select
@@ -55,7 +75,7 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
             >
               <option
                 className="form__select-default-option"
-                value={selectedResident.id}
+                value={selectedResident._id}
               >
                 {selectedResident.name}
               </option>
@@ -67,10 +87,10 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
             >
               {
                 /* map all the residents of the current user */
-                users[userId - 1].residents?.map((resident, index) => (
+                residents?.map((resident: ResidentData) => (
                   <div
                     className="form__select-option"
-                    key={index}
+                    key={resident._id}
                     onClick={() => {
                       setSelectedResident(resident);
                       toggleOptionsVisibility();
@@ -78,36 +98,47 @@ function ModalAddPost({ formName, onClose, userId, onNext }: AddPostFormProps) {
                   >
                     <img
                       className="form__select-option-img"
-                      src={resident.avatarUrl}
+                      src={resident.avatar}
                       alt={resident.name}
                     />
                     {resident.name}
                   </div>
                 ))
               }
-              <div className="form__select-option" onClick={() => {dispatch(openModal('add-resident'))}}>
+              <div
+                className="form__select-option"
+                onClick={() => {
+                  dispatch(openModal('add-resident'));
+                }}
+              >
                 Create new resident
               </div>
             </div>
           </div>
-          {selectedResident.id !== 0 && (
-            <input
-              name="photo"
-              id="photo"
-              type="url"
-              required
-              className="form__input"
-              placeholder="Add photo url"
-              value={photoUrl}
-              onChange={(e) => setPhotoUrl(e.target.value)}
-            ></input>
+          {selectedResident._id && (
+            <>
+              <input
+                name="photo"
+                id="photo"
+                type="url"
+                required
+                className="form__input"
+                placeholder="Add photo url"
+                value={photoUrl}
+                onChange={(e) => {
+                  setUrlError('');
+                  setPhotoUrl(e.target.value);
+                }}
+              ></input>
+              {urlError && <p className="form__error">{urlError}</p>}
+            </>
           )}
-          {selectedResident.id !== 0 && (
+          {selectedResident._id && (
             <button type="submit" className="form__button">
               Next
             </button>
           )}
-        </form>
+        </Form>
       </Modal>
     </>
   );
