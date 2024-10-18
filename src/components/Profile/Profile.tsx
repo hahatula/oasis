@@ -14,6 +14,7 @@ import { setUser } from '../../redux/userSlice';
 import { removeToken } from '../../utils/token';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../redux/userSlice';
+import { useImageUrl } from '../../hooks/useImageUrl';
 
 function Profile() {
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ function Profile() {
           <div className="profile__host-img">
             <img
               className="profile__host-img"
-              src={user.avatar ? user.avatar : avatarPlaceholder}
+              src={user.avatar ? useImageUrl(user.avatar) : avatarPlaceholder}
               alt={user.name}
             />
             <button

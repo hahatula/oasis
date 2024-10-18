@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/selectors';
 import { createResident, getUserInfo } from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
+import { useImageUrl } from '../../../hooks/useImageUrl';
 
 // TODO: loading while waiting for api response
 
@@ -142,7 +143,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
           )}
           {step === 2 && (
             <>
-              <img className="form__resident-img" src={photoUrl}></img>
+              <img className="form__resident-img" src={useImageUrl(photoUrl)}></img>
               {species && <p>{species}</p>}
               <p>Oh! Is it a {suggestion}?</p>
               <div className="form__btn-container">
@@ -164,7 +165,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
           )}
           {step === 3 && (
             <>
-              <img className="form__resident-img" src={photoUrl}></img>
+              <img className="form__resident-img" src={useImageUrl(photoUrl)}></img>
               <button
                 type="button"
                 className="form__edit form__edit_image"

@@ -6,6 +6,7 @@ import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
 import { getUser, getModal } from '../../../redux/selectors';
 import { ResidentData } from '../../../types/resident';
+import { useImageUrl } from '../../../hooks/useImageUrl';
 
 type AddPostFormProps = {
   formName: string;
@@ -35,7 +36,6 @@ function ModalAddPost({
       species: '',
     }
   );
-  console.log(selectedResident);
   const [photoUrl, setPhotoUrl] = useState('');
   const [optionsVisibility, setOptionsVisibility] = useState(false);
   const [urlError, setUrlError] = useState('');
@@ -98,7 +98,7 @@ function ModalAddPost({
                   >
                     <img
                       className="form__select-option-img"
-                      src={resident.avatar}
+                      src={useImageUrl(resident.avatar)}
                       alt={resident.name}
                     />
                     {resident.name}

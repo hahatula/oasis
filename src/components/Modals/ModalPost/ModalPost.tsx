@@ -16,6 +16,8 @@ import {
   updatePost,
 } from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
+import { useImageUrl } from '../../../hooks/useImageUrl';
+import imgPlaceholder from '../../../assets/post-placeholder.jpg'
 
 export type ModalPostProps = {
   postId: string;
@@ -79,9 +81,10 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
   };
 
   const handleDeleteClick = () => {
-    deletePosts(localStorage.jwt, postId);
-    dispatch(removePost({ _id: postId }));
-    onClose();
+    deletePosts(localStorage.jwt, postId).then(() => {
+      dispatch(removePost({ _id: postId }));
+      onClose();
+    });
   };
 
   const handleSaveClick = () => {
@@ -97,10 +100,14 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
     };
 
     modal.modalIsActive === 'add-post-next'
-      ? saveNewPost(newPost)
-      : saveUpdatedPost(updatedPost);
-    setPostModalMode('view');
-    onClose();
+      ? saveNewPost(newPost).then(() => {
+        setPostModalMode('view');
+        onClose();
+      })
+      : saveUpdatedPost(updatedPost).then(() => {
+          setPostModalMode('view');
+          onClose();
+        });
   };
 
   const saveNewPost = async (post: newPostData) => {
@@ -144,7 +151,7 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
           <div className="post__image-wrapper">
             <img
               className="post__image"
-              src={photoUrl}
+              src={useImageUrl(photoUrl, imgPlaceholder)}
               alt={`${authors.resident.name}'s post`}
             />
             <Likes id={postId} likes={likes} />

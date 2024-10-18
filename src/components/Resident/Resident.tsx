@@ -2,6 +2,7 @@ import './Resident.css';
 import { ResidentProps } from './types';
 import { useDispatch } from 'react-redux';
 import { openModal, setChosenResident } from '../../redux/modalSlice';
+import { useImageUrl } from '../../hooks/useImageUrl';
 
 // TODO: edit resident and declare death
 const Resident: React.FC<ResidentProps> = ({
@@ -22,14 +23,13 @@ const Resident: React.FC<ResidentProps> = ({
   });
 
   const handleAddPost = () => {
-    console.log('add post for resident')
     dispatch(setChosenResident({ _id: id, name, avatar: avatarUrl, species }));
     dispatch(openModal('add-post'));
   }
 
   return (
     <li className="resident" key={id}>
-      <img className="resident__image" src={avatarUrl} alt={name} />
+      <img className="resident__image" src={useImageUrl(avatarUrl)} alt={name} />
       <div className="resident__info">
         <div>
           <p className="resident__name">{name}</p>

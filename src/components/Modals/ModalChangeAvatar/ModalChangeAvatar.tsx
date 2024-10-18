@@ -2,8 +2,6 @@ import { Modal } from '../../Modal/Modal';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Form from '../../Form/Form';
-// import { useSelector } from 'react-redux';
-// import { getUser } from '../../../redux/selectors';
 import { updateAvatar } from '../../../utils/api';
 import { closeModal } from '../../../redux/modalSlice';
 import { setUser } from '../../../redux/userSlice';
@@ -16,8 +14,6 @@ type ChangeAvatarFormProps = {
 
 function ModalChangeAvatar({ formName, onClose }: ChangeAvatarFormProps) {
   const dispatch = useDispatch();
-//   const user = useSelector(getUser);
-//   const avatar = user?.avatar;
   const [avatarUrl, setAvatarUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [urlError, setUrlError] = useState('');

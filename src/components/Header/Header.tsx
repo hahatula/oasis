@@ -13,7 +13,7 @@ function Header() {
   const closeBurger = () => setBurgerOpened(false);
 
   return (
-    <div className="header">
+    <header className="header">
       <Link to='/'><img src={logo} alt="Oasis Logo" /></Link>
       {/* <div onClick={() => dispatch(openModal('sign-in')) } >Temp button</div> */}
       <nav className="header__nav">
@@ -59,7 +59,7 @@ function Header() {
           </div>
         </nav>
       )}
-    </div>
+    </header>
   );
 }
 export default Header;

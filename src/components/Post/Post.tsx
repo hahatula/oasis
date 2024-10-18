@@ -4,6 +4,8 @@ import { PostProps } from '../../types/post';
 import Author from '../Author/Author';
 import Likes from '../Likes/Likes';
 import { formatTime } from '../../utils/helpers';
+import { useImageUrl } from '../../hooks/useImageUrl';
+import imgPlaceholder from '../../assets/post-placeholder.jpg'
 
 export const Post: React.FC<PostProps> = memo(({
   _id,
@@ -36,7 +38,7 @@ export const Post: React.FC<PostProps> = memo(({
         <div className="post__image-wrapper">
           <img
             className="post__image"
-            src={photoUrl}
+            src={useImageUrl(photoUrl, imgPlaceholder)}
             alt={`${authors.resident.name}'s post`}
           />
           <Likes id={_id} likes={likes} />
