@@ -2,12 +2,12 @@ import './Residents.css';
 import { useMemo } from 'react';
 import { SectionTitle } from '../Titles/PageTitle';
 import Resident from '../Resident/Resident';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../redux/hooks';
 import { getUser } from '../../redux/selectors';
 import { ResidentData } from '../../types/resident';
 
 function Residents() {
-  const user = useSelector(getUser);
+  const user = useAppSelector(getUser);
 
   const residentsToShow = useMemo(() => {
     if (user) {

@@ -6,12 +6,13 @@ import { getPlantTip } from '../../../utils/plantNetApi';
 import { plantNetApiKey } from '../../../utils/constants';
 import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getUser } from '../../../redux/selectors';
 import { createResident, getUserInfo } from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
 import { useImageUrl } from '../../../hooks/useImageUrl';
 import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
+
 
 type AddResidentFormProps = {
   formName: string;
@@ -35,8 +36,8 @@ type UserInput = {
 
 function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
   const [step, setStep] = useState(1);
   const [photoUrl, setPhotoUrl] = useState('');
   const [species, setSpecies] = useState('');

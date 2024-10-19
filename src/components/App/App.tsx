@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../redux/hooks';
 import { useEffect, useState } from 'react';
 import { PostData } from '../../types/post';
 import { openModal } from '../../redux/modalSlice';
@@ -17,7 +17,7 @@ import { getUserInfo } from '../../utils/api';
 import { setUser } from '../../redux/userSlice';
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
 
   useEffect(() => {

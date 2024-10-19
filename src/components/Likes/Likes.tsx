@@ -2,14 +2,13 @@ import { LikesProps } from './types';
 import './Likes.css';
 import { useEffect, useState, memo } from 'react';
 import { dislikePost, likePost } from '../../utils/api';
-import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getUser } from '../../redux/selectors';
-import { useDispatch } from 'react-redux';
 import { addLike, removeLike } from '../../redux/postSlice';
 
 const Likes: React.FC<LikesProps> = memo(({ id, likes }) => {
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
   const [isLiked, setIsLiked] = useState(
     likes.some((like) => like._id === user?._id)
   );

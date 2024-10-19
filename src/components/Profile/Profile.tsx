@@ -2,7 +2,7 @@ import './Profile.css';
 import { useEffect } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
 import Residents from '../Residents/Residents';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getUser, getModal } from '../../redux/selectors';
 import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
 import ModalChangeProfile from '../Modals/ModalChangeProfile/ModalChangeProfile';
@@ -17,9 +17,9 @@ import { useImageUrl } from '../../hooks/useImageUrl';
 
 function Profile() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
-  const modal = useSelector(getModal);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
+  const modal = useAppSelector(getModal);
   const avatarUrl = useImageUrl(user?.avatar || '');
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { Modal } from '../../Modal/Modal';
 import { useState } from 'react';
 import { openModal } from '../../../redux/modalSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
 import { getUser, getModal } from '../../../redux/selectors';
@@ -24,9 +24,9 @@ function ModalAddPost({
   onNext,
 
 }: AddPostFormProps) {
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
-  const modal = useSelector(getModal)
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
+  const modal = useAppSelector(getModal)
   const residents = user?.residents;
   const [selectedResident, setSelectedResident] = useState(
     modal?.chosenResident || {

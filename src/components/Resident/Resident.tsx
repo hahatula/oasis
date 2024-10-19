@@ -1,6 +1,6 @@
 import './Resident.css';
 import { ResidentProps } from './types';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../redux/hooks';
 import { openModal, setChosenResident } from '../../redux/modalSlice';
 import { useImageUrl } from '../../hooks/useImageUrl';
 
@@ -14,7 +14,7 @@ const Resident: React.FC<ResidentProps> = ({
   bio,
   bday,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const formatedBday = new Date(bday).toLocaleDateString(undefined, {
     year: 'numeric',

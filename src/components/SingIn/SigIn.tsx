@@ -6,7 +6,7 @@ import { getUserInfo } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { setUser } from '../../redux/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getUser } from '../../redux/selectors';
 import Form from '../Form/Form';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
@@ -23,8 +23,8 @@ function SingIn() {
       password: '',
     });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState('');
 

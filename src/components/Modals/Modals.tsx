@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getModal, getUser } from '../../redux/selectors';
 import { PostData } from '../../types/post';
 import { openModal, closeModal } from '../../redux/modalSlice';
@@ -8,9 +8,9 @@ import ModalAddResident from './ModalAddResident/ModalAddResident';
 import ModalPost from './ModalPost/ModalPost';
 
 export const Modals = ({ post }: { post: PostData | null }) => {
-  const dispatch = useDispatch();
-  const modal = useSelector(getModal);
-  const user = useSelector(getUser);
+  const dispatch = useAppDispatch();
+  const modal = useAppSelector(getModal);
+  const user = useAppSelector(getUser);
   const [selectedPost, setSelectedPost] = useState<PostData | null>(post);
   const [newPostData, setNewPostData] = useState<{
     resident: {

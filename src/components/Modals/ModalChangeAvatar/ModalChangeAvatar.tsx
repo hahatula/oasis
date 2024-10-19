@@ -1,6 +1,6 @@
 import { Modal } from '../../Modal/Modal';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../redux/hooks';
 import Form from '../../Form/Form';
 import { updateAvatar } from '../../../utils/api';
 import { closeModal } from '../../../redux/modalSlice';
@@ -15,7 +15,7 @@ type ChangeAvatarFormProps = {
 function ModalChangeAvatar({ formName, onClose }: ChangeAvatarFormProps) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormAndValidation<{ avatar: string }>({ avatar: '' });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (event: React.FormEvent) => {

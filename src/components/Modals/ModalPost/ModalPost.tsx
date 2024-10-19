@@ -1,7 +1,7 @@
 import './ModalPost.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getUser, getModal, getPosts } from '../../../redux/selectors';
 import { Modal } from '../../Modal/Modal';
 import { newPostData, updatedPostData } from '../../../types/post';
@@ -45,10 +45,10 @@ export type ModalPostProps = {
 
 function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
-  const posts = useSelector(getPosts);
-  const modal = useSelector(getModal);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
+  const posts = useAppSelector(getPosts);
+  const modal = useAppSelector(getModal);
   const [postText, setPostText] = useState('');
   const [postModalMode, setPostModalMode] = useState(
     modal.modalIsActive === 'add-post-next' ? 'edit' : 'view'

@@ -1,8 +1,7 @@
 import { Modal } from '../../Modal/Modal';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Form from '../../Form/Form';
-import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getUser } from '../../../redux/selectors';
 import { updateUserProfile } from '../../../utils/api';
 import { closeModal } from '../../../redux/modalSlice';
@@ -16,9 +15,9 @@ type ChangeProfileFormProps = {
 
 function ModalChangeProfile({ formName, onClose }: ChangeProfileFormProps) {
   const { values, handleChange, errors, isValid, setValues } =
-    useFormAndValidation<{ name: string, bio: string }>({ name: '', bio: '' });
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
+    useFormAndValidation<{ name: string; bio: string }>({ name: '', bio: '' });
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

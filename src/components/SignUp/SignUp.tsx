@@ -4,7 +4,7 @@ import { authorize, register } from '../../utils/auth';
 import { setToken } from '../../utils/token';
 import { getUserInfo } from '../../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { RootState } from '../../redux/store';
 import { setUser } from '../../redux/userSlice';
 import Form from '../Form/Form';
@@ -19,7 +19,7 @@ type FormData = {
 };
 
 function SingUp() {
-  const { values, handleChange, errors, isValid, setValues, resetForm } =
+  const { values, handleChange, errors, isValid } =
     useFormAndValidation<FormData>({
       name: '',
       email: '',
@@ -28,8 +28,8 @@ function SingUp() {
       bio: '',
     });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state: RootState) => state.user);
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState('');
 
