@@ -7,7 +7,9 @@ export const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json() as Promise<T>;
   }
-  return Promise.reject(`Error: ${res.status}`);
+  return res.json().then((err) => {
+    return Promise.reject({ status: res.status, message: err.message });
+  });
 };
 
 export const request = <T>(url: string, options?: RequestInit): Promise<T> => {

@@ -17,7 +17,7 @@ import {
 } from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
 import { useImageUrl } from '../../../hooks/useImageUrl';
-import imgPlaceholder from '../../../assets/post-placeholder.jpg'
+import imgPlaceholder from '../../../assets/post-placeholder.jpg';
 
 export type ModalPostProps = {
   postId: string;
@@ -99,15 +99,14 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
       text: postText,
     };
 
+    const closeAfterSaving = () => {
+      setPostModalMode('view');
+      onClose();
+    };
+
     modal.modalIsActive === 'add-post-next'
-      ? saveNewPost(newPost).then(() => {
-        setPostModalMode('view');
-        onClose();
-      })
-      : saveUpdatedPost(updatedPost).then(() => {
-          setPostModalMode('view');
-          onClose();
-        });
+      ? saveNewPost(newPost).then(() => closeAfterSaving())
+      : saveUpdatedPost(updatedPost).then(() => closeAfterSaving());
   };
 
   const saveNewPost = async (post: newPostData) => {

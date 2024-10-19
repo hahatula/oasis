@@ -4,7 +4,6 @@ import { PageTitle } from '../Titles/PageTitle';
 import Residents from '../Residents/Residents';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, getModal } from '../../redux/selectors';
-import avatarPlaceholder from '../../assets/avatar-placeholder.jpg';
 import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
 import ModalChangeProfile from '../Modals/ModalChangeProfile/ModalChangeProfile';
 import { openModal, closeModal } from '../../redux/modalSlice';
@@ -21,6 +20,7 @@ function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
   const modal = useSelector(getModal);
+  const avatarUrl = useImageUrl(user?.avatar || '');
 
   useEffect(() => {
     if (!user) {
@@ -68,7 +68,7 @@ function Profile() {
           <div className="profile__host-img">
             <img
               className="profile__host-img"
-              src={user.avatar ? useImageUrl(user.avatar) : avatarPlaceholder}
+              src={avatarUrl}
               alt={user.name}
             />
             <button

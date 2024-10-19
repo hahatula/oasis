@@ -5,52 +5,46 @@ import Author from '../Author/Author';
 import Likes from '../Likes/Likes';
 import { formatTime } from '../../utils/helpers';
 import { useImageUrl } from '../../hooks/useImageUrl';
-import imgPlaceholder from '../../assets/post-placeholder.jpg'
+import imgPlaceholder from '../../assets/post-placeholder.jpg';
 
-export const Post: React.FC<PostProps> = memo(({
-  _id,
-  text,
-  photoUrl,
-  authors,
-  likes,
-  createdAt,
-  handlePostClick,
-}) => {
-  const openPostPopup: () => void = () => {
-    handlePostClick({ _id, text, photoUrl, authors, likes, createdAt });
-  };
+export const Post: React.FC<PostProps> = memo(
+  ({ _id, text, photoUrl, authors, likes, createdAt, handlePostClick }) => {
+    const openPostPopup: () => void = () => {
+      handlePostClick({ _id, text, photoUrl, authors, likes, createdAt });
+    };
 
-  const postingTime = formatTime(new Date(createdAt));
-  const isToday =
-    createdAt.slice(0, 10) === new Date().toISOString().slice(0, 10);
+    const postingTime = formatTime(new Date(createdAt));
+    const isToday =
+      createdAt.slice(0, 10) === new Date().toISOString().slice(0, 10);
 
-  return (
-    <li className="post">
-      <Author
-        hostAvatar={authors.host.avatar}
-        hostName={authors.host.name}
-        residentAvatar={authors.resident.avatar}
-        residentName={authors.resident.name}
-        residentSpecies={authors.resident.species}
-        placement="post"
-      />
-      <div onClick={openPostPopup} className="post__body">
-        <div className="post__image-wrapper">
-          <img
-            className="post__image"
-            src={useImageUrl(photoUrl, imgPlaceholder)}
-            alt={`${authors.resident.name}'s post`}
-          />
-          <Likes id={_id} likes={likes} />
+    return (
+      <li className="post">
+        <Author
+          hostAvatar={authors.host.avatar}
+          hostName={authors.host.name}
+          residentAvatar={authors.resident.avatar}
+          residentName={authors.resident.name}
+          residentSpecies={authors.resident.species}
+          placement="post"
+        />
+        <div onClick={openPostPopup} className="post__body">
+          <div className="post__image-wrapper">
+            <img
+              className="post__image"
+              src={useImageUrl(photoUrl, imgPlaceholder)}
+              alt={`${authors.resident.name}'s post`}
+            />
+            <Likes id={_id} likes={likes} />
+          </div>
+          <p className="post__date">
+            Posted{' '}
+            {postingTime.trim() === '0 days' && isToday
+              ? 'today'
+              : `${postingTime} ago`}
+          </p>
+          <p className="post__text">{text}</p>
         </div>
-        <p className="post__date">
-          Posted{' '}
-          {postingTime.trim() === '0 days' && isToday
-            ? 'today'
-            : `${postingTime} ago`}
-        </p>
-        <p className="post__text">{text}</p>
-      </div>
-    </li>
-  );
-});
+      </li>
+    );
+  }
+);
