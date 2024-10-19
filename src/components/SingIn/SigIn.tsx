@@ -6,9 +6,10 @@ import { getUserInfo } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { setUser } from '../../redux/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getUser } from '../../redux/selectors';
 import Form from '../Form/Form';
+import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 
 type FormData = {
   email: string;
@@ -16,27 +17,21 @@ type FormData = {
 };
 
 function SingIn() {
+  const { values, handleChange, errors, isValid } =
+    useFormAndValidation<FormData>({
+      email: '',
+      password: '',
+    });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [formError, setFormError] = useState('');
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    handleLogin(data);
+    handleLogin(values);
   };
 
   const handleLogin = (formData: FormData) => {
@@ -46,7 +41,10 @@ function SingIn() {
     }
     makeRequest(formData)
       .then(() => navigate('/'))
-      .catch(console.error)
+      .catch((error) => {
+        console.error(error);
+        setFormError(error.message || 'An unexpected error occurred.');
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -81,23 +79,28 @@ function SingIn() {
           id="email"
           name="email"
           placeholder="Email"
-          value={data.email}
+          value={values.email || ''}
           onChange={handleChange}
           className="form__input"
           required
         />
+        {errors.email && <span className="form__error">{errors.email}</span>}
         <input
           type="password"
           id="password"
           name="password"
           placeholder="Password"
-          value={data.password}
+          value={values.password || ''}
           onChange={handleChange}
           className="form__input"
           required
         />
+        {errors.password && (
+          <span className="form__error">{errors.password}</span>
+        )}
+        {formError && <span className="form__error">{formError}</span>}
         <div className="form__btn-container">
-          <button className="form__button" type="submit">
+          <button className="form__button" type="submit" disabled={!isValid}>
             {isLoading ? 'Logging In...' : 'Log In'}
           </button>
           <Link className="form__button_alt-option" to="/signup">

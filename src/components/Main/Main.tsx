@@ -3,7 +3,7 @@ import { PageTitle } from '../Titles/PageTitle';
 import { Posts } from '../Posts/Posts';
 import { PostData } from '../../types/post';
 import { setInitialPosts } from '../../redux/postSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../redux/hooks';
 import { getPosts } from '../../utils/api';
 
 const TitleTexts: string[] = [
@@ -26,7 +26,7 @@ function Main({
 }: {
   handlePostClick: (post: PostData) => void;
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   getPosts(localStorage.jwt).then((data) => dispatch(setInitialPosts(data)));
 
   return (

@@ -1,7 +1,7 @@
 import './ModalPost.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getUser, getModal, getPosts } from '../../../redux/selectors';
 import { Modal } from '../../Modal/Modal';
 import { newPostData, updatedPostData } from '../../../types/post';
@@ -16,6 +16,8 @@ import {
   updatePost,
 } from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
+import { useImageUrl } from '../../../hooks/useImageUrl';
+import imgPlaceholder from '../../../assets/post-placeholder.jpg';
 
 export type ModalPostProps = {
   postId: string;
@@ -43,10 +45,10 @@ export type ModalPostProps = {
 
 function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
-  const posts = useSelector(getPosts);
-  const modal = useSelector(getModal);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
+  const posts = useAppSelector(getPosts);
+  const modal = useAppSelector(getModal);
   const [postText, setPostText] = useState('');
   const [postModalMode, setPostModalMode] = useState(
     modal.modalIsActive === 'add-post-next' ? 'edit' : 'view'
@@ -79,9 +81,10 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
   };
 
   const handleDeleteClick = () => {
-    deletePosts(localStorage.jwt, postId);
-    dispatch(removePost({ _id: postId }));
-    onClose();
+    deletePosts(localStorage.jwt, postId).then(() => {
+      dispatch(removePost({ _id: postId }));
+      onClose();
+    });
   };
 
   const handleSaveClick = () => {
@@ -96,11 +99,14 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
       text: postText,
     };
 
+    const closeAfterSaving = () => {
+      setPostModalMode('view');
+      onClose();
+    };
+
     modal.modalIsActive === 'add-post-next'
-      ? saveNewPost(newPost)
-      : saveUpdatedPost(updatedPost);
-    setPostModalMode('view');
-    onClose();
+      ? saveNewPost(newPost).then(() => closeAfterSaving())
+      : saveUpdatedPost(updatedPost).then(() => closeAfterSaving());
   };
 
   const saveNewPost = async (post: newPostData) => {
@@ -144,7 +150,7 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
           <div className="post__image-wrapper">
             <img
               className="post__image"
-              src={photoUrl}
+              src={useImageUrl(photoUrl, imgPlaceholder)}
               alt={`${authors.resident.name}'s post`}
             />
             <Likes id={postId} likes={likes} />

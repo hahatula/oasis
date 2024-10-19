@@ -1,11 +1,12 @@
 import { Modal } from '../../Modal/Modal';
 import { useState } from 'react';
 import { openModal } from '../../../redux/modalSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
 import { getUser, getModal } from '../../../redux/selectors';
 import { ResidentData } from '../../../types/resident';
+import { useImageUrl } from '../../../hooks/useImageUrl';
 
 type AddPostFormProps = {
   formName: string;
@@ -23,9 +24,9 @@ function ModalAddPost({
   onNext,
 
 }: AddPostFormProps) {
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
-  const modal = useSelector(getModal)
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
+  const modal = useAppSelector(getModal)
   const residents = user?.residents;
   const [selectedResident, setSelectedResident] = useState(
     modal?.chosenResident || {
@@ -35,7 +36,6 @@ function ModalAddPost({
       species: '',
     }
   );
-  console.log(selectedResident);
   const [photoUrl, setPhotoUrl] = useState('');
   const [optionsVisibility, setOptionsVisibility] = useState(false);
   const [urlError, setUrlError] = useState('');
@@ -98,7 +98,7 @@ function ModalAddPost({
                   >
                     <img
                       className="form__select-option-img"
-                      src={resident.avatar}
+                      src={useImageUrl(resident.avatar)}
                       alt={resident.name}
                     />
                     {resident.name}

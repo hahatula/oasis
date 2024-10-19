@@ -1,12 +1,12 @@
 import './Toolbar.css';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../redux/hooks';
 import { openModal } from '../../redux/modalSlice';
 import addPostIcon from '../../assets/add-post.svg';
 import addResidentIcon from '../../assets/add-plant.svg';
 import graveyardIcon from '../../assets/dead-plant.svg';
 
 function Toolbar() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleAddPost = (): void => {
     dispatch(openModal('add-post'));

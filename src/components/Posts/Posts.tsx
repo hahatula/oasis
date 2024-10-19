@@ -1,6 +1,6 @@
 import './Posts.css';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../redux/hooks';
 import { Post } from '../Post/Post';
 import { PostData } from '../../types/post';
 import { getPosts } from '../../redux/selectors';
@@ -10,7 +10,7 @@ export const Posts = ({
 }: {
   handlePostClick: (post: PostData) => void;
 }) => {
-  const posts = useSelector(getPosts);
+  const posts = useAppSelector(getPosts);
 
   const postsToShow = useMemo(() => {
     if (posts) {

@@ -1,13 +1,12 @@
 import { Modal } from '../../Modal/Modal';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 import Form from '../../Form/Form';
-import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getUser } from '../../../redux/selectors';
 import { updateUserProfile } from '../../../utils/api';
 import { closeModal } from '../../../redux/modalSlice';
 import { setUser } from '../../../redux/userSlice';
-// import { formatImgUrl } from '../../../utils/helpers';
+import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 
 type ChangeProfileFormProps = {
   formName: string;
@@ -15,28 +14,26 @@ type ChangeProfileFormProps = {
 };
 
 function ModalChangeProfile({ formName, onClose }: ChangeProfileFormProps) {
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
-  const [data, setData] = useState({
-    name: user?.name,
-    bio: user?.bio,
-  });
+  const { values, handleChange, errors, isValid, setValues } =
+    useFormAndValidation<{ name: string; bio: string }>({ name: '', bio: '' });
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    if (user) {
+      setValues({
+        name: user.name || '',
+        bio: user.bio || '',
+      });
+    }
+  }, [user, setValues]);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setIsLoading(true);
-    const newBio = data.bio || '';
-    data.name &&
-      updateUserProfile(localStorage.jwt, data.name, newBio)
+    values.name &&
+      updateUserProfile(localStorage.jwt, values.name, values.bio || '')
         .then((updatedUser) => {
           dispatch(setUser(updatedUser));
         })
@@ -67,19 +64,20 @@ function ModalChangeProfile({ formName, onClose }: ChangeProfileFormProps) {
             required
             className="form__input"
             placeholder="Name"
-            value={data.name}
+            value={values.name}
             onChange={handleChange}
           ></input>
+          {errors.name && <span className="form__error">{errors.name}</span>}
           <input
             name="bio"
             id="bio"
             type="text"
             className="form__input"
             placeholder="About me"
-            value={data.bio}
+            value={values.bio}
             onChange={handleChange}
           ></input>
-          <button type="submit" className="form__button">
+          <button type="submit" className="form__button" disabled={!isValid}>
             {isLoading ? 'Saving...' : 'Save'}
           </button>
         </Form>

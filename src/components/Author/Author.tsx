@@ -1,5 +1,6 @@
 import './Author.css';
 import { AuthorProps } from './types';
+import { useImageUrl } from '../../hooks/useImageUrl';
 
 function Author({
   hostAvatar,
@@ -9,13 +10,17 @@ function Author({
   residentSpecies,
   placement,
 }: AuthorProps) {
+
+  const hostAvatarUrl = useImageUrl(hostAvatar);
+  const residentAvatarUrl = useImageUrl(residentAvatar);
+
   return (
     <div className={`author ${placement}__author`}>
       <div className="author__avatars">
-        <img className="author__avatar" src={hostAvatar} alt={hostName} />
+        <img className="author__avatar" src={hostAvatarUrl} alt={hostName} />
         <img
           className="author__avatar"
-          src={residentAvatar}
+          src={residentAvatarUrl}
           alt={residentName}
         />
       </div>

@@ -6,12 +6,13 @@ import { getPlantTip } from '../../../utils/plantNetApi';
 import { plantNetApiKey } from '../../../utils/constants';
 import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getUser } from '../../../redux/selectors';
 import { createResident, getUserInfo } from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
+import { useImageUrl } from '../../../hooks/useImageUrl';
+import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 
-// TODO: loading while waiting for api response
 
 type AddResidentFormProps = {
   formName: string;
@@ -26,10 +27,17 @@ type PlantTipResponse = {
   }>;
 };
 
+type UserInput = {
+  species: string;
+  name: string;
+  bday: Date | null;
+  bio: string;
+};
+
 function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
   const [step, setStep] = useState(1);
   const [photoUrl, setPhotoUrl] = useState('');
   const [species, setSpecies] = useState('');
@@ -37,14 +45,15 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const [suggestion, setSuggestion] = useState('');
   const [urlError, setUrlError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const today = new Date().toISOString().split('T')[0];
-
-  const userInput = {
+  const { values, handleChange } = useFormAndValidation<UserInput>({
     species: '',
     name: '',
     bday: null as Date | null,
     bio: '',
-  };
+  });
+
+  const today = new Date().toISOString().split('T')[0];
+  const avatarUrl = useImageUrl(photoUrl);
 
   const getSuggestion = async (photoUrl: string) => {
     setIsLoading(true);
@@ -81,16 +90,16 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
       }
     }
     if (step === 3) {
-      setSpecies(userInput.species ? userInput.species : suggestion);
-      setName(userInput.name);
+      setSpecies(values.species ? values.species : suggestion);
+      setName(values.name);
     }
     if (step === 4) {
       const newResident = {
         name: name,
         avatar: photoUrl,
         species: species,
-        bio: userInput.bio,
-        bday: userInput.bday,
+        bio: values.bio,
+        bday: values.bday,
       };
 
       try {
@@ -142,7 +151,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
           )}
           {step === 2 && (
             <>
-              <img className="form__resident-img" src={photoUrl}></img>
+              <img className="form__resident-img" src={avatarUrl}></img>
               {species && <p>{species}</p>}
               <p>Oh! Is it a {suggestion}?</p>
               <div className="form__btn-container">
@@ -164,7 +173,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
           )}
           {step === 3 && (
             <>
-              <img className="form__resident-img" src={photoUrl}></img>
+              <img className="form__resident-img" src={avatarUrl}></img>
               <button
                 type="button"
                 className="form__edit form__edit_image"
@@ -185,7 +194,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                   required
                   className="form__input"
                   placeholder="What kind is your plant?"
-                  onChange={(e) => (userInput.species = e.target.value)}
+                  onChange={handleChange}
                 ></input>
               )}
               <input
@@ -195,8 +204,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 required
                 className="form__input"
                 placeholder="What's your plant's pet name?"
-                // value={name}
-                onChange={(e) => (userInput.name = e.target.value)}
+                onChange={handleChange}
               ></input>
               <button type="submit" className="toolbar__button form__button">
                 Next
@@ -237,11 +245,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 max={today}
                 className="form__input"
                 placeholder="Date of birth"
-                onChange={(e) =>
-                  (userInput.bday = e.target.value
-                    ? new Date(e.target.value)
-                    : null)
-                }
+                onChange={handleChange}
               />
               <input
                 name="bio"
@@ -249,7 +253,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
                 type="text"
                 className="form__input"
                 placeholder="A few words about the plant's story"
-                onChange={(e) => (userInput.bio = e.target.value)}
+                onChange={handleChange}
               />
               <button type="submit" className="form__button">
                 Create new resident

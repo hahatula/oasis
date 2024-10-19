@@ -1,13 +1,11 @@
 import { Modal } from '../../Modal/Modal';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../redux/hooks';
 import Form from '../../Form/Form';
-// import { useSelector } from 'react-redux';
-// import { getUser } from '../../../redux/selectors';
 import { updateAvatar } from '../../../utils/api';
 import { closeModal } from '../../../redux/modalSlice';
 import { setUser } from '../../../redux/userSlice';
-import { formatImgUrl } from '../../../utils/helpers';
+import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 
 type ChangeAvatarFormProps = {
   formName: string;
@@ -15,26 +13,19 @@ type ChangeAvatarFormProps = {
 };
 
 function ModalChangeAvatar({ formName, onClose }: ChangeAvatarFormProps) {
-  const dispatch = useDispatch();
-//   const user = useSelector(getUser);
-//   const avatar = user?.avatar;
-  const [avatarUrl, setAvatarUrl] = useState('');
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation<{ avatar: string }>({ avatar: '' });
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [urlError, setUrlError] = useState('');
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const cleanUrl = formatImgUrl(avatarUrl, setUrlError);
-
-    if (!cleanUrl) {
-      console.error('Invalid URL, skipping plant suggestion.');
-      return;
-    }
 
     setIsLoading(true);
-    updateAvatar(localStorage.jwt, cleanUrl)
+    updateAvatar(localStorage.jwt, values.avatar)
       .then((updatedUser) => {
         dispatch(setUser(updatedUser));
+        resetForm();
       })
       .then(() => {
         setIsLoading(false);
@@ -57,20 +48,17 @@ function ModalChangeAvatar({ formName, onClose }: ChangeAvatarFormProps) {
           method="post"
         >
           <input
-            name="photo"
-            id="photo"
+            name="avatar"
+            id="avatar"
             type="url"
             required
             className="form__input"
             placeholder="Add photo url"
-            value={avatarUrl}
-            onChange={(e) => {
-              setUrlError('');
-              setAvatarUrl(e.target.value);
-            }}
+            value={values.avatar}
+            onChange={handleChange}
           ></input>
-          {urlError && <p className="form__error">{urlError}</p>}
-          <button type="submit" className="form__button">
+          {errors.avatar && <p className="form__error">{errors.avatar}</p>}
+          <button type="submit" className="form__button" disabled={!isValid}>
             {isLoading ? 'Saving...' : 'Save'}
           </button>
         </Form>
