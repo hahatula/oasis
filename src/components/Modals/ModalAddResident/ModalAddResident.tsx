@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Author from '../../Author/Author';
 import { getPlantTip } from '../../../utils/plantNetApi';
-import { plantNetApiKey } from '../../../utils/constants';
+import { PLANTNET_API_KEY } from '../../../utils/constants';
 import Form from '../../Form/Form';
 import { formatImgUrl } from '../../../utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
@@ -40,7 +40,7 @@ function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
     try {
       const data = (await getPlantTip(
         photoUrl,
-        plantNetApiKey
+        PLANTNET_API_KEY
       )) as PlantTipResponse;
       setIsLoading(false);
       return data.results[0]?.species?.commonNames[0] || '';
