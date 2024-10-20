@@ -38,32 +38,30 @@ function ModalChangeAvatar({ formName, onClose }: ChangeAvatarFormProps) {
   };
 
   return (
-    <>
-      <Modal name={formName} onClose={onClose}>
-        <Form
-          formName={formName}
-          title="Change avatar"
-          onSubmit={handleSubmit}
-          action="submit"
-          method="post"
-        >
-          <input
-            name="avatar"
-            id="avatar"
-            type="url"
-            required
-            className="form__input"
-            placeholder="Add photo url"
-            value={values.avatar}
-            onChange={handleChange}
-          ></input>
-          {errors.avatar && <p className="form__error">{errors.avatar}</p>}
-          <button type="submit" className="form__button" disabled={!isValid}>
-            {isLoading ? 'Saving...' : 'Save'}
-          </button>
-        </Form>
-      </Modal>
-    </>
+    <Modal name={formName} onClose={onClose}>
+      <Form
+        formName={formName}
+        title="Change avatar"
+        onSubmit={handleSubmit}
+        action="submit"
+        method="post"
+      >
+        <input
+          name="avatar"
+          id="avatar"
+          type="url"
+          required
+          className="form__input"
+          placeholder="Add photo url"
+          value={values.avatar}
+          onChange={handleChange}
+        ></input>
+        {errors.avatar && <p className="form__error">{errors.avatar}</p>}
+        <button type="submit" className="form__button" disabled={!isValid}>
+          {isLoading ? 'Saving...' : 'Save'}
+        </button>
+      </Form>
+    </Modal>
   );
 }
 

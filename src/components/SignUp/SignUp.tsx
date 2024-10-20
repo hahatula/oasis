@@ -65,9 +65,11 @@ function SingUp() {
       authorize(formData.email, formData.password).then((data) => {
         if (data.token) {
           setToken(data.token);
-          getUserInfo(data.token).then((user) => {
-            dispatch(setUser(user));
-          });
+          getUserInfo(data.token)
+            .then((user) => {
+              dispatch(setUser(user));
+            })
+            .catch((error) => console.error(error));
         }
       });
     });
@@ -120,7 +122,9 @@ function SingUp() {
           className="form__input"
           required
         />
-        {errors.password && <span className="form__error">{errors.password}</span>}
+        {errors.password && (
+          <span className="form__error">{errors.password}</span>
+        )}
         <input
           type="text"
           id="avatar"
@@ -143,11 +147,7 @@ function SingUp() {
         {errors.bio && <span className="form__error">{errors.bio}</span>}
         {formError && <span className="form__error">{formError}</span>}
         <div className="form__btn-container">
-          <button
-            className="form__button"
-            type="submit"
-            disabled={!isValid}
-          >
+          <button className="form__button" type="submit" disabled={!isValid}>
             {isLoading ? 'Signing Up...' : 'Sign Up'}
           </button>
           <Link className="form__button_alt-option" to="/signin">

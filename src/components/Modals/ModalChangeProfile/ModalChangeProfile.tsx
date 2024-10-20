@@ -48,41 +48,39 @@ function ModalChangeProfile({ formName, onClose }: ChangeProfileFormProps) {
   };
 
   return (
-    <>
-      <Modal name={formName} onClose={onClose}>
-        <Form
-          formName={formName}
-          title="Edit profile details"
-          onSubmit={handleSubmit}
-          action="submit"
-          method="post"
-        >
-          <input
-            name="name"
-            id="name"
-            type="text"
-            required
-            className="form__input"
-            placeholder="Name"
-            value={values.name}
-            onChange={handleChange}
-          ></input>
-          {errors.name && <span className="form__error">{errors.name}</span>}
-          <input
-            name="bio"
-            id="bio"
-            type="text"
-            className="form__input"
-            placeholder="About me"
-            value={values.bio}
-            onChange={handleChange}
-          ></input>
-          <button type="submit" className="form__button" disabled={!isValid}>
-            {isLoading ? 'Saving...' : 'Save'}
-          </button>
-        </Form>
-      </Modal>
-    </>
+    <Modal name={formName} onClose={onClose}>
+      <Form
+        formName={formName}
+        title="Edit profile details"
+        onSubmit={handleSubmit}
+        action="submit"
+        method="post"
+      >
+        <input
+          name="name"
+          id="name"
+          type="text"
+          required
+          className="form__input"
+          placeholder="Name"
+          value={values.name}
+          onChange={handleChange}
+        ></input>
+        {errors.name && <span className="form__error">{errors.name}</span>}
+        <input
+          name="bio"
+          id="bio"
+          type="text"
+          className="form__input"
+          placeholder="About me"
+          value={values.bio}
+          onChange={handleChange}
+        ></input>
+        <button type="submit" className="form__button" disabled={!isValid}>
+          {isLoading ? 'Saving...' : 'Save'}
+        </button>
+      </Form>
+    </Modal>
   );
 }
 

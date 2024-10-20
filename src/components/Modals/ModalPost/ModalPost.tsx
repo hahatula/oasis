@@ -81,10 +81,12 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
   };
 
   const handleDeleteClick = () => {
-    deletePosts(localStorage.jwt, postId).then(() => {
-      dispatch(removePost({ _id: postId }));
-      onClose();
-    });
+    deletePosts(localStorage.jwt, postId)
+      .then(() => {
+        dispatch(removePost({ _id: postId }));
+        onClose();
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleSaveClick = () => {
@@ -105,8 +107,12 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
     };
 
     modal.modalIsActive === 'add-post-next'
-      ? saveNewPost(newPost).then(() => closeAfterSaving())
-      : saveUpdatedPost(updatedPost).then(() => closeAfterSaving());
+      ? saveNewPost(newPost)
+          .then(() => closeAfterSaving())
+          .catch((error) => console.error(error))
+      : saveUpdatedPost(updatedPost)
+          .then(() => closeAfterSaving())
+          .catch((error) => console.error(error));
   };
 
   const saveNewPost = async (post: newPostData) => {
@@ -135,7 +141,7 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
     }
   };
 
-  const imageUrl = useImageUrl(photoUrl, imgPlaceholder)
+  const imageUrl = useImageUrl(photoUrl, imgPlaceholder);
 
   return (
     <Modal name="post" onClose={onClose}>
