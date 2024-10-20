@@ -16,14 +16,14 @@
 }
 
 .modal-post__text {
-    display: block;
-    white-space: pre-wrap;
+  display: block;
+  white-space: pre-wrap;
 }
 
 .modal-post__options {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }
 
 .modal-post__textarea {

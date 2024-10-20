@@ -1,4 +1,6 @@
+import { User } from "../../types/user";
+
 export type LikesProps = {
-  id: number;
-  likes: number;
+  id: string;
+  likes: User[];
 };

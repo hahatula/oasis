@@ -1,23 +1,22 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getModal } from '../../redux/selectors';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { getModal, getUser } from '../../redux/selectors';
 import { PostData } from '../../types/post';
 import { openModal, closeModal } from '../../redux/modalSlice';
 import ModalAddPost from './ModalAddPost/ModalAddPost';
 import ModalAddResident from './ModalAddResident/ModalAddResident';
 import ModalPost from './ModalPost/ModalPost';
-import { CURRENT_USER_TEMP } from '../../utils/constants';
-import { users } from '../../utils/tempDB';
 
 export const Modals = ({ post }: { post: PostData | null }) => {
-  const dispatch = useDispatch();
-  const modalIsActive = useSelector(getModal);
+  const dispatch = useAppDispatch();
+  const modal = useAppSelector(getModal);
+  const user = useAppSelector(getUser);
   const [selectedPost, setSelectedPost] = useState<PostData | null>(post);
   const [newPostData, setNewPostData] = useState<{
     resident: {
-      id: number;
+      _id: string;
       name: string;
-      avatarUrl: string;
+      avatar: string;
       species: string;
     };
     photoUrl: string;
@@ -31,9 +30,9 @@ export const Modals = ({ post }: { post: PostData | null }) => {
 
   const handleNextFromAddPost = (
     resident: {
-      id: number;
+      _id: string;
       name: string;
-      avatarUrl: string;
+      avatar: string;
       species: string;
     },
     photoUrl: string
@@ -44,44 +43,40 @@ export const Modals = ({ post }: { post: PostData | null }) => {
 
   return (
     <>
-      {modalIsActive === 'view-post' && post && (
+      {modal.modalIsActive === 'view-post' && post && (
         <ModalPost
-          id={post.id}
-          text={post.text}
-          photoUrl={post.photoUrl}
-          authors={post.authors}
-          createdAt={post.createdAt}
-          likes={post.likes}
+          postId={post._id}
           onClose={handleActiveModalClose}
         />
       )}
-      {modalIsActive === 'add-post' && (
+      {modal.modalIsActive === 'add-post' && (
         <ModalAddPost
           formName="add-post"
           onClose={handleActiveModalClose}
-          userId={CURRENT_USER_TEMP}
           onNext={handleNextFromAddPost}
         />
       )}
-      {modalIsActive === 'add-post-next' && newPostData && (
+      {modal.modalIsActive === 'add-post-next' && newPostData && user && (
         <ModalPost
-          id={10000000} // временный id для нового поста
-          text={''} // Пустое поле для текста
-          photoUrl={newPostData.photoUrl}
-          authors={{
-            host: {
-              id: CURRENT_USER_TEMP,
-              name: users[CURRENT_USER_TEMP - 1].name,
-              avatarUrl: users[CURRENT_USER_TEMP - 1].avatarUrl,
+          postId={'new'}
+          newPost={{
+            text: '',
+            photoUrl: newPostData.photoUrl,
+            authors: {
+              host: {
+                _id: user._id,
+                name: user.name,
+                avatar: user.avatar,
+              },
+              resident: newPostData.resident,
             },
-            resident: newPostData.resident,
+            createdAt: new Date().toISOString(),
+            likes: [],
           }}
-          createdAt={new Date().toISOString()}
-          likes={0}
           onClose={handleActiveModalClose}
         />
       )}
-      {modalIsActive === 'add-resident' && (
+      {modal.modalIsActive === 'add-resident' && (
         <ModalAddResident
           formName="add-resident"
           onClose={handleActiveModalClose}

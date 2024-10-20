@@ -5,7 +5,7 @@
 }
 
 .author__avatars {
-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .author__avatar {

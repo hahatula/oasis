@@ -1,33 +1,36 @@
 .likes {
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    background-color: rgba(255, 252, 241, 0.5);
-    padding: 0 8px 0 0;
-    border-radius: 20px;
-    backdrop-filter: blur(2px);
-  }
-  
-  .likes__like-button {
-    width: 28px;
-    height: 28px;
-    background-color: transparent;
-    border: none;
-    background-image: url(../../assets/flower-stroke.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: inherit;
-    cursor: url(../../assets/flower-fill.svg) 12 12, auto;
-  }
-  
-  .likes__like-button_checked {
-    background-image: url(../../assets/flower-fill.svg);
-    cursor: url(../../assets/flower-stroke.svg) 12 12, auto;
-  }
-  
-  .likes__like-button:hover {
-    box-shadow: 0 0 15px 2px var(--pink);
-  }
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: rgba(255, 252, 241, 0.5);
+  padding: 0 8px 0 0;
+  border-radius: 20px;
+  border: none;
+  backdrop-filter: blur(2px);
+  cursor: url(../../assets/flower-fill.svg) 12 12, auto;
+}
+
+.likes_checked {
+  cursor: url(../../assets/flower-stroke.svg) 12 12, auto;
+}
+
+.likes__icon {
+  width: 28px;
+  height: 28px;
+  background-color: transparent;
+  background-image: url(../../assets/flower-stroke.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: inherit;
+}
+
+.likes__icon_checked {
+  background-image: url(../../assets/flower-fill.svg);
+}
+
+.likes:hover .likes__icon {
+  box-shadow: 0 0 15px 2px var(--pink);
+}

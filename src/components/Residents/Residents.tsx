@@ -1,28 +1,38 @@
 import './Residents.css';
-// import Post from '../Post/Post';
-import { residents } from '../../utils/tempDB';
-// import { PostData } from '../../types/post';
+import { useMemo } from 'react';
 import { SectionTitle } from '../Titles/PageTitle';
 import Resident from '../Resident/Resident';
+import { useAppSelector } from '../../redux/hooks';
+import { getUser } from '../../redux/selectors';
+import { ResidentData } from '../../types/resident';
 
-function Residents({ hostId }: { hostId: number }) {
+function Residents() {
+  const user = useAppSelector(getUser);
+
+  const residentsToShow = useMemo(() => {
+    if (user) {
+      return [...user.residents].reverse();
+    }
+  }, [user]);
+
   return (
     <>
       <SectionTitle titleText="Residents" />
       <ul className="residents-grid">
-        {residents
-          .filter((resident) => resident.hostId === hostId)
-          .map((resident, index) => (
-            <Resident
-              key={index}
-              id={resident.id}
-              name={resident.name}
-              avatarUrl={resident.avatarUrl}
-              posts={resident.posts}
-              species={resident.species}
-              bio={resident.bio}
-            />
-          ))}
+        {residentsToShow?.length
+          ? residentsToShow.map((resident: ResidentData, index: number) => (
+              <Resident
+                key={index}
+                id={resident._id}
+                name={resident.name}
+                avatarUrl={resident.avatar}
+                posts={resident.posts}
+                species={resident.species}
+                bio={resident.bio}
+                bday={resident.bday}
+              />
+            ))
+          : <p>No residents yet</p>}
       </ul>
     </>
   );

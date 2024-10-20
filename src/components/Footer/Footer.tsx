@@ -3,7 +3,7 @@ import Toolbar from '../Toolbar/Toolbar';
 
 function Footer() {
   return (
-    <div className="footer">
+    <footer className="footer">
       <p className="footer__info">
         Developed by{' '}
         <a
@@ -16,7 +16,7 @@ function Footer() {
       </p>
       <Toolbar />
       <p className="footer__info footer__year">2024</p>
-    </div>
+    </footer>
   );
 }
 export default Footer;

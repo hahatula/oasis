@@ -1,28 +1,43 @@
 import './Posts.css';
-import { useSelector } from 'react-redux';
-import Post from '../Post/Post';
+import { useMemo } from 'react';
+import { useAppSelector } from '../../redux/hooks';
+import { Post } from '../Post/Post';
 import { PostData } from '../../types/post';
 import { getPosts } from '../../redux/selectors';
 
-function Posts({ handlePostClick }: { handlePostClick: (post: PostData) => void }) {
-  const posts = useSelector(getPosts);
+export const Posts = ({
+  handlePostClick,
+}: {
+  handlePostClick: (post: PostData) => void;
+}) => {
+  const posts = useAppSelector(getPosts);
+
+  const postsToShow = useMemo(() => {
+    if (posts) {
+      return [...posts].reverse();
+    }
+  }, [posts]);
 
   return (
-    <ul className="posts-grid">
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          id={post.id}
-          text={post.text}
-          photoUrl={post.photoUrl}
-          authors={post.authors}
-          likes={post.likes}
-          createdAt={post.createdAt}
-          handlePostClick={handlePostClick}
-        />
-      ))}
-    </ul>
+    <>
+      {postsToShow?.length ? (
+        <ul className="posts-grid">
+          {postsToShow.map((post) => (
+            <Post
+              key={post._id}
+              _id={post._id}
+              text={post.text}
+              photoUrl={post.photoUrl}
+              authors={post.authors}
+              likes={post.likes}
+              createdAt={post.createdAt}
+              handlePostClick={handlePostClick}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p>No posts yet</p>
+      )}
+    </>
   );
-}
-
-export default Posts;
+};

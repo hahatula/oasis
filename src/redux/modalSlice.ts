@@ -1,20 +1,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type ModalState = string | null;
+export type ModalState = {
+  modalIsActive: string | null;
+  chosenResident: {
+    _id: string;
+    name: string;
+    avatar: string;
+    species: string;
+  } | null;
+};
+
+const initialState: ModalState = {
+  modalIsActive: null,
+  chosenResident: null,
+};
 
 const modalSlice = createSlice({
   name: 'modal',
-  initialState: null as ModalState,
+  initialState,
   reducers: {
-    //the state parameter is replaced with _, which is commonly used in TypeScript and JavaScript to indicate an unused parameter (for linter).
-    openModal(_, action: PayloadAction<string | null>) {
-      return action.payload;
+    openModal(state, action: PayloadAction<string | null>) {
+      state.modalIsActive = action.payload;
     },
-    closeModal() {
-      return null;
+    closeModal(state) {
+      state.modalIsActive = null;
+      state.chosenResident = null;
+    },
+    setChosenResident(
+      state,
+      action: PayloadAction<ModalState['chosenResident']>
+    ) {
+      state.chosenResident = action.payload;
     },
   },
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openModal, closeModal, setChosenResident } = modalSlice.actions;
 export default modalSlice.reducer;

@@ -1,31 +1,55 @@
 .resident {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .resident__image {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    transition: 0.5s;
-    border-radius: 30px;
-  }
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: 0.5s;
+  border-radius: 30px;
+}
 
-  .resident__info {
-    display: flex;
+.resident__info {
+  display: flex;
   justify-content: space-between;
-    gap: 10px;
-  }
+  gap: 10px;
+}
 
-  .resident__name {
-    font-family: var(--accent-font);
-    font-size: 24px;
-  }
+.resident__name {
+  font-family: var(--accent-font);
+  font-size: 24px;
+}
 
-  .resident__species {
-    opacity: 0.6;
-  }
+.resident__species,
+.resident__bday {
+  opacity: 0.6;
+}
 
-  .resident__buttons {
-    margin-top: auto;
-  }
+.resident__bday {
+  font-size: 16px;
+}
+
+.resident__buttons {
+  margin-top: auto;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.resident__button {
+  display: flex;
+  gap: 10px;
+  padding: 5px 20px;
+  border-radius: 30px;
+  border: solid 1px var(--natural-green);
+  background-color: #fffcf199;
+  cursor: pointer;
+  text-wrap: nowrap;
+}
+
+.resident__button:hover {
+  background-color: #fffcf1;
+  color: var(--natural-green);
+}

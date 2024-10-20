@@ -10,8 +10,8 @@ function Header() {
   const closeBurger = () => setBurgerOpened(false);
 
   return (
-    <div className="header">
-      <img src={logo} alt="Oasis Logo" />
+    <header className="header">
+      <Link to='/'><img src={logo} alt="Oasis Logo" /></Link>
       <nav className="header__nav">
         <Link to="/" className="header__link">
           Home
@@ -29,7 +29,11 @@ function Header() {
 
       {burgerOpened && (
         <nav className="header__burger-nav">
-           <button className="header__close-btn" type="button" onClick={closeBurger} />
+          <button
+            className="header__close-btn"
+            type="button"
+            onClick={closeBurger}
+          />
           <Link to="/" className="header__link" onClick={closeBurger}>
             Home
           </Link>
@@ -51,7 +55,7 @@ function Header() {
           </div>
         </nav>
       )}
-    </div>
+    </header>
   );
 }
 export default Header;

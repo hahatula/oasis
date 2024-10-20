@@ -11,6 +11,7 @@
 
 .form__title {
   font-family: var(--accent-font);
+  width: 100%;
 }
 
 .form__select-wrapper {
@@ -94,8 +95,19 @@
 }
 
 .form__button {
+  display: flex;
+  gap: 10px;
+  padding: 5px 20px;
+  border-radius: 30px;
+  border: solid 1px var(--natural-green);
   background-color: #fffcf199;
   cursor: pointer;
+  text-wrap: nowrap;
+}
+
+.form__button:disabled {
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .form__button:hover {
@@ -103,9 +115,53 @@
   color: var(--natural-green);
 }
 
+.form__button_alt-option:hover {
+  color: var(--pink);
+}
+
 .form__error {
   font-size: 16px;
   width: 100%;
-  text-align: center;
   color: var(--pink);
 }
+
+.form__resident-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 30px;
+}
+
+.form__btn-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.form__edit {
+  font-size: 14px;
+  background-color: transparent;
+  padding: 4px 8px;
+  align-self: center;
+  border: 1px solid var(--natural-green);
+  border-radius: 20px;
+}
+
+.form__edit:hover {
+  background-color: var(--natural-green);
+  color: var(--light);
+}
+
+.form__edit_image {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+}
+
+.form__author-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+

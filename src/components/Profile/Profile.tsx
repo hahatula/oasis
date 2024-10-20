@@ -1,91 +1,126 @@
 import './Profile.css';
-import { CURRENT_USER_TEMP } from '../../utils/constants';
+import { useEffect } from 'react';
 import { PageTitle } from '../Titles/PageTitle';
-import { users } from '../../utils/tempDB';
-import {
-  differenceInYears,
-  differenceInMonths,
-  differenceInDays,
-  subMonths,
-  subYears,
-} from 'date-fns';
 import Residents from '../Residents/Residents';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { getUser, getModal } from '../../redux/selectors';
+import ModalChangeAvatar from '../Modals/ModalChangeAvatar/ModalChangeAvatar';
+import ModalChangeProfile from '../Modals/ModalChangeProfile/ModalChangeProfile';
+import { openModal, closeModal } from '../../redux/modalSlice';
+import { formatTime } from '../../utils/helpers';
+import { getUserInfo } from '../../utils/api';
+import { setUser } from '../../redux/userSlice';
+import { removeToken } from '../../utils/token';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../redux/userSlice';
+import { useImageUrl } from '../../hooks/useImageUrl';
 
 function Profile() {
-  const currentUser = users.find(user => user.id === CURRENT_USER_TEMP); //TODO: shouldn't be hardcoded in the future
-  
-  if (!currentUser) {
-    return <p>User not found.</p>; // TODO: Decide how to handle the case where the user is not found better
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
+  const modal = useAppSelector(getModal);
+  const avatarUrl = useImageUrl(user?.avatar || '');
+
+  useEffect(() => {
+    if (!user) {
+      getUserInfo(localStorage.jwt)
+        .then((user) => {
+          dispatch(setUser(user));
+        })
+        .catch((err) => {
+          console.error('Failed to fetch user info:', err);
+        });
+    }
+  }, [dispatch, user]);
+
+  if (!user) {
+    return <p>User not found.</p>;
   }
 
-  const registrationDate = new Date(currentUser.registeredAt);
   const currentDate = new Date();
+  const registrationDate = user ? new Date(user.registeredAt) : currentDate;
+  const hostingTime = formatTime(registrationDate);
 
-  const findHostTime = () => {
-    const years = differenceInYears(currentDate, registrationDate);
-    const dateAfterYears = subYears(currentDate, years);
-    const months = differenceInMonths(dateAfterYears, registrationDate);
-    const dateAfterMonths = subMonths(dateAfterYears, months);
-    const days = differenceInDays(dateAfterMonths, registrationDate);
-
-    const showYears = years > 0 ? true : false;
-    const showMonths = months > 0 ? true : false;
-    const showDays = !showYears
-      ? true
-      : !showMonths
-      ? days > 0
-        ? true
-        : false
-      : false;
-
-    const resultYears = !showYears
-      ? ''
-      : years === 1
-      ? `${years} year`
-      : `${years} years`;
-    const resultMonths = !showMonths
-      ? ''
-      : months === 1
-      ? `${months} month`
-      : `${months} months`;
-    const resultDays = !showDays
-      ? ''
-      : days === 1
-      ? `${days} day`
-      : `${days} days`;
-
-    return `${resultYears} ${resultMonths} ${resultDays}`;
+  const changeAvatar = () => {
+    dispatch(openModal('change-avatar'));
   };
 
-  console.log(findHostTime());
+  const handleModalClose = () => {
+    dispatch(closeModal());
+  };
+
+  const handleEditClick = () => {
+    dispatch(openModal('change-profile'));
+  };
+
+  const logOut = () => {
+    removeToken();
+    navigate('/');
+    dispatch(logoutUser());
+  };
+
   return (
-    <section className="profile">
-      <article className="profile__host">
-        <PageTitle titleText={currentUser.name} />
-        <img
-          className="profile__host-img"
-          src={currentUser.avatarUrl}
-          alt={currentUser.name}
-        />
-        <article className="profile__host-info">
-          <div className="profile__host-info-item">
-            <label className="profile__host-info-label">Oasis host time:</label>
-            <p>{findHostTime()}</p>
+    <>
+      <section className="profile">
+        <article className="profile__host">
+          <PageTitle titleText={user.name} />
+          <div className="profile__host-img">
+            <img
+              className="profile__host-img"
+              src={avatarUrl}
+              alt={user.name}
+            />
+            <button
+              className="profile__host-img-edit"
+              onClick={changeAvatar}
+            ></button>
           </div>
-          <div className="profile__host-info-item">
-            <label className="profile__host-info-label">Number of hosted residents:</label>
-            <p>{currentUser.posts.length}</p>
-          </div>
-          <div className="profile__host-info-item">
-            <label className="profile__host-info-label">Bio:</label>
-            <p>{currentUser.bio}</p>
-          </div>
+          <article className="profile__host-info">
+            <div className="profile__host-info-item">
+              <label className="profile__host-info-label">
+                Oasis host time:
+              </label>
+              <p>{hostingTime}</p>
+            </div>
+            <div className="profile__host-info-item">
+              <label className="profile__host-info-label">
+                Number of hosted residents:
+              </label>
+              <p>{user.residents?.length}</p>
+            </div>
+            <div className="profile__host-info-item">
+              <label className="profile__host-info-label">Bio:</label>
+              <p>{user.bio ? user.bio : 'The host of this oasis'}</p>
+            </div>
+            <div className="profile__btn-container">
+              <button className="profile__button" onClick={logOut}>
+                Log Out
+              </button>
+              <button className="profile__button" onClick={handleEditClick}>
+                Edit profile
+              </button>
+            </div>
+          </article>
         </article>
-      </article>
-      <section className="profile__residents">
-        <Residents hostId={currentUser.id} />
+        <section className="profile__residents">
+          <Residents />
+          {/* {user.residents.length > 0 && <Residents />} */}
+        </section>
       </section>
-    </section>
+      {modal.modalIsActive === 'change-avatar' && (
+        <ModalChangeAvatar
+          formName="change-avatar"
+          onClose={handleModalClose}
+        />
+      )}
+      {modal.modalIsActive === 'change-profile' && (
+        <ModalChangeProfile
+          formName="change-profile"
+          onClose={handleModalClose}
+        />
+      )}
+    </>
   );
 }
 

@@ -1,6 +1,10 @@
 import './Resident.css';
 import { ResidentProps } from './types';
+import { useAppDispatch } from '../../redux/hooks';
+import { openModal, setChosenResident } from '../../redux/modalSlice';
+import { useImageUrl } from '../../hooks/useImageUrl';
 
+// TODO: edit resident and declare death
 const Resident: React.FC<ResidentProps> = ({
   id,
   avatarUrl,
@@ -8,21 +12,38 @@ const Resident: React.FC<ResidentProps> = ({
   posts,
   species,
   bio,
+  bday,
 }) => {
+  const dispatch = useAppDispatch();
+
+  const formatedBday = new Date(bday).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const handleAddPost = () => {
+    dispatch(setChosenResident({ _id: id, name, avatar: avatarUrl, species }));
+    dispatch(openModal('add-post'));
+  }
+  const imageUrl = useImageUrl(avatarUrl);
+
   return (
     <li className="resident" key={id}>
-      <img className="resident__image" src={avatarUrl} alt={name} />
+      <img className="resident__image" src={imageUrl} alt={name} />
       <div className="resident__info">
         <div>
           <p className="resident__name">{name}</p>
           <p className="resident__species">{species}</p>
         </div>
-        <p className="resident__stats">{posts.length} posts</p>
+        <p className="resident__stats">{posts?.length} post{posts?.length === 1 ? '' : 's'}</p>
       </div>
-      <p className="resident__bio">{bio}</p>
-      {/* <div className="resident__buttons">
-        <button className="toolbar__button">Do something</button>
-      </div> */}
+      {bio && <p className="resident__bio">{bio}</p>}
+      {bday && <p className="resident__bday">Alive since {formatedBday}</p>}
+      <div className="resident__buttons">
+        {/* <button className="resident__button">Edit</button> */}
+        <button className="resident__button" onClick={handleAddPost}>Add post</button>
+      </div>
     </li>
   );
 };
