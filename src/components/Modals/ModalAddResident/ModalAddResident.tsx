@@ -12,27 +12,7 @@ import { createResident, getUserInfo } from '../../../utils/api';
 import { setUser } from '../../../redux/userSlice';
 import { useImageUrl } from '../../../hooks/useImageUrl';
 import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
-
-
-type AddResidentFormProps = {
-  formName: string;
-  onClose: () => void;
-};
-
-type PlantTipResponse = {
-  results: Array<{
-    species?: {
-      commonNames: string[];
-    };
-  }>;
-};
-
-type UserInput = {
-  species: string;
-  name: string;
-  bday: Date | null;
-  bio: string;
-};
+import { AddResidentFormProps, PlantTipResponse, UserInput } from './types';
 
 function ModalAddResident({ formName, onClose }: AddResidentFormProps) {
   const navigate = useNavigate();

@@ -19,7 +19,7 @@ import { setUser } from '../../../redux/userSlice';
 import { useImageUrl } from '../../../hooks/useImageUrl';
 import imgPlaceholder from '../../../assets/post-placeholder.jpg';
 
-export type ModalPostProps = {
+type ModalPostProps = {
   postId: string;
   onClose: () => void;
   newPost?: {
@@ -135,6 +135,8 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
     }
   };
 
+  const imageUrl = useImageUrl(photoUrl, imgPlaceholder)
+
   return (
     <Modal name="post" onClose={onClose}>
       <article className="post modal-post">
@@ -150,7 +152,7 @@ function ModalPost({ postId, onClose, newPost }: ModalPostProps) {
           <div className="post__image-wrapper">
             <img
               className="post__image"
-              src={useImageUrl(photoUrl, imgPlaceholder)}
+              src={imageUrl}
               alt={`${authors.resident.name}'s post`}
             />
             <Likes id={postId} likes={likes} />

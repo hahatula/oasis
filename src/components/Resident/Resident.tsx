@@ -26,10 +26,11 @@ const Resident: React.FC<ResidentProps> = ({
     dispatch(setChosenResident({ _id: id, name, avatar: avatarUrl, species }));
     dispatch(openModal('add-post'));
   }
+  const imageUrl = useImageUrl(avatarUrl);
 
   return (
     <li className="resident" key={id}>
-      <img className="resident__image" src={useImageUrl(avatarUrl)} alt={name} />
+      <img className="resident__image" src={imageUrl} alt={name} />
       <div className="resident__info">
         <div>
           <p className="resident__name">{name}</p>

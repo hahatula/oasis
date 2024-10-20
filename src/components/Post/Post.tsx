@@ -16,6 +16,7 @@ export const Post: React.FC<PostProps> = memo(
     const postingTime = formatTime(new Date(createdAt));
     const isToday =
       createdAt.slice(0, 10) === new Date().toISOString().slice(0, 10);
+    const imageUrl = useImageUrl(photoUrl, imgPlaceholder);
 
     return (
       <li className="post">
@@ -31,7 +32,7 @@ export const Post: React.FC<PostProps> = memo(
           <div className="post__image-wrapper">
             <img
               className="post__image"
-              src={useImageUrl(photoUrl, imgPlaceholder)}
+              src={imageUrl}
               alt={`${authors.resident.name}'s post`}
             />
             <Likes id={_id} likes={likes} />

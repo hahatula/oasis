@@ -49,7 +49,6 @@ const Likes: React.FC<LikesProps> = memo(({ id, likes }) => {
         className={`likes__icon ${
           isLiked && 'likes__icon_checked'
         }`}
-        // onClick={toggleLike}
       ></div>
       {likeCount}
     </button>

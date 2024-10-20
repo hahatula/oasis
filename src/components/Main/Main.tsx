@@ -5,15 +5,14 @@ import { PostData } from '../../types/post';
 import { setInitialPosts } from '../../redux/postSlice';
 import { useAppDispatch } from '../../redux/hooks';
 import { getPosts } from '../../utils/api';
+import { useEffect } from 'react';
 
 const TitleTexts: string[] = [
   'Oasis Latest News',
   "Oasis news you're following",
   'Oasis Graveyard',
-  'My Oasis Residents',
   'My Subscriptions',
   'Timeline',
-  'Residents',
 ];
 
 const getTitleText = (): string => {
@@ -27,7 +26,12 @@ function Main({
   handlePostClick: (post: PostData) => void;
 }) {
   const dispatch = useAppDispatch();
-  getPosts(localStorage.jwt).then((data) => dispatch(setInitialPosts(data)));
+
+  useEffect(() => {
+    getPosts(localStorage.jwt)
+      .then((data) => dispatch(setInitialPosts(data)))
+      .catch((error) => console.error(error));
+  }, [dispatch]);
 
   return (
     <article className="main">
