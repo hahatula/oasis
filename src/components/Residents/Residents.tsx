@@ -19,20 +19,22 @@ function Residents() {
     <>
       <SectionTitle titleText="Residents" />
       <ul className="residents-grid">
-        {residentsToShow?.length
-          ? residentsToShow.map((resident: ResidentData, index: number) => (
-              <Resident
-                key={index}
-                id={resident._id}
-                name={resident.name}
-                avatarUrl={resident.avatar}
-                posts={resident.posts}
-                species={resident.species}
-                bio={resident.bio}
-                bday={resident.bday}
-              />
-            ))
-          : <p>No residents yet</p>}
+        {residentsToShow?.length ? (
+          residentsToShow.map((resident: ResidentData) => (
+            <Resident
+              key={resident._id}
+              id={resident._id}
+              name={resident.name}
+              avatarUrl={resident.avatar}
+              posts={resident.posts}
+              species={resident.species}
+              bio={resident.bio}
+              bday={resident.bday}
+            />
+          ))
+        ) : (
+          <p>No residents yet</p>
+        )}
       </ul>
     </>
   );
