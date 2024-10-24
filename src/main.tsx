@@ -5,12 +5,14 @@ import App from './components/App/App.tsx';
 import './index.css';
 import { store } from './redux/store.ts';
 import { Provider } from 'react-redux';
+import { Analytics } from '@vercel/analytics/react';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter basename="/">
       <Provider store={store}>
         <App />
+        <Analytics />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

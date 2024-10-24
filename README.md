@@ -1,7 +1,7 @@
 # 🌿 Oasis
 An app for plant-lovers. Speak for your plants, share your gardening experiences, tips, and plant care routines.
 
-#### Link: https://oasis.gatesweb.info/
+#### Link: https://oasis-green-app.vercel.app/
 
 ## 🚀 Built With
 React - A JavaScript library for building user interfaces.  
